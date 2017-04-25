@@ -20,12 +20,25 @@
     var splashEl = document.getElementById('splash');
     splashEl.parentNode.removeChild(splashEl);
   };
-
+  
+   var onFileUploadLoaded = function() {
+		//var el = document.querySelector('px-file-upload');
+		//console.log("["+el+"]");
+		document.addEventListener('px-file-upload-files-changed', function(){
+			logIt();
+		});
+  };
+  
+  var logIt = function() {
+	  console.log("upload triggered.........");	  
+  }
+  
   // load webcomponents polyfills
   if ('registerElement' in document && 'import' in document.createElement('link') && 'content' in
     document.createElement('template')) {
     // browser has web components, no need to load webcomponents polyfill
     onWebComponentsLoaded();
+	onFileUploadLoaded();
   } else {
     // polyfill web components
     var polyfill = document.createElement('script');

@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/px-sample-cards/toggle-card.html">
+<link rel="import" href="../../bower_components/px-sample-cards/hide-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-spinner/px-spinner.html" />
+<link rel="import" href="../../bower_components/px-file-upload/px-file-upload.html" />
+<link rel="import" href="../../bower_components/px-data-table/px-data-table.html" />
+
+<dom-module id="addedcomponents-view">
+  <template>
+	
+	<div>I will respond</div>
+    <div>to a tap on</div>
+    <div>any of my children!</div>
+    <div on-tap="specialTap">I am special!</div>
+	
+	<button on-click="handleClick">Hit me</button>
+	
+	<px-card id="1">
+		<px-view-header title="Spinner"></px-view-header>
+		<px-spinner size="50"></px-spinner>
+	</px-card>
+	
+	<px-card id="2">
+		<px-view-header title="Upload File"></px-view-header>
+		<px-file-upload message="Drag and drop files here, or click the button below."></px-file-upload>
+	</px-card>
+	
+	<px-card id="3">
+		<px-view-header title="Data table"></px-view-header>
+		<px-data-table table-data='[{"first":"Valentine","last":"Meyer","email":"valentinemeyer@scentric.com"},{"first":"Silva","last":"Alexander","email":"silvaalexander@gmail.com"},{"first":"Hopkins","last":"Wong","email":"hopkinswong@hotmail.com"}]' striped="true" filterable="true">
+		</px-data-table>
+	</px-card>
+	
+	<px-card id="4">
+		My name is {{myName}}
+	</px-card>
+
+
+  </template>
+  <script>
+    Polymer({
+      is: 'addedcomponents-view',
+      properties: {
+		myName: {
+			type: String,
+			value: "Kent"
+		}
+	  },
+      ready: function() {
+        console.log('addedcomponents-view ready()')
+      },
+	 /*listeners: {
+		'tap' : 'regularTap',
+		'special.tap' : 'specialTap'
+	  },
+	  regularTap: function(e) {
+		alert("Aw");
+	  },*/
+	  specialTap: function() {
+		alert("Special Tap!");
+	  },
+	  handleClick: function(e, detail) {
+        this.fire('kick', {kicked: true});
+      }
+	  
+    });
+  </script>
+</dom-module>
+

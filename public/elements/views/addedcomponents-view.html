@@ -1,0 +1,131 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/px-sample-cards/toggle-card.html">
+<link rel="import" href="../../bower_components/px-sample-cards/hide-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-file-upload/px-file-upload.html" />
+<link rel="import" href="../../bower_components/px-file-upload/demo.html" />
+<link rel="import" href="../../bower_components/px-data-table/px-data-table.html" />
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
+<link rel="import" href="../../bower_components/px-widget-cards/px-twoup.html" />
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html" />
+
+<dom-module id="addedcomponents-view">
+  <template>
+
+  	<style>
+	  	.input {
+	  		background: blue;
+	  		color: red;
+	  		font-size: 40px;
+	  	}
+  	</style>
+
+	<iron-ajax
+		id="analysisOutputAjax",
+		url="https://maps.googleapis.com/maps/api/geocode/json?address=Winnetka",
+		last-response={{response}}
+		method="GET"
+		auto
+		>
+	</iron-ajax>
+
+<!-- on-response= 'handleResponse' -->
+	<!-- <px-card id="1">
+		<px-view-header title="Spinner"></px-view-header>
+		<px-spinner size="50"></px-spinner>
+	</px-card> -->
+	
+	<!-- <px-card id="2">
+		<px-view-header title="Upload File"></px-view-header>
+		<px-file-upload id="myId" message="Drag and drop files here, or click the button below."></px-file-upload>
+	</px-card> -->
+	
+	<!-- <px-card id="3">
+		<px-view-header title="Data table"></px-view-header>
+		<px-data-table table-data='[{"first":"Valentine","last":"Meyer","email":"valentinemeyer@scentric.com"},{"first":"Silva","last":"Alexander","email":"silvaalexander@gmail.com"},{"first":"Hopkins","last":"Wong","email":"hopkinswong@hotmail.com"}]' striped="true" filterable="true">
+		</px-data-table>
+	</px-card> -->
+	<px-file-upload message="Drag and drop files here, or click the button below."></px-file-upload>
+	<px-dropdown display-value="Text">
+  		<px-dropdown-content class="px-dropdown-content" extend-dropdown="true" extend-dropdown-by="25" max-cont-character-width="10" items='[{"key":"one", "val": "One"}, {"key":"two", "val": "Two"}, {"key":"three", "val": "Three"}, {"key":"four", "val": "How now brown cow"}]'>
+  		</px-dropdown-content>
+	</px-dropdown>
+
+	<div>I will respond</div>
+    <div>to a tap on</div>
+    <div on-tap="anyanyTap">any of my children!</div>
+    <div id="special">I am special!</div>
+	<px-card id="4">
+		Hello {{myName}}
+	</px-card>
+	<h1>Response:</h1>
+	<h2>{{displayResponse}}</h2>
+	<input class="input" type="text" value="{{myName::input}}"></input>
+	<br>
+	<px-twoup id="widget-1" widget-header="Widget Card" widget-icon="fa-paper-plane">
+		<div id="p1" class='widget-1'>
+			<span>Placeholder 1</span>
+		</div>
+		<div class='widget-2'>
+			<span>Placeholder 2</span>
+		</div>
+	</px-twoup>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'addedcomponents-view',
+      properties: {
+		myName: {
+			type: String,
+			value: "World"
+		},
+		response: Object,
+		displayResponse: {
+			type: String,
+			computed: 'computeDisplayResponse(response)'
+		}
+	  },
+	  listeners: {
+	  	'tap' : 'regularTap',
+	  	'p1.tap' : 'idTap',
+	  	'special.tap' : 'specialTap',
+	  	'px-file-upload-files-changed' : 'fileChanged',
+	  	'px-dropdown-value-changed' : 'dropdownChanged'
+	  },
+	  dropdownChanged: function(){
+	  	console.log("dropdownChanged!!");
+	  },
+	  regularTap: function(){
+	  	console.log("tapped!");
+	  },
+	  idTap: function(){
+	  	console.log("p1 tapped!");
+	  },
+	  fileChanged: function(){
+	  	console.log("File changed!");
+	  },
+	  computeDisplayResponse: function(response){
+	  	console.log("JSON.stringify(response) " + JSON.stringify(response));
+	  	return JSON.stringify(response);
+	  },
+      ready: function() {
+        console.log('addedcomponents-view ready()')
+      },
+      anyanyTap: function() {
+        console.log('any any tap')
+      },
+      
+	  specialTap: function(e) {
+        console.log("It was special tapping");
+      }/*,
+      handleResponse: function(e){
+      	console.log("handle response " + e.detail.response);
+      	return e.detail.response;
+      }*/
+	  
+    });
+  </script>
+</dom-module>
+

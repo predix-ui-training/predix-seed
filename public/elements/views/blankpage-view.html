@@ -1,20 +1,44 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/px-sample-cards/blank-card.html">
 <link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
-<dom-module id="blankpage-view">
+<link rel="import" href="../../bower_components/px-file-upload/px-file-upload.html" />
+
+<dom-module id="blankpage-view"><!-- -->
   <template>
-    <px-view-header title="Blank Page" style="display: block; margin-bottom: 6px;"></px-view-header>
+    <!--<px-view-header title="Blank Page" style="display: block; margin-bottom: 6px;"></px-view-header>
+
     <blank-card id="myCard">
-      An example of a blank card without any content (except for this brief description).  Replace this with the actual content for your application.
+	An example of a blank card without any content (except for this brief description).  Replace this with the actual content for your application.
     </blank-card>
+
+	<px-file-upload message="Drag and drop files here, or click the button below." multiple="true"></px-file-upload>-->
+
+    <h1>Hellow {{value}}</h1>
+    <input type="text" value="{{value::change}}"></input>
+    <button on-click="changename">Change name</button>
+
   </template>
   <script>
     Polymer({
       is: 'blankpage-view',
-      properties: {},
       ready: function() {
         console.log('blankpage-view ready()')
+      },
+      properties: {
+        'value' : {
+          type: String,
+          reflectToAttribute: true,
+          notify: true,
+          value: null
+        }
+      },
+      changename: function(){
+        this.value = "you";
       }
+
     });
+
+	//var el1 = document.createElement('blankpage-view');
+	//var el2 = new MyElement();
   </script>
 </dom-module>
