@@ -1,0 +1,57 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-timeline/px-timeline.html"/>
+<link rel="import" href="../../bower_components/px-map/px-map.html"/>
+<link rel="import" href="../../bower_components/px-spinner/px-spinner.html"/>
+<link rel="import" href="../../bower_components/px-clipboard/px-clipboard.html"/>
+<link rel="import" href="../../bower_components/px-slider/px-slider.html"/>
+<dom-module id="addedcomponents-view">
+  <template>
+    <px-view-header title="Bea's Page" style="display: block; margin-bottom: 6px;"></px-view-header>
+    <px-card header-text="New Components">
+      <div>
+        <h1>Bea's timeline</h1>
+        <px-timeline time-groups="false"
+        show-node-content="false"
+        enhanced="true" 
+        timeline-data='[{"metaData":{"editedBy":"Google Chrome Developers","editedDate":"Fri Nov 04 2016 14:12:00 GMT-0700 (PDT)","editorImg":"img/immelt.jpg","editorTitle":"Poly Chiefmaster","percent":"88","customIcon":"fa-code-fork"},"content":{"title":"Binding to Arrays","bodyType":"Video","body":[{"video":"https://www.youtube.com/embed/HBUb8frm2Tw?list=PLOU2XLYxmsII5c3Mgw6fNYCzaWrsM3sMN","headline":"To ng-repeat or dom-repeat, that is the question","text":"Thanks to the GE Digital team for evangelising polymer","host":"Remote"}]}},{"metaData":{"editedBy":"Soundcloud Podcast","editedDate":"Tue Nov 1 2016 11:42:00 GMT-0700 (PDT)","editorTitle":"Machine AI Recomendations","customIcon":"fa-code"},"content":{"title":"Polymer 1.0 Announced","bodyType":"Audio","body":[{"audio":"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/212712436&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true","headline":"Everyone agrees on Polymer","text":"Just listen to podcast. No explanation is necessary","host":"remote","isComment":true}]}},{"metaData":{"editedBy":"GE Digital","editedDate":"Thu Oct 27 2016 18:28:10 GMT-0700 (PDT)","editorTitle":"Chief Technical Division","percent":"100","editorImg":"img/immelt.jpg","customIcon":"fa-bullhorn"},"content":{"title":"Building the industrial internet","bodyType":"text","body":[{"text":"On Tuesday, GE CEO Jeff Immelt and Intel CEO Brian Krzanich spoke at the Intel Developer Forum in San Francisco about the partnership and the future of the Industrial Internet. They noted this is a significant step in the two companies’ plan to eventually offer GE’s Industrial Internet software on Intel-powered devices.","headline":"Predix, the operating system for the Industrial Internet","isComment":true}]}},{"metaData":{"editedBy":"Polymer Team","editedDate":"Mon Sep 12 2016 06:37:00 GMT-0700 (PDT)"},"content":{"title":"New Polycast","bodyType":"LIST","body":[{"key":"Topic 1","value":"Data Binding"},{"key":"Topic 2","value":"Data Flow"},{"key":"Topic 3","value":"Shadow Dom"}]}},{"metaData":{"editedBy":"GE Digital","editedDate":"Tue Nov 03 2015 00:00:00 GMT-0700 (PDT)"},"content":{"title":"Building the industrial internet","bodyType":"text","body":[{"text":"On Tuesday, GE CEO Jeff Immelt and Intel CEO Brian Krzanich spoke at the Intel Developer Forum in San Francisco about the partnership and the future of the Industrial Internet. They noted this is a significant step in the two companies’ plan to eventually offer GE’s Industrial Internet software on Intel-powered devices.","headline":"This is the content headline","isComment":true}]}}]' 
+        date-format="MMM D, YYYY HH:MM">
+        </px-timeline>
+      </div>
+      <div>
+        <h1>Where is Bea?</h1>
+        <div style="height:400px;width:600px;display:flex">
+          <px-map lat="35.6895" lng="139.6917" zoom="12" style="width: 500px; height: 300px;">
+            <px-map-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></px-map-tile-layer>
+            <px-map-control-zoom position="bottomright"></px-map-control-zoom>
+          </px-map>
+        </div>
+      </div>
+      <div>
+        <h1>What is Bea thinking?</h1>
+        <px-spinner size="100"></px-spinner>
+      </div>
+      <div>
+        <h1>Bea says something below. Copy it!</h1>
+        <div style="width:100px;">
+          <px-clipboard copy-from=".helloCopy"><input type="text" id="helloCopy" class="helloCopy" value="hello World Copy"/>
+          </px-clipboard>
+        </div>
+      </div>
+      <div>
+        <h1>Rate Bea!</h1>
+          <px-slider value="50" min="1" max="100"></px-slider>
+      </div>
+    </px-card>      
+  </template>
+  <script>
+    Polymer({
+      is: 'addedcomponents-view',
+      properties: {},
+      ready: function() {
+        console.log('1-addedcomponents-view ready()')
+      }
+    });
+  </script>
+</dom-module>

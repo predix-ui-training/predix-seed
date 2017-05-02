@@ -96,6 +96,26 @@
             element-href="/elements/views/simple-asset-view.html">
           </px-view>
 
+          <!-- /1-addedComponent route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/1addedcomponent"
+            active="{{_1addedcomponentActive}}">
+          </app-route>
+          <px-view
+            active="[[_1addedcomponentActive]]"
+            element-href="/elements/views/addedcomponents-view.html">
+          </px-view>
+          <!-- /2-contactList route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/2contactslist"
+            active="{{_2contactlistActive}}">
+          </app-route>
+          <px-view
+            active="[[_2contactlistActive]]"
+            element-href="/elements/views/contactslist-view.html">
+          </px-view>
         </main>
 
       </div>
@@ -137,6 +157,16 @@
             }, {
               "label": "Blank Page",
               "path": "/blankpage",
+              "icon": "fa-file"
+            },
+            {
+              "label": "1 - Added Components",
+              "path": "/1addedcomponent",
+              "icon": "fa-file"
+            },
+            {
+              "label": "2 - Contacts List",
+              "path": "/2contactslist",
               "icon": "fa-file"
             }
             //Uncomment this block to show the Simple Asset navigation item on the menu.

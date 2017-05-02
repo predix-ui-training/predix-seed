@@ -1,0 +1,65 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<!--<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">-->
+<link rel="import" href="list-contact.html">
+<dom-module id="contactslist-view">
+  <style>
+      ul {
+        list-style: none;
+      }
+      li {
+        border: dashed 1px #999;
+      }
+  </style>
+  <template>
+    <px-card header-text="Contacts" icon="fa-book">
+      <ul>
+        <template is="dom-repeat" items="{{contacts}}">
+          <li>
+            <list-contact 
+              name="{{item.name}}" 
+              email="{{item.email}}" 
+              img="{{item.image}}">
+            </list-contact>
+          </li>
+        </template>
+      </ul>
+    </px-card>      
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'contactslist-view',
+    properties: {},
+    ready: function() {
+      this.contacts = [
+        {
+          "id": 2,
+          "name": "Leri",
+          "email": "Leri@abc.com",
+          "image": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTdkckxQapTRIZGen5LGngYXXdTZHCsbeqMjMhFJY9bjrm7xQ6bcU9QqZk"
+        },
+        {
+          "id": 3,
+          "name": "Kent",
+          "email": "Kent@abc.com",
+          "image": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcStVm3xHiteevAkvpLZwa9Cy5TUSkchOkGJOdU4D42pHFrWM5NQYA"
+        },
+        {
+          "id": 5,
+          "name": "Pat",
+          "email": "pat@abc.com",
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0JCdU82hcSDMtZuw77IrMtzunfb8Pr8AMkoQMU9JzvtNWIEBa"
+        },
+        {
+          "id": 7,
+          "name": "Ann",
+          "email": "ann@abc.com",
+          "image": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQroqSkYAGvO_H2UzA8cM2DTsc-sJlwqvFZ_jsbR86EpxBELuh5Uw"
+        }
+      ]
+      console.log('2-contactslist-view ready()')
+    }
+  });
+</script>
