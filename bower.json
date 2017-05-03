@@ -26,7 +26,7 @@
     "px-overlay": "^0.4.0",
     "px-simple-line-chart": "^1.7.0",
     "px-simple-horizontal-bar-chart": "^0.8.0",
-    "px-widget-cards": "^2.2.1",
+    "px-widget-cards": "^2.3.1",
     "px-simple-bar-chart": "^1.7.1",
     "px": "^1.4.3",
     "px-app-nav": "^1.9.1",
@@ -37,7 +37,15 @@
     "px-theme": "^2.0.1",
     "px-vis-timeseries": "^0.6.2",
     "px-vis-xy-chart": "^0.3.0",
-    "px-view-header": "^0.2.0"
+    "px-view-header": "^0.2.0",
+    "px-login": "^1.0.6",
+    "px-map": "^1.2.4",
+    "px-spinner": "^1.0.0",
+    "px-tabs": "^0.7.0",
+    "px-slider": "^1.0.3",
+    "px-toggle": "^1.0.5",
+    "px-polymer-font-awesome": "^1.1.5",
+    "px-vis-pie-chart": "^1.1.0"
   },
   "devDependencies": {
     "px-forms-design": "^1.1.1",

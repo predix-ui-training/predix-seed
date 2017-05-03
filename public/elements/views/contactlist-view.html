@@ -1,0 +1,82 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/px-card/px-card.html"/>
+<link rel="import" href="/bower_components/px-widget-cards/px-sixup.html"/>
+<dom-module id="contactlist-view">
+  <style>
+    li {
+      display: flex;
+      align-content: center;
+    }
+    li img {
+      border-radius: 50%;
+    }
+  </style>
+  
+  <template>
+      <px-sixup id="widgetsx6" widget-header="CONTACTS" widget-icon="fa-user">
+  <div class=widget-1 >
+    <li>
+      <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAlxAAAAJDY2NGQwYWY3LTcwYTEtNGY4ZS05NzI4LTA2NjA0YzE3YjJmZg.jpg" 
+alt="Aldwin!" height="150" width="150" /></li>
+    <h3>Aldwin</h3>
+     <span><a href="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAlxAAAAJDY2NGQwYWY3LTcwYTEtNGY4ZS05NzI4LTA2NjA0YzE3YjJmZg.jpg">aldwin@abc.com</a></span>
+  </div>
+  <div class=widget-2 align="center">
+    <li>
+     <img src="https://people.accenture.com/misc/PhotoProvider.ashx?pk=1485323&dt=1493286814397" 
+alt="Peter!" height="150" width="150" /></li>
+    <h3>Peter</h3>
+       <span><a href="https://people.accenture.com/misc/PhotoProvider.ashx?pk=1485323&dt=1493286814397">peter@abc.com</a></span> 
+  </div>
+  <div class=widget-3 align="center">
+    <li>
+    <img src="https://people.accenture.com/misc/PhotoProvider.ashx?pk=1484820&dt=1493286690747" 
+alt="Jess!" height="150" width="150" /></li>
+    <h3>Jessica</h3>
+    <span><a href="https://people.accenture.com/misc/PhotoProvider.ashx?pk=1484820&dt=1493286690747">jessica@abc.com</a></span>
+  </div>
+  <div class=widget-4 align="center">
+     <li><img src="http://vignette2.wikia.nocookie.net/villains/images/e/ea/Akame_-_01.jpg/revision/latest?cb=20140806223223" 
+alt="Lei!" height="150" width="150" /></li>
+    <h3>Adoha </h3>
+    <span><a href="http://vignette2.wikia.nocookie.net/villains/images/e/ea/Akame_-_01.jpg/revision/latest?cb=20140806223223">adoha@abc.com</a></span>
+  </div>
+   <div class=widget-5 align="center">
+     <li><img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAhiAAAAJDQ2NTRmYmY2LTZiNjUtNDg1OC05YTg4LTQyZDc0NzFkMzIxZA.jpg" 
+alt="Lei!" height="150" width="150"/></li>
+    <h3>Kaloy</h3> 
+    <span><a href="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAhiAAAAJDQ2NTRmYmY2LTZiNjUtNDg1OC05YTg4LTQyZDc0NzFkMzIxZA.jpg">kaloy@abc.com</a></span>
+  </div>
+   <div class=widget-6 align="center">
+      <li><img src="https://people.accenture.com/misc/PhotoProvider.ashx?pk=922225&dt=1493287214232" 
+alt="Paolo!" height="150" width="150"/></li>
+    <h3>Paolo</h3> 
+    <span><a href="https://people.accenture.com/misc/PhotoProvider.ashx?pk=922225&dt=1493287214232">paolo@abc.com</a></span>
+  </div>
+</px-sixup>
+  
+  </template>
+  <script>
+    Polymer({
+      is: 'contactlist-view',
+      properties: {
+        firstName: String,
+        lastName:{
+          type: String,
+          value: 'Sy'
+        },
+        fullName:{
+          type: String,
+          computed: 'computeFullName(firstName, lastName)'
+        }
+      },
+
+      computeFullName: function(firstName, lastName) {
+        return firstName + ' ' + lastName;
+      },
+      ready: function() {
+        console.log('contactlist-view ready()')
+      }
+    });
+  </script>
+</dom-module>

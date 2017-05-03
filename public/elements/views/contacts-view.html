@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="contacts-view">
+  <style>
+    ul{
+        list-style: none;
+    }
+    li {
+      display: flex;
+      margin-bottom: 40px; 
+      padding: 20px;
+    }
+    li img {
+      border-radius: 50%;
+      margin-right: 40px;
+    }
+    li span{
+        line-height: 80px;
+    }
+    li + li {
+        border-top: solid 1px #666;
+    }
+    h3{
+        margin: 0 10px 0 0;
+        line-height: 80px;
+    }
+  </style>  
+ 
+  <template>
+    <iron-ajax 
+    id="getContacts"
+    url="http://localhost:8080/api/v1/contacts"
+    last-response={{contacts}}
+    method="GET"
+    auto 
+    ></iron-ajax>
+   <px-card icon='fa-user' header-text='Contacts' chevron>
+      <ul>
+          <template is="dom-repeat" items="{{contacts}}" as="contact">
+              <li>
+                   <img src={{contact.image}} alt="" height="100" width="100" />
+                   <h3>{{contact.name}}</h3>
+                   <span>
+                       <a href={{contact.image}}>{{contact.email}}</a>
+                       &emsp; &emsp; {{contact.datetimestamp}}
+                       </span>
+              </li>
+             
+          </template>
+      </ul>          
+   </px-card>
+  </template>
+  <script>
+    Polymer({
+      is: 'contacts-view',
+      properties: {
+          contacts :{
+              type: Array,
+              value: function(){
+                  return [{
+                      id : 1,
+                      name :  "Aldwin Christopher Sy",
+                      email : "aldwinsy@yahoo.com",
+                      image : "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAlxAAAAJDY2NGQwYWY3LTcwYTEtNGY4ZS05NzI4LTA2NjA0YzE3YjJmZg.jpg",
+                      age : 21,  
+                      datetimestamp : "2017-01-01 15:04:05"
+                  }]
+              }
+          }
+      },
+      ready: function() {
+        console.log('contacts-view ready()')
+      }
+    });
+  </script>
+</dom-module>

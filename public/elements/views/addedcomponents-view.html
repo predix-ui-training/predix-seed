@@ -1,0 +1,78 @@
+<link rel="import" href="/bower_components/px-rangepicker/px-rangepicker.html"/>
+<link rel="import" href="/bower_components/px-card/px-dashboard.html"/>
+<link rel="import" href="/bower_components/px-card/px-deck.html"/>
+<link rel="import" href="/bower_components/px-card/px-card.html"/>
+<link rel="import" href="/bower_components/px-map/px-map.html" />
+<link rel="import" href="/bower_components/px-map/px-map-tile-layer.html" />
+<link rel="import" href="/bower_components/px-spinner/px-spinner.html"/>
+<link rel="import" href="/bower_components/px-tabs/px-tab-set.html"/>
+<link rel="import" href="/bower_components/px-slider/px-slider.html"/>
+<link rel="import" href="/bower_components/px-toggle/px-toggle.html"/>
+<link rel="import" href="/bower_components/px-polymer-font-awesome/px-polymer-font-awesome.html"/>
+<link rel="import" href="/bower_components/px-vis-pie-chart/px-vis-pie-chart.html"/>
+<dom-module id="addedcomponents-view">
+  <template>
+    <px-card chevron="true" header-text="GREETINGS" icon="fa-fort-awesome">
+      <h1 align="center">Hello World</h1>
+    </px-card>
+      <px-tab-set selected="{{selected}}">
+        <px-tab>SPINNER</px-tab>
+        <px-tab>SLIDER</px-tab>
+        <px-tab>TOGGLE</px-tab>
+        <px-tab>FONT AWESOME</px-tab>
+        <px-tab>RANGE PICKER</px-tab>
+        <px-tab>MAP</px-tab>
+        <px-tab>CHART</px-tab>
+    </px-tab-set>
+    <px-tab-pages selected="{{selected}}">
+      <section>
+        <div align="center">
+          <px-spinner size="100"></px-spinner>
+          <px-spinner size="100"></px-spinner>
+          <px-spinner size="100"></px-spinner>
+          </div>
+      </section>
+       <section>
+        <div align="center">
+          <px-slider value="10" min="1" max="100" step="1" scale="linear" base="10" exponent="2" min-label-position="bottom" max-label-position="bottom"></px-slider>
+           <px-slider value="10" min="1" max="100" step="1" scale="linear" base="10" exponent="2" min-label-position="bottom" max-label-position="bottom"></px-slider>
+            <px-slider value="10" min="1" max="100" step="1" scale="linear" base="10" exponent="2" min-label-position="bottom" max-label-position="bottom"></px-slider>
+          </div>
+      </section>
+      <section>
+          <div align="center">
+            <px-toggle size="huge"></px-toggle>
+            <px-toggle size="huge"></px-toggle>
+            <px-toggle size="huge"></px-toggle>
+          </div>
+      </section>
+      <section>
+        <div align="center"><iron-icon icon="fa:fa-briefcase"></iron-icon>
+        <iron-icon icon="fa:fa-spotify"></iron-icon>
+         <iron-icon icon="fa:fa-anchor"></iron-icon>
+          <iron-icon icon="fa:fa-ban"></iron-icon>
+           <iron-icon icon="fa:fa-youtube-square"></iron-icon>
+            <iron-icon icon="fa:fa-firefox"></iron-icon>
+             <iron-icon icon="fa:fa-leaf"></iron-icon>
+        <iron-icon icon="fa:fa-forward"></iron-icon></div>
+      </section>
+       <section>
+        <px-rangepicker></px-rangepicker>
+      </section>
+      <section><div style="height:400px;width:400px;display:flex">
+      <px-map zoom="5" lat="14.519780046326085" lng="482.34375000000006" flex-to-size="true" disable-touch-zoom="true"><px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map>
+    </div></section>
+      <section><px-vis-pie-chart prevent-resize="true" width="450" height="450" chart-horizontal-alignment="center" chart-vertical-alignment="center" margin='{"top":"10","bottom":"10","left":"0","right":"0"}' register-config='{"type":"vertical","width":200}' chart-data='[{"percentage":"26","x":15,"y":"IPA","colorIndex":0,"backgroundColor":"rgb(93,165,218)"},{"percentage":"2","x":1,"y":"Pils","colorIndex":1,"backgroundColor":"rgb(250,164,58)"},{"percentage":"2","x":1,"y":"Lager","colorIndex":2,"backgroundColor":"rgb(96,189,104)"},{"percentage":"14","x":8,"y":"Lambic","colorIndex":3,"backgroundColor":"rgb(241,124,176)"},{"percentage":"21","x":12,"y":"Stout","colorIndex":4,"backgroundColor":"rgb(178,145,47)"},{"percentage":"12","x":7,"y":"Pale Ale","colorIndex":5,"backgroundColor":"rgb(178,118,178)"},{"percentage":"16","x":9,"y":"Porter","colorIndex":6,"backgroundColor":"rgb(222,207,63)"},{"percentage":"7","x":4,"y":"Heffeweisse","colorIndex":7,"backgroundColor":"rgb(241,88,84)"}]' series-config='{"mySerie":{"xAxisUnit":"pints","y":"y","x":"x"}}' title="Total" title-spacing="5" dynamic-menu-config='[{"name":"Log message","action":"function(data) {console.log(\"logging message\")}","eventName":"delete","icon":"fa-trash"}]'></px-vis-pie-chart></section>
+    </px-tab-pages>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'addedcomponents-view',
+      properties: {},
+      ready: function() {
+        console.log('contactlist-view ready()')
+      }
+    });
+  </script>
+</dom-module>
