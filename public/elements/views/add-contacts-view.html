@@ -1,0 +1,90 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="/bower_components/px-dropdown/px-dropdown.html"/>
+
+<dom-module id="add-contacts-view">
+  <template>
+
+    <style></style>
+
+    <iron-ajax
+      id="postPersonAjax"
+      url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
+      last-response="{{response}}"
+      loading="{{loading}}"
+      method="POST"
+    >
+    </iron-ajax>
+
+    <px-view-header title="Blank Page" style="display: block; margin-bottom: 6px;"></px-view-header>
+     <px-card icon='fa-user' header-text='Add Contact' chevron>
+        <px-dropdown value="{{selectedName}}" display-value="Select">
+          <px-dropdown-content 
+               class="px-dropdown-content" 
+               items='[{"key":"one", "val": "Harry"}, {"key":"two", "val": "James"}, {"key":"three", "val": "Matt"}]'>
+          </px-dropdown-content>
+        </px-dropdown>
+        <br>
+        <label for="Email">Email:</label>
+        <input type="text" id="Email" placeholder="Your Email" value="{{email::input}}" class="text-input">
+        <br><br>
+        <label for=Image">Image:</label>
+        <input type="text" id="Image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input">
+        <br><br>
+        <button class="btn btn--primary style-scope local-element-demo" on-tap="addContact">Add</button>
+        <button class="btn btn--primary style-scope local-element-demo" on-tap="reset">Reset</button>
+      </px-card>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'add-contacts-view',
+
+      properties: {
+        selectedName: String,
+        email: String,
+        loading: {
+          type: Boolean,
+          observer: 'isLoading'
+        }
+      },
+
+      listeners: {
+        'px-dropdown-value-changed' : 'getSelectedName'
+      },
+
+      observers: [
+        
+      ],
+
+      isLoading: function(){
+        console.log("isLoading : " + this.loading);
+        if(!this.loading){
+          this.fire('add-person-completed');
+        }
+      },
+
+      addContact: function() {
+        let tempPerson = new Object();
+        tempPerson.name = this.selectedName;
+        tempPerson.email = this.email;
+
+        console.log("Request Body : " + JSON.stringify(tempPerson));
+
+        this.$.postPersonAjax.body = JSON.stringify(tempPerson);
+        this.$.postPersonAjax.generateRequest();
+
+      },
+
+      getSelectedName: function() {
+        console.log("Selected name : " + this.selectedName);
+      },
+
+  	  ready: function(){
+  	  	console.log("add-contacts-view ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>

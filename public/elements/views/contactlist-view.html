@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/px-card/px-card.html"/>
 <link rel="import" href="/bower_components/px-widget-cards/px-sixup.html"/>
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
 <dom-module id="contactlist-view">
   <style>
     li {
@@ -13,13 +14,15 @@
   </style>
   
   <template>
+     <px-view-header title="Contact List" style="display: block; margin-bottom: 6px;"></px-view-header>
       <px-sixup id="widgetsx6" widget-header="CONTACTS" widget-icon="fa-user">
-  <div class=widget-1 >
+  <div class=widget-1 align="center">
     <li>
       <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAlxAAAAJDY2NGQwYWY3LTcwYTEtNGY4ZS05NzI4LTA2NjA0YzE3YjJmZg.jpg" 
 alt="Aldwin!" height="150" width="150" /></li>
     <h3>Aldwin</h3>
      <span><a href="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAlxAAAAJDY2NGQwYWY3LTcwYTEtNGY4ZS05NzI4LTA2NjA0YzE3YjJmZg.jpg">aldwin@abc.com</a></span>
+     
   </div>
   <div class=widget-2 align="center">
     <li>
