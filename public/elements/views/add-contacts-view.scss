@@ -1,0 +1,20 @@
+$inuit-enable-btn--primary : true;
+$inuit-enable-input--small : true;
+@import 'px-forms-design/_base.forms.scss';
+@import 'px-buttons-design/_objects.buttons.scss';
+
+
+div {
+        background-color: white;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+px-dropdown {
+	--px-dropdown-bg-color--default : white;
+}
+
+
+

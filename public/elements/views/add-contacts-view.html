@@ -1,39 +1,60 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/px-card/px-card.html">
 <link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
 <link rel="import" href="/bower_components/px-dropdown/px-dropdown.html"/>
 
+<link rel="import" href="add-contacts-view-styles.html">
 <dom-module id="add-contacts-view">
   <template>
 
-    <style></style>
+    <style include="add-contacts-view-styles"></style>
 
     <iron-ajax
-      id="postPersonAjax"
-      url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
+      id="postContactAjax"
+      url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/postcontacts"
       last-response="{{response}}"
       loading="{{loading}}"
       method="POST"
     >
     </iron-ajax>
 
-    <px-view-header title="Blank Page" style="display: block; margin-bottom: 6px;"></px-view-header>
+
      <px-card icon='fa-user' header-text='Add Contact' chevron>
-        <px-dropdown value="{{selectedName}}" display-value="Select">
+        <form>
+         <label>Name:</label>    
+         <px-dropdown value="{{selectedName}}" display-value="Select Name">
+             
           <px-dropdown-content 
                class="px-dropdown-content" 
-               items='[{"key":"one", "val": "Harry"}, {"key":"two", "val": "James"}, {"key":"three", "val": "Matt"}]'>
+               items='[{"key":"one", "val": "Naruto Uzumaki"}, {"key":"two", "val": "Sasuke Uchiha"}, {"key":"three", "val": "Sakura Haruno"}]'>
           </px-dropdown-content>
-        </px-dropdown>
+         </px-dropdown>
+         <br>
+         <div style="width: 100%">
+          <label for="Email">Email:</label>
+          <input type="text" id="Email" placeholder="Your Email" value="{{email::input}}" class="text-input input--small">
+         <br><br>
+          <label for="Image">Image:</label>
+          <input type="text" id="Image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input input--small">
+          <br><br>
+         </div>
+          <button class="btn btn--primary" on-tap="addContact">Add</button>
+          <button class="btn btn--primary" type="reset" value="Reset" on-tap="resetTriggered">Reset</button>
+        </form>
         <br>
-        <label for="Email">Email:</label>
-        <input type="text" id="Email" placeholder="Your Email" value="{{email::input}}" class="text-input">
-        <br><br>
-        <label for=Image">Image:</label>
-        <input type="text" id="Image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input">
-        <br><br>
-        <button class="btn btn--primary style-scope local-element-demo" on-tap="addContact">Add</button>
-        <button class="btn btn--primary style-scope local-element-demo" on-tap="reset">Reset</button>
+        <template is="dom-if" if="{{addTriggered}}">
+        <px-card icon='fa-user' header-text='New Contact' chevron>
+        <div><img class="img-circle" src={{image::input}} alt="" height="100" width="100" /></div>
+        <br>
+        <div><label>Name: </label> {{selectedName}}</div>
+        <br>
+        <div><label>Email:</label> {{email::input}}</div>
+        <br>
+        <button class="btn btn--primary" on-tap="submitContact">Submit</button>
+        </px-card>
+        </template>
+       
       </px-card>
   </template>
 
@@ -44,37 +65,52 @@
       properties: {
         selectedName: String,
         email: String,
+        addTriggered : {
+            type : Boolean,
+            value : false
+        },
         loading: {
-          type: Boolean,
-          observer: 'isLoading'
-        }
-      },
+          type: Boolean
+        }, 
+       contact: {
+          type: Object,
+          notify: true
+       },
+       },
 
-      listeners: {
+       listeners: {
         'px-dropdown-value-changed' : 'getSelectedName'
       },
+      
 
       observers: [
-        
+        'isLoading(loading)'
       ],
 
       isLoading: function(){
         console.log("isLoading : " + this.loading);
         if(!this.loading){
-          this.fire('add-person-completed');
+          this.fire('add-contact-completed');
         }
       },
 
       addContact: function() {
-        let tempPerson = new Object();
-        tempPerson.name = this.selectedName;
-        tempPerson.email = this.email;
+        return this.addTriggered = true;
+      },
 
-        console.log("Request Body : " + JSON.stringify(tempPerson));
+      submitContact: function() {
+        let tempContact = new Object();
+        tempContact.image = this.image;
+        tempContact.name = this.selectedName;
+        tempContact.email = this.email;
+        console.log("Request Body : " + JSON.stringify(tempContact));
+        this.contact = tempContact
+        this.$.postContactAjax.body = JSON.stringify(tempContact);
+        this.$.postContactAjax.generateRequest();
+      },
 
-        this.$.postPersonAjax.body = JSON.stringify(tempPerson);
-        this.$.postPersonAjax.generateRequest();
-
+      resetTriggered: function() {
+        return this.addTriggered = false;
       },
 
       getSelectedName: function() {

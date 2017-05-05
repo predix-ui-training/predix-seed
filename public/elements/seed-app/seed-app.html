@@ -118,6 +118,17 @@
             element-href="/elements/views/add-contacts-view.html">
           </px-view>
 
+           <!-- /contactlist route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/contactslist"
+            active="{{_contactslistActive}}">
+          </app-route>
+          <px-view
+            active="[[_contactslistActive]]"
+            element-href="/elements/views/contacts-list-view.html">
+          </px-view>
+
 
           <!-- /winddata route and view -->
           <app-route
@@ -198,6 +209,10 @@
             }, {
               "label": "3 - Add Contacts",
               "path": "/addcontacts",
+              "icon": "fa-users"
+            }, {
+              "label": "Contact List",
+              "path": "/contactslist",
               "icon": "fa-users"
             }
             //Uncomment this block to show the Simple Asset navigation item on the menu.

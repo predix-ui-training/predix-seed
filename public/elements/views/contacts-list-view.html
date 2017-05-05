@@ -1,0 +1,66 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-widget-cards/px-twoup.html">
+<link rel="import" href="contacts-view.html">
+<link rel="import" href="add-contacts-view.html">
+<link rel="import" href="contacts-list-view-styles.html">
+
+<dom-module id="contacts-list-view">
+  
+  <template>
+
+  	<style include="contacts-list-view-styles"></style>
+
+    <iron-ajax 
+    id="getContacts"
+    url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
+    last-response={{response}}
+    method="GET"
+    auto 
+    ></iron-ajax>
+
+    <px-twoup id="widget-2" widget-header="Contacts App" widget-icon="fa-paper-plane">
+      <div class='widget-1'>
+        <add-contacts-view></add-contacts-view>
+      </div>
+      <div class='widget-2'>
+        <contacts-view contacts={{response}}></contacts-view>
+      </div>
+    </px-twoup>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'contacts-list-view',
+
+      properties: {
+       
+        response: {
+          type: Array
+        }
+     
+	    },
+
+      listeners: {
+        'add-contact-completed' : 'triggerGetContactsAjax',
+        'delete-contact-completed' : 'GetContactsAjax'
+      },
+
+      GetContactsAjax: function() {
+        console.log("get after delete triggered");
+        this.$.getContacts.generateRequest();
+      },
+
+      triggerGetContactsAjax: function() {
+        console.log("get after post triggered");
+        this.$.getContacts.generateRequest();
+      },
+
+  	  ready: function(){
+  	  	console.log("contacts-list-view ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

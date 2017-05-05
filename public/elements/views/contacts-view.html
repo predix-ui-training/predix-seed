@@ -1,52 +1,37 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/px-card/px-card.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+<link rel="import" href="contacts-view-styles.html">
+
 <dom-module id="contacts-view">
-  <style>
-    ul{
-        list-style: none;
-    }
-    li {
-      display: flex;
-      margin-bottom: 40px; 
-      padding: 20px;
-    }
-    li img {
-      border-radius: 50%;
-      margin-right: 40px;
-    }
-    li span{
-        line-height: 80px;
-    }
-    li + li {
-        border-top: solid 1px #666;
-    }
-    h3{
-        margin: 0 10px 0 0;
-        line-height: 80px;
-    }
-  </style>  
- 
   <template>
-    <iron-ajax 
-    id="getContacts"
-    url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
-    last-response={{contacts}}
-    method="GET"
-    auto 
-    ></iron-ajax>
-     <px-view-header title="Contact List" style="display: block; margin-bottom: 6px;"></px-view-header>
+    <style include="contacts-view-styles"></style>  
+
+     <iron-ajax
+      id="deleteContactAjax"
+      url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/deletecontacts"
+      last-response="{{response}}"
+      params='{{_getParams(contactId)}}'
+      loading="{{loading}}"
+      method="POST"
+    >
+    </iron-ajax>
+
    <px-card icon='fa-user' header-text='Contacts' chevron>
       <ul>
-          <template is="dom-repeat" items="{{contacts}}" as="contact">
+          <template is="dom-repeat" items="{{contacts}}" as="contact" sort="_sort">
               <li>
                    <img src={{contact.image}} alt="" height="100" width="100" />
                    <h3>{{contact.name}}</h3>
                    <span>
                        <a href={{contact.image}}>{{contact.email}}</a>
-                       &emsp; &emsp; {{contact.dateTimeStamp}}
-                       </span>
+                       &emsp; {{contact.dateTimeStamp}} &emsp;
+                   </span>
+                   <!--<button class="btn btn--primary" on-tap="deleteContact"><iron-icon icon="fa:fa-times"></iron-icon></button>-->
+                <px-modal btn-modal-positive="DELETE" btn-modal-negative="Cancel" modal-heading="Confirm Delete" scrolling-disabled="true">
+                <button class='btn btn--primary modal-trigger' on-tap="getId"><iron-icon icon="fa:fa-times"></iron-icon></button><p>Contact will be deleted!!</p></px-modal>
               </li>
              
           </template>
@@ -57,6 +42,7 @@
     Polymer({
       is: 'contacts-view',
       properties: {
+          contactId: String,
           contacts :{
               type: Array,
               value: function(){
@@ -69,7 +55,60 @@
                       dateTimeStamp : "2017-01-01 15:04:05"
                   }]
               }
+          },
+          contact: {
+          type: Object,
+          value: function() {
+            return {
+               name :  "Aldwin Christopher Sy",
+               email : "aldwinsy@yahoo.com",
+               image : "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAlxAAAAJDY2NGQwYWY3LTcwYTEtNGY4ZS05NzI4LTA2NjA0YzE3YjJmZg.jpg",
+               age : 21,  
+               dateTimeStamp : "2017-01-01 15:04:05"
+            }
           }
+        },
+         loading: {
+          type: Boolean
+        }
+        },
+          observers: [
+            'isLoading(loading)'
+          ],
+         listeners: {
+        'btnModalPositiveClicked' : 'deleteContact',
+        'btnModalNegativeClicked' : 'showLog'
+        },      
+            
+
+      _sort: function(a,b) {
+          if(a==b){
+              return 0;
+          }
+          return a.dateTimeStamp > b.dateTimeStamp ? -1 : 1;
+      },
+      getId: function(e) {
+        var model = e.model;
+        this.contactId = model.contact.id;
+        console.log("id" , model.contact.id);
+      },
+      _getParams:function(contactId) {
+       return {
+           id : contactId 
+           }
+     },
+     showLog: function() {
+        console.log("cancelled.....")
+     },
+     deleteContact: function() {
+        console.log("deleting....")
+        this.$.deleteContactAjax.generateRequest();
+        }, 
+     isLoading: function(){
+        console.log(" deletete isLoading : " + this.loading);
+        if(!this.loading){
+          this.fire('delete-contact-completed');
+        }
       },
       ready: function() {
         console.log('contacts-view ready()')
