@@ -20,18 +20,18 @@
     </iron-ajax>
 
 
-     <px-card icon='fa-user' header-text='Add Contact' chevron>
+     <px-card icon='fa-user' header-text='Add Contact'>
         <form>
-         <label>Name:</label>    
+         <label>Name:</label>
          <px-dropdown value="{{selectedName}}" display-value="Select Name">
-             
+               
           <px-dropdown-content 
                class="px-dropdown-content" 
                items='[{"key":"one", "val": "Naruto Uzumaki"}, {"key":"two", "val": "Sasuke Uchiha"}, {"key":"three", "val": "Sakura Haruno"}]'>
           </px-dropdown-content>
          </px-dropdown>
          <br>
-         <div style="width: 100%">
+         <div>
           <label for="Email">Email:</label>
           <input type="text" id="Email" placeholder="Your Email" value="{{email::input}}" class="text-input input--small">
          <br><br>
@@ -44,14 +44,16 @@
         </form>
         <br>
         <template is="dom-if" if="{{addTriggered}}">
-        <px-card icon='fa-user' header-text='New Contact' chevron>
-        <div><img class="img-circle" src={{image::input}} alt="" height="100" width="100" /></div>
+        <px-card icon='fa-user' header-text='New Contact'>
+        <div align="center">
+        <img class="img-circle" src={{image::input}} alt="" height="300" width="300" />
+        <br><br>
+        <div><label><b>Name: </b></label> {{selectedName}}</div>
         <br>
-        <div><label>Name: </label> {{selectedName}}</div>
-        <br>
-        <div><label>Email:</label> {{email::input}}</div>
+        <div><label><b>Email: </b></label> {{email::input}}</div>
         <br>
         <button class="btn btn--primary" on-tap="submitContact">Submit</button>
+        </div>
         </px-card>
         </template>
        

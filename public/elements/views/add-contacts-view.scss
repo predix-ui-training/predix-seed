@@ -5,7 +5,7 @@ $inuit-enable-input--small : true;
 
 
 div {
-        background-color: white;
+        background-color: lightskyblue;
 }
 
 .img-circle {
@@ -13,7 +13,12 @@ div {
 }
 
 px-dropdown {
-	--px-dropdown-bg-color--default : white;
+	--px-dropdown-bg-color--default : lightskyblue;
+    --px-dropdown-bg-color : white;
+}
+
+px-card{
+    --px-card-background-color : lightskyblue;
 }
 
 

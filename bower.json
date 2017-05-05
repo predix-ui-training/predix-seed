@@ -46,7 +46,10 @@
     "px-toggle": "^1.0.5",
     "px-polymer-font-awesome": "^1.1.5",
     "px-vis-pie-chart": "^1.1.0",
-    "px-modal": "https://github.com/PredixDev/px-modal.git#^1.4.10"
+    "px-modal": "https://github.com/PredixDev/px-modal.git#^1.4.10",
+    "px-widths-design": "^0.3.21",
+    "px-tables-design": "^1.1.9",
+    "px-list-bare-design": "^0.3.5"
   },
   "devDependencies": {
     "px-forms-design": "^1.1.1",

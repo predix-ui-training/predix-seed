@@ -19,24 +19,22 @@
     >
     </iron-ajax>
 
-   <px-card icon='fa-user' header-text='Contacts' chevron>
+   <div style="width: 150%"><px-card icon='fa-users' header-text='Contacts'>
       <ul>
           <template is="dom-repeat" items="{{contacts}}" as="contact" sort="_sort">
               <li>
-                   <img src={{contact.image}} alt="" height="100" width="100" />
-                   <h3>{{contact.name}}</h3>
-                   <span>
-                       <a href={{contact.image}}>{{contact.email}}</a>
-                       &emsp; {{contact.dateTimeStamp}} &emsp;
-                   </span>
-                   <!--<button class="btn btn--primary" on-tap="deleteContact"><iron-icon icon="fa:fa-times"></iron-icon></button>-->
+                   <img class="img-circle" src={{contact.image}} alt="" height="100" width="100" />
+                   <div><span><b>Name : </b>{{contact.name}}</span><br>
+                        <span><b>Email : </b><a href={{contact.image}}>{{contact.email}}</a></span><br>
+                       <span><b>Date Created : </b>{{contact.dateTimeStamp}}</span>
+                   </div>
                 <px-modal btn-modal-positive="DELETE" btn-modal-negative="Cancel" modal-heading="Confirm Delete" scrolling-disabled="true">
                 <button class='btn btn--primary modal-trigger' on-tap="getId"><iron-icon icon="fa:fa-times"></iron-icon></button><p>Contact will be deleted!!</p></px-modal>
               </li>
              
           </template>
       </ul>          
-   </px-card>
+   </px-card></div>
   </template>
   <script>
     Polymer({
