@@ -21,6 +21,7 @@
 
 
      <px-card icon='fa-user' header-text='Add Contact'>
+
         <form>
          <label>Name:</label>
          <px-dropdown value="{{selectedName}}" display-value="Select Name">
@@ -33,15 +34,16 @@
          <br>
          <div>
           <label for="Email">Email:</label>
-          <input type="text" id="Email" placeholder="Your Email" value="{{email::input}}" class="text-input input--small">
+          <input type="email" id="Email" name="email" placeholder="Enter a valid email address" value="{{email::input}}" class="text-input input--small" required>
          <br><br>
           <label for="Image">Image:</label>
-          <input type="text" id="Image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input input--small">
+          <input type="text" id="Image" name="image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input input--small"pattern="https?://.+"  required>
           <br><br>
          </div>
           <button class="btn btn--primary" on-tap="addContact">Add</button>
           <button class="btn btn--primary" type="reset" value="Reset" on-tap="resetTriggered">Reset</button>
         </form>
+
         <br>
         <template is="dom-if" if="{{addTriggered}}">
         <px-card icon='fa-user' header-text='New Contact'>
@@ -67,6 +69,7 @@
       properties: {
         selectedName: String,
         email: String,
+        image: String,
         addTriggered : {
             type : Boolean,
             value : false
@@ -97,7 +100,17 @@
       },
 
       addContact: function() {
-        return this.addTriggered = true;
+        console.log("Adding Contact.....");
+        console.log("Email: "+ this.email);
+        console.log("Image URL: "+ this.email);
+        if (this.email=="" || this.email==null || this.email=="" || this.email==null)
+       {
+         alert("Please Fill All Required Field");
+         return false;
+       }else{
+           return this.addTriggered = true;
+       }
+       
       },
 
       submitContact: function() {
@@ -112,6 +125,11 @@
       },
 
       resetTriggered: function() {
+        console.log("Reset.....");
+        this.email = null;
+        console.log("Email: "+ this.email);
+        this.image = null;
+        console.log("Image URL: "+ this.image);
         return this.addTriggered = false;
       },
 
