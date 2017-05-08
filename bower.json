@@ -30,14 +30,19 @@
     "px-simple-bar-chart": "^1.7.1",
     "px": "^1.4.3",
     "px-app-nav": "^1.9.1",
-    "px-card": "^0.6.1",
+    "px-card": "^0.7.1",
     "px-context-browser": "^1.4.5",
     "px-deck-selector": "^1.5.5",
     "px-sample-cards": "^0.7.1",
     "px-theme": "^2.0.1",
     "px-vis-timeseries": "^0.6.2",
     "px-vis-xy-chart": "^0.3.0",
-    "px-view-header": "^0.2.0"
+    "px-view-header": "^0.2.0",
+    "px-map": "^1.2.4",
+    "px-tabs": "^0.7.0",
+    "px-modal": "^1.4.10",
+    "px-slider": "^1.0.3",
+    "px-box-design": "^0.4.4"
   },
   "devDependencies": {
     "px-forms-design": "^1.1.1",
@@ -59,5 +64,8 @@
     "px-buttons-design": "^1.1.2",
     "px-actionable-text-icons-design": "^1.1.1",
     "px-spacing-design": "^0.4.1"
+  },
+  "resolutions": {
+    "px-dropdown": "^3.1.0"
   }
 }

@@ -1,0 +1,38 @@
+ @import 'px-layout-design/_objects.layout.scss';
+ $inuit-enable-btn--primary : true;
+ $inuit-enable-btn--icon : true;
+@import "px-buttons-design/_objects.buttons.scss";
+    template{
+      background-color: turquoise;
+    }
+    px-view-header{
+      --px-view-header-background-color: lightseagreen;
+    }
+    px-card{
+      --px-card-border-color: navy;
+      --px-card-background-color: lightblue;
+    }
+    px-modal{
+      --px-modal-border-color:navy;
+      --px-modal-background-color:lightblue;
+    }
+   ul{
+    list-style: none;
+    }
+    li {
+      padding: 10px;
+    }
+    li + li{
+    border-top: solid 2px blue;
+     }
+    img {
+      border-radius: 50%;
+    }
+    p1{
+    font: italic;
+    }
+    h3{
+    color: navy;
+    font: bold;
+  }
+  

@@ -1,0 +1,180 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="/bower_components/px-map/px-map.html" />
+<link rel="import" href="/bower_components/px-map/px-map-tile-layer.html" />
+<link rel="import" href="/bower_components/px-tabs/px-tab-set.html"/>
+<link rel="import" href="/bower_components/px-card/px-card.html"/>
+<link rel="import" href="/bower_components/px-modal/px-modal.html"/>
+<link rel="import" href="/bower_components/px-slider/px-slider.html"/>
+
+<dom-module id="added-components-view">
+
+  <template>
+   <px-view-header title="My Added Components"></px-view-header>
+   <px-view-header title="7 Wonders of the Philippines"></px-view-header>
+   <input type="text" value="{{inputComment::input}}">
+   <h1>Comment: {{inputComment}}</h1>
+  <body>
+    
+   <px-tab-set no-bottom-border="true" selected="{{selected}}">
+     <px-tab>Banaue Rice Terraces</px-tab>
+     <px-tab>The Chocolate Hills of Bohol</px-tab>
+     <px-tab>Tubbataha Reefs Natural Park</px-tab>
+     <px-tab>Mount Hamiguitan Range Wildlife Sanctuary</px-tab>
+     <px-tab>Puerto-Princesa Subterranean River National Park</px-tab>
+     <px-tab>Mayon Volcano Natural Park</px-tab>
+     <px-tab>Hundred Islands National Park</px-tab>
+   </px-tab-set>
+   <px-tab-pages selected="{{selected}}">
+      
+      <section>
+        <px-card px-card-background-color="red" header-text="Banaue Rice Terraces" icon="fa-star">
+          <body>
+          The Banaue Rice Terraces are 2,000-year-old terraces that were carved into the mountains of Ifugao in the Philippines by ancestors of the indigenous people. The Rice Terraces are commonly referred to as the "Eighth Wonder of the World". Wikipedia
+          <px-slider value="10" min="1" max="10">Rate this location</px-slider>
+        </body>
+        <div>
+          <px-modal btn-modal-negative="Cancel">
+            <button class='btn btn--primary modal-trigger'>Location</button>
+              <div style="height:300px;width:300px;display:flex">
+                  <px-map zoom="10" lat="16.912311429252732" lng="-238.91693115234378" flex-to-size="true" disable-scroll-zoom="true" disable-touch-zoom="true" disable-dragging="true">
+                      <px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map-tile-layer>  
+                  </px-map>
+            </div>
+          </px-modal>
+        </div>
+        </px-card>   
+      </section>
+      
+      <section>
+        <px-card header-text="The Chocolate Hills of Bohol" icon="fa-star">
+        <body>
+          The Chocolate Hills are a geological formation in the Bohol province of the Philippines. There are at least 1,260 hills but there may be as many as 1,776 hills spread over an area of more than 50 square kilometres
+          <px-slider value="10" min="1" max="10">Rate this location</px-slider>
+        </body>
+        <div>
+           <px-modal btn-modal-negative="Cancel">
+            <button class='btn btn--primary modal-trigger'>Location</button>
+             <div style="height:300px;width:300px;display:flex">
+                <px-map zoom="10" lat="9.755077019501561" lng="-235.74737548828128" flex-to-size="true" disable-scroll-zoom="true" disable-touch-zoom="true">
+                    <px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map-tile-layer>  
+                </px-map>
+          </div>
+          </px-modal>
+        </div>
+        
+        </px-card>
+      </section>
+     
+      <section>
+        <px-card header-text="Tubbataha Reefs Natural Park" icon="fa-star">
+        <body>
+          The Tubbataha Reefs Natural Park is a protected area of the Philippines located in the middle of the Sulu Sea. The marine and bird sanctuary consists of two huge atolls and the smaller Jessie Beazley Reef covering a total area of 97,030 hectares. Wikipedia
+        <px-slider value="10" min="1" max="10">Rate this location</px-slider>
+        </body>
+         <div>
+           <px-modal btn-modal-negative="Cancel">
+            <button class='btn btn--primary modal-trigger'>Location</button>
+              <div style="height:300px;width:300px;display:flex">
+                <px-map style="width: 500px; height: 300px;" zoom="8" lat="8.879644376420835" lng="-240.09521484375003" >
+                    <px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map-tile-layer>  
+                </px-map>
+          </div>
+          </px-modal>
+        </div>
+       
+        </px-card>
+      </section>
+    
+      <section>
+        <px-card header-text="Mount Hamiguitan Range Wildlife Sanctuary" icon="fa-star">
+        <body>
+          Mount Hamiguitan is a mountain located in the province of Davao Oriental, Philippines. It has a height of 1,620 metres. The mountain and its vicinity has one of the most diverse wildlife populations in the country. Wikipedia
+         <px-slider value="10" min="1" max="10">Rate this location</px-slider>
+          </body>
+           <div>
+           <px-modal btn-modal-negative="Cancel">
+            <button class='btn btn--primary modal-trigger'>Location</button>
+             <div style="height:300px;width:300px;display:flex">
+                <px-map zoom="11" lat="6.656423427652239" lng="-233.84674072265628" flex-to-size="true" disable-scroll-zoom="true" disable-touch-zoom="true" disable-dragging="true">
+                    <px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map-tile-layer>  
+                </px-map>
+          </div>
+          </px-modal>
+        </div>
+        
+        </px-card>
+      </section>
+    
+      <section>
+        <px-card header-text="Puerto-Princesa Subterranean River National Park" icon="fa-star">
+        <body>
+          The Puerto Princesa Subterranean River National Park is a protected area of the Philippines located about 80 kilometres north of the city centre of Puerto Princesa, Palawan. The river is also called Puerto Princesa Underground River. Wikipedia
+         <px-slider value="10" min="1" max="10">Rate this location</px-slider>
+          </body>
+           <div>
+           <px-modal btn-modal-negative="Cancel">
+            <button class='btn btn--primary modal-trigger'>Location</button>
+             <div style="height:300px;width:300px;display:flex">
+                <px-map  zoom="9" lat="9.714471509337628" lng="-241.23504638671878" flex-to-size="true" disable-scroll-zoom="true" disable-touch-zoom="true" disable-dragging="true">
+                    <px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map-tile-layer>  
+                </px-map>
+          </div>
+          </px-modal>
+        </div>
+        
+        </px-card>
+      </section>
+    
+      <section>
+        <px-card header-text="Mayon Volcano Natural Park" icon="fa-star">
+        <body>
+          The Mayon Volcano Natural Park is a protected area of the Philippines located in the Bicol Region on southeast Luzon Island, the largest island of the country. Wikipedia
+          <px-slider value="10" min="1" max="10">Rate this location</px-slider>
+          </body>
+           <div>
+           <px-modal btn-modal-negative="Cancel">
+            <button class='btn btn--primary modal-trigger'>Location</button>
+                <div style="height:300px;width:300px;display:flex">
+                <px-map zoom="10" lat="13.237271908200585" lng="-236.2651062011719" flex-to-size="true" disable-scroll-zoom="true" disable-touch-zoom="true" disable-dragging="true">
+                    <px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map-tile-layer>  
+                </px-map>
+          </div>
+          </px-modal>
+        </div>
+     
+        </px-card>
+      </section>
+     
+      <section>
+        <px-card header-text="Hundred Islands National Park" icon="fa-star">
+        <body>
+         The Hundred Islands National Park is a national park in the Philippines. The protected area is located in the city of Alaminos, in the province of Pangasinan in northern Philippines. Wikipedia
+         <px-slider value="10" min="1" max="10">Rate this location</px-slider>
+         </body>
+          <div>
+           <px-modal btn-modal-negative="Cancel">
+            <button class='btn btn--primary modal-trigger'>Location</button>
+             <div position=center  style="height:300px;width:300px;display:flex">
+                <px-map zoom="10" lat="16.333318573391775" lng="-239.8686218261719"x1 flex-to-size="true" disable-scroll-zoom="true" disable-touch-zoom="true" disable-dragging="true">
+                    <px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map-tile-layer>  
+                </px-map>
+          </div>
+          </px-modal>
+        </div>
+        
+        </px-card>
+      </section>
+   </px-tab-pages>
+  </body>
+  </template>
+  <script>
+    Polymer({
+      is: 'added-components-view',
+      properties: {},
+      ready: function() {
+        console.log('added-components-view ready()')
+      }
+    });
+  </script>
+</dom-module>

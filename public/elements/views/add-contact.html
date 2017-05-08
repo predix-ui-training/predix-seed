@@ -1,0 +1,134 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="add-contact-styles.html">
+
+<dom-module id="add-contact">
+  
+<template>
+   <iron-ajax
+      id="postContactAjax"
+      url="https://502581119-predix-seed-ui-pjco.run.aws-usw02-pr.ice.predix.io/api/v1/contact"    
+      method="POST"
+      last-response="{{response}}"
+      loading={{loading}}
+    >
+   </iron-ajax>
+  <style include="add-contact-styles">
+  </style>
+  
+  <px-view-header title="Add Contacts"></px-view-header>
+  
+  <px-card header-text="New Contact" icon="fa-user-plus" chevron>
+  <form>
+    <label for="name">Name:</label>
+    <px-dropdown value="{{selectedName}}"display-value="Select">
+        <px-dropdown-content class="px-dropdown-content" items='[{"key":"1","val":"Peter"},{"key":"2","val":"Aldwin"},{"key":"3","val":"Jess"},{"key":"4","val":"Pat"}]'>
+        </px-dropdown-content>
+    </px-dropdown>
+
+    <br>
+    
+    <label for="email1">Email: </label>
+    <input id="email1" value="{{email::input}}"  placeholder="Type email address..." class="text-input input--regular" type="text" >
+    
+    <br>
+    <label for="image1">Image: </label>
+    <input id="image1" value="{{image::input}}" placeholder="Type image url..." class="text-input input--regular" type="text">
+    <!--<img src={{image}} alt="" style="width:150px;height:150px;">-->
+    <br>
+    <br>
+    <button class="btn btn--primary" on-tap="_submitContact">Submit</button>
+    <button class="btn btn--primary" type="reset" value="Reset" on-tap="_resetContact">Reset</button>
+    <br>
+    <br>
+  </form>
+
+  <template is="dom-if" if="{{submitPressed}}">
+     <px-card>
+      <form>
+          <label for="name2">Name: {{selectedName}}</label>
+          <br>
+          <label for="email2">Email: {{email::input}}</label>   
+          <br>
+          <label for="image2">Image: </label>
+          <br>
+          <img src={{image}} alt="" style="width:150px;height:150px;">
+          <br>
+          <br>
+          <button class="btn btn--primary" on-tap="addContact">Add Contacts</button>
+       </form>
+     </px-card>
+  </template>
+
+  </px-card>
+</template>
+ 
+  <script>
+    Polymer({
+      is: 'add-contact',
+      properties: {
+        selectedName: String,
+        email:String,     
+        image:String,
+        submitPressed:{
+          type: Boolean,
+          value: false
+        },
+        loading:{
+          type:Boolean
+        }
+        // contact:{
+        //   type: Object,
+        //   value: function(){
+        //     return {
+        //       "id":1,
+        //       "name":"Anonymous",
+        //       "email":"Anonymous@abc.com",
+        //       "image":"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTdkckxQapTRIZGen5LGngYXXdTZHCsbeqMjMhFJY9bjrm7xQ6bcU9QqZk"
+        //       }
+           
+        //   }
+        // }
+      },
+      listeners:{
+        'px-dropdown-value-changed':'getSelectedName'
+      },
+      observers:[
+        'isLoading(loading)'
+      ],
+      getSelectedName: function(){
+        console.log("Selected name: "+ this.selectedName);
+      },
+      _submitContact: function(){
+        this.submitPressed=true;
+      },
+      _resetContact: function(){
+         this.submitPressed=false;
+      },
+      isLoading: function(loading){
+        console.log("isLoading: " + this.loading);
+        if(!loading){
+          this.fire('add-contact-completed')
+        }
+      },
+      addContact: function(){
+        let tempContact = new Object();
+        tempContact.name=this.selectedName;
+        tempContact.email=this.email;
+        tempContact.image=this.image;
+
+        console.log("Request Body: "+ JSON.stringify(tempContact));
+
+        this.$.postContactAjax.body = JSON.stringify(tempContact);
+        this.$.postContactAjax.generateRequest();
+        this.submitPressed=false;
+      },
+      ready: function() {
+        console.log("add-contact ready()");
+      }
+    });
+  </script>
+</dom-module>

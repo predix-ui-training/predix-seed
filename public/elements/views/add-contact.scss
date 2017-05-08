@@ -1,0 +1,23 @@
+
+$inuit-enable-btn--primary : true;
+$inuit-enable-input--regular : true;
+@import "px-buttons-design/_objects.buttons.scss";
+@import 'px-forms-design/_base.forms.scss';
+
+
+
+ px-view-header{
+      --px-view-header-background-color: lightseagreen;
+    }
+img {
+      border-radius: 50%;
+    }
+px-card{
+  --px-card-border-color: navy;
+  --px-card-background-color: lightblue;
+    }
+px-dropdown{
+  --px-dropdown-bg-color--hover:lightseagreen;
+  --px-dropdown-border-color--hover:lightblue;
+  --px-dropdown-border-color--opened: navy;
+  }

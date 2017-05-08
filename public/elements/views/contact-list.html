@@ -1,0 +1,110 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-data-table/px-data-table.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="contact-list-styles.html">
+
+
+<dom-module id="contact-list">
+  <style include="contact-list-styles">
+   
+  </style>
+  <template>
+
+    <iron-ajax
+      id="deleteContactAjax"
+      url="https://502581119-predix-seed-ui-pjco.run.aws-usw02-pr.ice.predix.io/api/v1/contact/id"
+      method= "POST"
+      last-response="{{response}}"
+      loading={{loading}}
+    >
+    </iron-ajax>
+    <px-view-header title="Contact List" icon="fa-users"></px-view-header>
+    <px-card header-text="Contacts" icon="fa-users" chevron>    
+     
+    <ul>
+       <template is="dom-repeat" items="{{contacts}}" as="contact" sort="_sortContact">
+          <li>    
+          <div class="layout">
+              <div><img src={{contact.image}} alt="" style="width:100px;height:100px;"></div>
+              <div class="layout__item u-1/4">
+                <h3>{{contact.name}}</h3>
+                <p1>Email:<a href="{{contact.email}}">{{contact.email}}</a></p1>
+                <footer>Time stamp: {{contact.time_stamp}}</footer></div>
+  
+             <aside>
+              <div>   
+               <px-modal btn-modal-positive="Delete" btn-modal-negative="Cancel" modal-heading="Delete Contact" scrolling-disabled="true">
+                  <button class='btn btn--primary modal-trigger btn--icon'on-tap="_getId"><i class="fa fa-times" aria-hidden="true"></i></button>
+                   <h3 align="center"><img src={{contact.image}} alt="" style="width:100px;height:100px;"></h3>
+                   Are you sure you want to delete <strong> {{contact.name}} </strong>?               
+                </px-modal>
+              </div>
+             </aside>
+
+          </div>
+        </li>
+      </template>
+     </ul>
+    </px-card>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'contact-list',
+      properties: {
+        contacts:{
+          type:Array,
+          value: function(){
+            return [
+              {
+              "id":1,
+              "name":"Anonymous",
+              "email":"Anonymous@abc.com",
+              "image":"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTdkckxQapTRIZGen5LGngYXXdTZHCsbeqMjMhFJY9bjrm7xQ6bcU9QqZk"
+              }
+            ]
+          }
+        },
+        id:Number
+      },
+      listeners:{
+        'btnModalPositiveClicked':'_deleteContact'
+       },
+      observers:[
+        'isLoading(loading)'
+       ],
+        isLoading: function(loading){
+        console.log("isLoading: " + this.loading);
+        if(!loading){
+          this.fire('delete-contact-completed')
+        }
+      },
+      _getId: function(e){
+         var model = e.model
+         this.id=e.model.contact.id
+         console.log("selecte Id: " + this.id)
+       },
+       _sortContact: function(con1,con2){
+        return con1.time_stamp<con2.time_stamp
+       },
+       _deleteContact: function(){
+        console.log("_deleteContact: ");
+        let tempContact = new Object();
+        tempContact.id = this.id;
+     
+        console.log("Request Body: "+ JSON.stringify(tempContact));
+
+        this.$.deleteContactAjax.body = JSON.stringify(tempContact);
+        this.$.deleteContactAjax.generateRequest();
+     
+       },
+        ready: function() {
+        console.log('contact-list ready()')
+      }
+    });
+  </script>
+</dom-module>
