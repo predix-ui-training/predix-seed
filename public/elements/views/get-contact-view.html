@@ -1,0 +1,126 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="populate-contact-list-styles.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+<link rel="import" href="../../bower_components/px-polymer-font-awesome/px-polymer-font-awesome.html">
+ 
+ <dom-module id="get-contact-view">
+ 
+    <template>
+    <iron-ajax
+            id="deletePersonAjax"
+            url="https://502581119-go-learning-session-svc2-pao.run.aws-usw02-pr.ice.predix.io/api/v1/contact"
+            last-response="{{delResponse}}"
+            loading="{{delLoading}}"
+            method="POST"
+            on-response="handleResponse"
+      >
+      </iron-ajax>
+      <style include="populate-contact-list-styles"></style>
+      <div style="overflow-x:auto;">
+       <table >
+       <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Email</th>
+          <th>Created Date</th>
+          <th>Action</th>
+       </tr>
+       <template is="dom-repeat" items={{response}}  sort="_computeSort">  
+          <tr>
+              <td> <span><img class="img-circle" src="{{item.image}}" alt=""></td>
+              <td>  <span>{{item.name}}</td>
+              <td>  <span>{{item.age}}</td>
+              <td> <span><a href="{{item.email}}">{{item.email}}l</a></span></td>
+              <td>{{item.createdDate}}</td>
+              <td>
+                  <px-modal btn-modal-positive="Submit"  on-tap="saveDeletedId" btn-modal-negative="Cancel">
+                      <button class='btn btn--huge btn--bare modal-trigger'><i class="fa fa-times fa-2x" aria-hidden="true"></i></button>
+                      <p>Delete Record?.</p>
+                  </px-modal>
+              </td> 
+          </tr>
+        </template> 
+      </table>
+  </div>
+    </template>
+
+<script>
+  Polymer({
+    is: 'get-contact-view',
+    properties: {
+      response: {
+        type: Array
+      },
+       delLoading: {
+             type: Boolean,
+             observer: 'isLoading'
+            },
+             isMsg: {
+              type: Boolean,
+              value: false
+            },
+             deletedId: {
+              type: String,
+              value:""
+             },
+              deletedArray: {
+              type: Array          
+             },
+    },
+ 
+     _computeSort: function(a, b) {
+      if (a.createdDate == b.createdDate) {
+        return 0;
+      }
+      return a.createdDate > b.createdDate ? -1 : 1;
+    },
+      deleteContact: function(e) {
+         
+         let tempContact = new Object();
+
+         tempContact.id =  this.deletedId
+         console.log("Request Body : " + JSON.stringify(tempContact));
+           
+            this.$.deletePersonAjax.body = JSON.stringify(tempContact);
+            this.$.deletePersonAjax.generateRequest();
+         
+         
+    },
+    
+    listeners:{
+        'btnModalPositiveClicked':'deleteContact'
+    },
+    handleResponse: function(e) {
+      console.log(e.detail.response);
+    },
+        isLoading: function(){
+        console.log("isLoading : " + this.delLoading);
+        if(!this.delLoading){
+          this.fire('api-completed');
+        }
+      },
+      saveDeletedId:function(e){
+          var model= e.model;
+        this.deletedId= model.item.id
+      },
+      showMsg: function() {
+          if(this.isMsg){
+              this.isMsg = false;
+            } else {
+              this.isMsg = true;
+            }
+
+        
+          
+
+          },
+    ready: function(){
+      console.log("get-contact-view is ready()");
+     },
+          
+   });
+</script>
+

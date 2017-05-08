@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-sample-cards/blank-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-file-upload/px-file-upload.html"/>
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html"/>
+<link rel="import" href="../../bower_components/px-inbox/px-inbox.html"/>
+<style>
+  .dropdown-div{
+    width:150px;
+  }
+  </style>
+<dom-module id="add-components-view">
+  <template>
+  
+     <div class="dropdown-div">
+       <px-dropdown display-value="Text">
+  <px-dropdown-content class="px-dropdown-content" max-cont-character-width="10"
+  extend-dropdown="true" extend-dropdown-by="15" items='[{"key":"one", "val": "One"}, {"key":"two", "val": "Two"}, {"key":"three", "val": "Three"}, {"key":"four", "val": "How now brown cow"}]'>
+  </px-dropdown-content>
+</px-dropdown>
+     </div><div>
+      <px-inbox height="100vh" 
+      list-items='[{"id":"1","title":"GT Vibration",
+                   "subtitle":"Block 2",
+                   "severity":"important",
+                   "date":"2016-10-05T01:29"}]'>
+  
+</px-inbox>
+       </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'add-components-view',
+      properties: {},
+      ready: function() {
+        console.log('add-components-view ready()')
+      }
+    });
+  </script>
+</dom-module>

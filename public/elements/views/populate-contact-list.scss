@@ -1,0 +1,75 @@
+$inuit-enable-btn--primary : true;
+@import 'px-buttons-design/_objects.buttons.scss';
+@import 'px-forms-design/_base.forms.scss';
+@import "px-helpers-design/_generic.helpers.scss";
+
+@import "px-defaults-design/_settings.defaults.scss";
+@import "px-colors-design/_settings.colors.scss";
+@import "px-typography-design/_base.typography.scss"; 
+
+
+div.comboBoxDiv {
+    width:150px;
+
+}
+.fa {
+  color : red;
+}
+.img-circle {
+   border-radius: 50%;
+    height:70px;
+    width: 70px
+}  
+.listing-wrapper{
+  display: flex;
+  padding: 20px;
+  max-width: 100%;
+}
+.listing-wrapper img{
+  border-radius: 100%;
+   line-height: 20px;
+   max-width: 100px;
+
+    
+}
+
+h3{
+ margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 40px;
+    margin-left: 20px;
+    max-width: 20px;
+   text-align:left;
+}
+h4{
+ margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 40px;
+    margin-left: 20px;
+    max-width: 20px;
+   text-align:left;
+}
+
+h5{
+ margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 40px;
+    margin-left: 10px;
+   max-width: 150px;
+   text-align:left;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+
+
+
+

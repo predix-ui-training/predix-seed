@@ -74,6 +74,37 @@
             element-href="/elements/views/blankpage-view.html">
           </px-view>
 
+          <app-route
+            route="[[_route]]"
+            pattern="/add-components-view"
+            active="{{_add-components-viewActive}}">
+          </app-route>
+          <px-view
+            active="[[_add-components-viewActive]]"
+            element-href="/elements/views/add-components-view.html">
+          </px-view>
+
+
+          <app-route
+            route="[[_route]]"
+            pattern="/contact-list-view"
+            active="{{_contact-list-viewActive}}">
+          </app-route>
+          <px-view
+            active="[[_contact-list-viewActive]]"
+            element-href="/elements/views/contact-list-view.html">
+          </px-view>
+
+          <app-route
+            route="[[_route]]"
+            pattern="/contact-list-view-db"
+            active="{{_contact-list-view-dbActive}}">
+          </app-route>
+                 <px-view
+            active="[[_contact-list-view-dbActive]]"
+            element-href="/elements/views/contact-list-view-db.html">
+          </px-view>
+
           <!-- /winddata route and view -->
           <app-route
             route="[[_route]]"
@@ -138,7 +169,23 @@
               "label": "Blank Page",
               "path": "/blankpage",
               "icon": "fa-file"
+            }, {
+              "label": "1- Add Components",
+              "path": "/add-components-view",
+              "icon": "fa-briefcase"
+            }, {
+              "label": "2- Contact List",
+              "path": "/contact-list-view",
+              "icon": "fa-thumbs-up"
+            }, {
+              "label": "3- Contact List from DB",
+              "path": "/contact-list-view-db",
+              "icon": "fa-thumbs-up"
             }
+
+
+
+            
             //Uncomment this block to show the Simple Asset navigation item on the menu.
             /* // asset-nav-item
             ,{

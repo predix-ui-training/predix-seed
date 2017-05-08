@@ -1,0 +1,61 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<style>
+
+.listing-wrapper{
+  display: flex;
+  padding: 20px;
+}
+.listing-wrapper img{
+  border-radius: 100%;
+   line-height: 20px;
+   max-width: 100px;
+
+    
+}
+
+h3{
+ margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 80px;
+    margin-left: 20px;
+    max-width: 20px;
+   text-align:left;
+}
+.listing-wrapper span{
+  margin-top: auto;
+    margin-bottom: auto;
+    margin-right: auto;
+    margin-left: inherit;
+      max-width: 1px;
+   text-align:left;
+}
+</style>
+<dom-module id="contact-listing">
+  <template>
+     <div class="listing-wrapper"> 
+       <img src="{{img}}" alt="">
+        <h3>{{name}}</h3>
+        <span><a href="{{email}}">{{email}}l</a> </span>
+     </div>
+  </template>
+ </dom-module>
+    <script>
+      
+        Polymer({
+          is: "contact-listing",
+
+            
+          properties:{
+               name: String,
+               email: String,
+               img: String,
+           },
+           ready: function() {
+             console.log('contact-listing ready()');
+           }
+        });
+      
+    </script>
+
+

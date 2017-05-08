@@ -1,0 +1,64 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../elements/views/contact-listing.html">
+<link rel="import" href="../../bower_components/px-sample-cards/blank-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+
+
+<dom-module id="contact-list-view">
+  <style>
+ul{
+  list-style: none;
+}
+
+
+li+li{
+  border-top:dashed 1px #666;
+}
+
+
+</style>
+
+  <template>
+      <template>
+        <px-view-header title="Contact" style="display: block; margin-bottom: 6px;"></px-view-header>
+        <blank-card id="myCard">
+          Sample Polymer Element
+        </blank-card>
+      </template>
+     <ul>
+         <template is="dom-repeat" items="{{contacts}}">
+             <li>
+               <contact-listing 
+                   img="{{item.img}}"
+                   name="{{item.name}}"
+                   email="{{item.email}}">
+               </contact-listing> 
+            </li>
+         </template>
+     <ul>
+  </template>
+ </dom-module>
+
+  <script>
+        Polymer({
+          is: "contact-list-view",
+          ready: function() {
+             console.log('contact-list-view ready()');
+            this.contacts = [{
+              name: "Butil",
+              email: "Buts@gmail.com",
+              img: "https://cdn4.iconfinder.com/data/icons/48x48-free-time-icons/48/Time_zone.png"
+            }, {
+              name: "Pancheta",
+              email: "Pancheta@gmail.com",
+              img: "https://cdn3.iconfinder.com/data/icons/social-media-black-white-1/1024/rss-48.png"
+            }, {
+              name: "Mik",
+              email: "acb@gmail.com",
+              img: "https://cdn3.iconfinder.com/data/icons/social-media-black-white-1/1024/rss-48.png"
+            }];
+          }
+        });
+      
+    </script>
+

@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-widget-cards/px-twoup.html">
+<link rel="import" href="get-contact-view.html">
+<link rel="import" href="populate-contact-list.html">
+
+<dom-module id="contact-list-view-db">
+    <template>
+        <iron-ajax
+        id="getPersonsAJax"
+        url="https://502581119-go-learning-session-svc2-pao.run.aws-usw02-pr.ice.predix.io/api/v1/contact/db"
+        last-response="{{response}}"
+        method="GET"
+        on-response="handleResponse"
+        auto
+      >
+      </iron-ajax>
+
+      
+      <style ></style>
+      <px-twoup id="widget-2" widget-header="Persons" widget-icon="fa-paper-plane">
+      <div class='widget-1'>
+         <populate-contact-list></populate-contact-list>
+      </div>
+      <div class='widget-2'>
+         <get-contact-view response="{{response}}"></get-contact-view>
+      </div>
+    </template>
+
+<script>
+  Polymer({
+    is: 'contact-list-view-db',
+    properties: {
+    
+    },
+    listeners: {
+        'api-completed' : 'showLog'
+        
+      },
+        showLog: function() {
+        console.log("showLog triggered..");
+         console.log("jsonResponse:")
+         this.$.getPersonsAJax.generateRequest();
+      },
+
+    handleResponse: function(e) {
+       console.log("handleResponse");
+      console.log(e.detail.response);
+    },
+    ready: function(){
+      console.log("contact-list-view ready()");
+    }
+   });
+</script>
+
