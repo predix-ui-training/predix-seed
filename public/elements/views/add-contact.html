@@ -1,0 +1,188 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+<link rel="import" href="add-contact-styles.html">
+
+
+<dom-module id="add-contact">
+
+  <template>
+    <style include="add-contact-styles"></style>
+
+    <iron-ajax
+      id="postContactAjax"
+      url="http://localhost:8080/api/v1/contact"
+      last-response="{{response}}"
+      loading="{{loading}}"
+      method="POST"
+    ></iron-ajax>
+
+    <h4>ADD CONTACT HERE:</h4>
+    
+    
+    <div class="dropdown-div">
+        <label>Name:</label>
+        <px-dropdown id="dropDownList" value="{{selectedName}}" display-value="Select Name">
+        <px-dropdown-content 
+            class="px-dropdown-content" 
+            items='[{"key":"one", "val": "Kaloy"}, {"key":"two", "val": "Gia"}, {"key":"three", "val": "Daryl"}, {"key":"three", "val": "Sheila"}]'>
+        </px-dropdown-content>
+        </px-dropdown>
+    </div>
+
+
+    <label id="emailInput">Email:</label> 
+    <div class="email-div">
+        <input type="text" value="{{email::input}}" class="text-input">
+    </div>
+
+
+    <label id="imageInput">Image:</label> 
+    <div class="image-div">
+        <input type="text" value="{{image::input}}" class="text-input">
+    </div>
+
+    <div class="button-div">
+        <button class="btn btn btn--primary style-scope local-element-demo" on-tap="showInputs">Add Contact</button>
+        <button id="saveBtn" class="btn btn btn--primary style-scope local-element-demo" on-tap="saveContact">Submit</button>
+        <!--<px-modal btn-modal-positive="Confirm" btn-modal-negative="Cancel" id="modalButton">
+            <button class='btn btn--primary modal-trigger'>Submit</button>
+
+            <p>Delete contact {{contact.name}} ?</p>
+        </px-modal>-->
+        <button class="btn btn--tertiary style-scope local-element-demo" on-tap="resetFields" >Reset</button>    
+    </div>
+    
+
+    <template is="dom-if" if="{{isAddBtnClicked}}">
+        <div>
+            <h4>Name: {{selectedName}}</h4>
+        </div>
+
+        <div>
+            <h4>Email: {{email}}</h4>
+        </div>
+
+        <div>
+            <h4>Image:</h4>
+            <img src="{{image}}" alt="">
+        </div>
+    </template>    
+
+  </template>
+  
+  <script>
+    Polymer({
+      is: 'add-contact',
+      properties: {
+        selectedName: String,
+        email: String,
+        image: String,
+        isAddBtnClicked: {
+          type: Boolean,
+          value: false
+        },
+
+        isNotInputValid: {
+            type: Boolean,
+            value: false
+        },
+
+        response: {
+          type: Array
+        },
+
+        loading: {
+          type: Boolean
+        },
+
+        contact: {
+          type: Object,
+          notify: true
+        }
+      },
+
+      observers: [
+        'isLoading(loading)'
+      ],
+
+      resetFields: function() {
+        console.log("resetFields is triggered..")
+        this.email = undefined;
+        this.image = undefined; 
+        this.$.dropDownList.displayValue = "Select Name";
+        //this.selectedName = "";
+        this.isAddBtnClicked = false;
+        
+      },
+
+      showInputs: function() {
+        console.log("showInputs triggered...")
+
+        if (this.validateInputs()) {
+            return;
+        } else {
+            console.log("email after: " + this.email)
+            return  this.$.saveBtn.disabled=false, this.isAddBtnClicked = true;
+        }
+         
+      },
+
+      validateInputs: function() {
+        console.log("validateInputs triggered...")
+
+        if (this.email === undefined && this.image === undefined) {
+            alert("Please provide contact name, email and image..");
+            this.resetFields();
+            return true;
+        }else if( this.email === undefined && this.image !== undefined) {
+            alert("Please provide contact email address..");
+            this.resetFields();
+            return true;
+        }else if (this.email !== undefined && this.image === undefined) {
+            alert("Please provide contact image..");
+            this.resetFields();
+            return true;
+        }
+
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        console.log("result: " , re.test(this.email))
+        if(!re.test(this.email)){
+            alert("Invalid email address..");
+            return true;
+        }
+      },
+
+      saveContact: function() {
+        console.log("selected name: "+ this.selectedName);
+        console.log("image: " + this.image);
+        console.log("email : " + this.email);
+        
+        let contactToInsert = new Object();
+        contactToInsert.name = this.selectedName;
+        contactToInsert.email = this.email;
+        contactToInsert.image = this.image;
+        contactToInsert.age = this.age;
+
+        console.log("Request Body : " + JSON.stringify(contactToInsert));
+        
+        this.person = contactToInsert;
+        this.$.postContactAjax.body = JSON.stringify(contactToInsert);
+        this.$.postContactAjax.generateRequest();
+
+      },
+
+      isLoading: function(){
+        console.log("isLoading : " + this.loading);
+        if(!this.loading){
+          this.fire('data-update-contact-completed');
+        }
+      },
+
+      ready: function() {
+        console.log('add-contact ready()', )
+        return this.$.saveBtn.disabled=true;
+      }
+    });
+  </script>
+</dom-module>

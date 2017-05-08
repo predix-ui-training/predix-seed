@@ -1,0 +1,74 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="../../bower_components/px-tooltip/px-tooltip.html">
+<link rel="import" href="../../bower_components/px-datetime-picker/px-datetime-picker.html">
+<link rel="import" href="../../bower_components/px-table-view/px-table-view.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+
+<dom-module id="addedcomponents-view">
+  <template>
+    
+    <div id="test-dropdown" on-click="triggerClicked">
+        
+        <px-card icon="fa-gamepad" header-text='Select Summoners War Monster below: '>
+            <px-dropdown id="lineDropdown" display-value="Monsters">
+            <px-dropdown-content class="px-dropdown-content" max-cont-character-width="10"
+            extend-dropdown="true" extend-dropdown-by="15" items='[{"key":"one", "val": "Taor"}, {"key":"two", "val": "Arang"}, {"key":"three", "val": "Stella"}, {"key":"four", "val": "Hathor"}]'>
+            </px-dropdown-content>
+            </px-dropdown>
+        </px-card>
+    </div>
+
+
+
+    <!--<div id="test-tooltip">
+        <px-tooltip for="btn1" delay="500" tooltip-message="#MarcosNotAHero" orientation="auto" tooltip-style="dark"></px-tooltip><button id='btn1'>Come here!</button>
+    </div>
+
+    <div id="test-datetime-picker">
+        <px-datetime-picker date-format="YYYY/MM/DD" time-format="HH:mm:ss" time-zone="UTC" show-time-zone="abbreviatedText" date-time="2017-04-27T07:01:49.000Z"></px-datetime-picker>
+    </div>
+
+    <div id="test-table">
+        <style is='custom-style'>:root { --px-table-row: { border-bottom: 1px solid gray; } }</style>
+        <px-table-view rows-size="regular">
+            <px-table-row title='Go Lang'></px-table-row>
+            <px-table-row title='Java'></px-table-row>
+            <px-table-row title='Python'></px-table-row>
+            <px-table-row title='C#'></px-table-row>
+            <px-table-row title='C++'></px-table-row>
+        </px-table-view>
+    </div>
+
+    <div id="test-modal">
+        <px-modal btn-modal-negative="Cancel"><button class='btn btn--primary modal-trigger'>Click Me!</button><p>Welcome to AOps!! :)</p></px-modal>
+    </div>-->
+
+     <px-modal id="testModal "btn-modal-negative="Cancel"><p>Welcome to AOps!! :)</p></px-modal>
+     <paper-icon-button on-click="feedback" icon="announcement"></paper-icon-button>
+  </template>
+  <script>
+    Polymer({
+      is: 'addedcomponents-view',
+      properties: {},
+      ready: function() {
+        console.log('addedcomponents-view ready()')
+
+
+      },
+     triggerClicked: function (evt) {   
+            var content = Polymer.dom(this).querySelector("lineDropdown");
+            console.log("Selected Value: " + (document.getElementsByTagName("px-dropdown")[0]).displayValue)
+
+            // if ((document.getElementsByTagName("px-dropdown")[0]).displayValue == "Hathor") {
+            //     console.log("Selected Hathor")
+            //     var dialog = document.querySelector('#dialogFeedback');
+            //     //this.setDialog(true);
+            //     dialog.
+                
+            // }
+     }
+    });
+  </script>
+</dom-module>

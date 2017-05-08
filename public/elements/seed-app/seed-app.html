@@ -15,6 +15,8 @@
 <link rel="import" href="../ge-svg-logo/ge-svg-logo.html">
 <link rel="import" href="../predix-logo/predix-logo.html">
 <link rel="import" href="../seed-footer/seed-footer.html">
+<link rel="import" href="../../bower_components/px-polymer-font-awesome/px-polymer-font-awesome.html">
+
 
 <dom-module id="seed-app">
   <template>
@@ -96,6 +98,28 @@
             element-href="/elements/views/simple-asset-view.html">
           </px-view>
 
+          <!-- /addedcomponents route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/addedcomponents"
+            active="{{_addedcomponentsActive}}">
+          </app-route>
+          <px-view
+            active="[[_addedcomponentsActive]]"
+            element-href="/elements/views/addedcomponents-view.html">
+          </px-view>
+
+            <!-- /contactlist route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/contactlist"
+            active="{{_contactlistActive}}">
+          </app-route>
+          <px-view
+            active="[[_contactlistActive]]"
+            element-href="/elements/views/contact-list-view.html">
+          </px-view>
+
         </main>
 
       </div>
@@ -138,6 +162,14 @@
               "label": "Blank Page",
               "path": "/blankpage",
               "icon": "fa-file"
+            }, {
+              "label": "1 - Added Components",
+              "path": "/addedcomponents",
+              "icon": "fa-tasks"
+            }, {
+              "label": "2 - Contact List",
+              "path": "/contactlist",
+              "icon": "fa-phone"
             }
             //Uncomment this block to show the Simple Asset navigation item on the menu.
             /* // asset-nav-item

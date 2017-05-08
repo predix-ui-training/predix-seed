@@ -1,0 +1,126 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-table-view/px-table-view.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="contact-view-styles.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-data-table/iron-data-table.html">
+
+<dom-module id="contact-view">
+
+  
+  <template>
+    <style include="contact-view-styles"></style>
+
+    <iron-ajax 
+        id="deleteContactAjax" 
+        url="http://localhost:8080/api/v1/delete-contact"
+        method="POST"
+        params='{{_processParam(contactId)}}'
+        loading="{{loading}}"
+    ></iron-ajax>
+
+    <ul>
+        <template is="dom-repeat" items="{{contactList}}" as="contact" sort="_sortByDate">
+            <li>
+                <div class="contacts-div">
+                    <div class="img-div"><img src="{{contact.image}}" alt=""></div>
+                    <div class="name-div"><h4>{{contact.name}}</h4></div>
+                    <div class="email-div"><span><a href="{{contact.email}}">{{contact.email}}</a></span></div>
+                    <div class="date-div"><span>{{contact.creationDate}}</span></div>
+                    <div class="modal-div"> 
+                        <px-modal btn-modal-positive="Confirm" btn-modal-negative="Cancel" on-tap="saveContactId" id="modalButton">
+                            <button class='btn btn--bare modal-trigger'  >
+                                <iron-icon icon="fa:fa-times"></iron-icon>
+                            </button>
+                            <p>Delete contact {{contact.name}} ?</p>
+                            <div class="delete-div">
+                                <div>
+                                    <img src="{{contact.image}}" alt="">
+                                </div>
+                                <div class="p-div">
+                                    <p>Email: {{contact.email}}</p>
+                                    <p>Creation Date: {{contact.creationDate}}</p>
+                                </div>
+                            </div>
+                            
+                        </px-modal>
+                    </div>
+                </div>
+            </li>
+        </template>
+    </ul>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'contact-view',
+      properties: {
+        contactList: {
+            type: Array
+        },
+
+        contactId: String,
+
+        loading: {
+          type: Boolean
+        },
+      },
+
+      observers: [
+        'isLoading(loading)'
+      ],
+
+      listeners : {
+        'btnModalPositiveClicked': 'deleteContact'
+      },
+
+      isLoading: function(loading){
+        console.log("isLoading : " + this.loading);
+        if(!this.loading){
+          this.fire('data-update-contact-completed');
+        }
+      },
+
+      _sortByDate : function(a, b) {
+        if (a.creationDate == b.creationDate){
+            return 0;
+        }else {
+            return a.creationDate < b.creationDate ? -1 : 1;
+        }
+      },
+
+      _processParam : function (contactId) {
+        console.log("processing url params..")
+        return {
+            id : contactId
+   
+        }
+      },
+
+      saveContactId : function (e){
+        var model = e.model;
+        this.contactId = model.contact.id;
+      },
+
+      deleteContact : function(e) {
+           this.$.deleteContactAjax.generateRequest();
+      },
+
+      ready: function() {
+        console.log('contact-view ready()')
+        properties: {
+            id: Number
+            name: String;
+            email: String;
+            image: String;
+            age: Number
+            creationDate: Date;
+        }
+        console.log('contact-view ready()', this.name)
+      }
+    });
+  </script>
+</dom-module>

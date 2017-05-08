@@ -1,0 +1,51 @@
+      $inuit-enable-btn--bare : true;
+      @import 'px-buttons-design/_objects.buttons.scss';
+      
+      .contacts-div {
+          display: flex;
+          padding: 15px;
+          border-top: solid 1px #666;
+          /*border-right: solid 1px #666;
+          border-left: solid 1px #666;
+          border-bottom: solid 1px #666;*/
+      }
+
+      .delete-div {
+          display: flex;
+          padding: 10px;
+          border-top: solid 1px #666;
+      }
+
+      .p-div {
+          display: block;
+      }
+
+      .p-div p {
+          height: 20px;
+      }
+
+      img {
+          border-radius: 50%;
+          margin-bottom: 10px;
+          margin: 0 20px 0 0;
+      }
+      h4 {
+          margin: 0 20px 0 0;
+          line-height: 80px;
+          font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+          font-weight: lighter;
+      }
+      span {
+          line-height: 80px;
+          font-size: 12px;
+          margin: 0 20px 20px 0;
+      }
+      ul {
+          list-style: none;
+      }
+
+      .modal-div {
+          position:relative;
+          left: 7%;
+          line-height: 80px;
+      }

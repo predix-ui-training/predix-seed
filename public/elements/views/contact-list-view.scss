@@ -1,0 +1,42 @@
+      .header-div {
+          display: flex;
+          padding: 5px;
+          //border-top: solid 1px #666;
+          /*border-right: solid 1px #666;
+          border-left: solid 1px #666;
+          border-bottom: solid 1px #666;*/
+      }
+
+      .header-image {
+        padding-left: 74px;
+        font-weight:bold;
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+      }
+
+      .header-name {
+        padding-left: 45px;
+        font-weight:bold;
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+      }
+
+      .header-email {
+        padding-left: 40px;
+        font-weight:bold;
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+      }
+
+      .header-date {
+        padding-left: 55px;
+        font-weight:bold;
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+      }
+
+      .header-delete {
+        padding-left: 52px;
+        font-weight:bold;
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+      }
+
+      px-twoup {
+          background: gray;
+      }

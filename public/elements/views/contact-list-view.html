@@ -1,0 +1,66 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-table-view/px-table-view.html">
+<link rel="import" href="contact-view.html">
+<link rel="import" href="add-contact.html">
+<link rel="import" href="../../bower_components/px-widget-cards/px-twoup.html">
+<link rel="import" href="contact-list-view-styles.html">
+
+<dom-module id="contact-list-view">
+  <template>
+    <style include="contact-list-view-styles"></style>   
+    <iron-ajax 
+        id="getContactsAJax" 
+        url="http://localhost:8080/api/v1/contacts"
+        last-response="{{response}}" 
+        method="GET" 
+        auto
+    ></iron-ajax>
+
+    <px-twoup id="widget-2" widget-header="Contact List:" widget-icon="fa-phone-square">
+      <div class='widget-1'>
+        <add-contact contact={{contact}}></add-contact>
+      </div>
+      <div class='widget-2'>
+        <div class="header-div">
+          <div class="header-image">Image</div>
+          <div class="header-name">Name</div>
+          <div class="header-email">Email</div>
+          <div class="header-date">Creation Date</div>
+          <div class="header-delete">Delete</div>
+        </div>
+        <contact-view contact-list={{response}}></contact-view>
+      </div>
+    </px-twoup>
+  </template>
+  <script>
+    Polymer({
+      is: 'contact-list-view',
+      properties: {
+        contact: {
+          type: Object,
+          value: function() {
+            return {
+              name: 'Default',
+              email: 'Default@yahoo.com'
+            }
+          }
+	     },
+
+        response: {
+          type: Array
+        }
+      },
+      listeners: {
+        'data-update-contact-completed' : 'executeGetContactList'
+      },
+
+      executeGetContactList: function() {
+        console.log("Contact has been saved on DB.");
+        this.$.getContactsAJax.generateRequest();
+      },
+      ready: function() {
+        console.log('contact-list-view ready()', this.response )
+      }
+    });
+  </script>
+</dom-module>
