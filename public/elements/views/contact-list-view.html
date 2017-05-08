@@ -1,0 +1,82 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-sample-cards/contacts.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="bower_components/px-data-table/px-data-table.html"/>
+
+<dom-module id="contact-list-view">
+
+  <template>
+
+    <!--<iron-ajax
+      id="getPersonsAJax"
+      url="http://localhost:8080/api/v1/contact/db"
+      last-response="{{contacts}}"
+      method="GET"
+      auto>
+    </iron-ajax>-->
+
+
+  <style>
+    .img-circle {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px
+    } 
+
+    table {
+    border: 1px dotted burlywood;
+    border-collapse: collapse;
+    }
+
+    table th {
+    border: 1px dashed #cccccc;
+    }  
+  </style>
+
+    <contacts-card id="myCard">
+    <table style="width:100%">
+      <template is="dom-repeat" items="{{contacts}}">
+      <tr>
+        <th><img class="img-circle" src='{{item.img}}'></img></th>
+        <th><span>{{item.name}}</span></th> 
+        <th><a href="{{item.email}}" id="email"><span>{{item.email}}</span></a></th>
+      </tr>
+      </template>
+    </table>
+    </contacts-card>
+
+  </template>
+
+
+  <script>
+
+    Polymer({
+      is: 'contact-list-view',
+      ready: function() {
+          this.contacts = [
+            { 
+            name: 'Kurt', 
+            email: 'kurt@email.com',
+            img: 'http://www.buzzle.com/images/people/facial-features/forehead-man.jpg'
+            },{ 
+            name: 'Linda',
+            email: 'linda@email.com',
+            img: 'http://www.buzzle.com/images/people/facial-features/chin.jpg'
+            },{ 
+            name: 'Allison', 
+            email: 'allison@email.com',
+            img: 'http://media.buzzle.com/media/images-en/gallery/human-expressions/900-rbrb_0742-girl-looking.jpg'
+            },{ 
+            name: 'Rosie', 
+            email: 'rosie@email.com',
+            img: 'http://www.buzzle.com/images/people/facial-features/forehead.jpg'
+            },{ 
+            name: 'Rock', 
+            email: 'rock@email.com',
+            img: 'http://www.buzzle.com/images/people/facial-features/lips-man.jpg'
+            }
+        ];
+      }
+    });
+  </script>
+</dom-module>

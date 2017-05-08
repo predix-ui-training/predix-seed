@@ -96,6 +96,39 @@
             element-href="/elements/views/simple-asset-view.html">
           </px-view>
 
+          <!-- /added components route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/added-components-view"
+            active="{{_added-components-view}}">
+          </app-route>
+          <px-view
+            active="[[_added-components-view]]"
+            element-href="/elements/views/added-components-view.html">
+          </px-view>
+
+           <!-- /added components route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/contact-list-view"
+            active="{{_contact-list-view}}">
+          </app-route>
+          <px-view
+            active="[[_contact-list-view]]"
+            element-href="/elements/views/contact-list-view.html">
+          </px-view>
+
+           <!-- /added components route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/person-list-view"
+            active="{{_person-list-view}}">
+          </app-route>
+          <px-view
+            active="[[_person-list-view]]"
+            element-href="/elements/views/person-list-view.html">
+          </px-view>
+
         </main>
 
       </div>
@@ -137,6 +170,18 @@
             }, {
               "label": "Blank Page",
               "path": "/blankpage",
+              "icon": "fa-file"
+            }, {
+              "label": "1 - Added Components",
+              "path": "/added-components-view",
+              "icon": "fa-file"
+            }, {
+              "label": "2 - Contact List",
+              "path": "/contact-list-view",
+              "icon": "fa-file"
+            }, {
+              "label": "3 - Contact Predix List",
+              "path": "/person-list-view",
               "icon": "fa-file"
             }
             //Uncomment this block to show the Simple Asset navigation item on the menu.

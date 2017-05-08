@@ -1,0 +1,63 @@
+//Input field flags
+$inuit-enable-input--small : true;
+$inuit-enable-input--regular : true;
+$inuit-enable-validation-states : true;
+
+//Buttons flags
+$inuit-enable-btn--primary : true;
+$inuit-enable-btn--disabled : true;
+
+//Table Styles
+$inuit-enable-table--rows : true;
+
+@import "px-buttons-design/_objects.buttons.scss";
+@import 'px-forms-design/_base.forms.scss';
+@import "px-iconography-design/_base.iconography.scss";
+@import 'px-tables-design/_base.tables.scss';
+
+
+div {
+        margin-top: 10px;
+        width: 150px;
+}
+
+h2 {
+        font-size: 30px
+}
+
+px-dropdown {
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+}
+
+label {
+        margin-top: 10px;      
+}
+
+.img-circle {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px
+} 
+
+px-spinner {
+         margin-top: 20px;
+         margin-left: 50px;
+        --px-spinner-fill-color: $primary-blue-pressed;
+}
+
+i {
+        margin-right: 10px;
+}
+
+table {
+        margin-top: 30px;
+}
+
+h4 {
+        display:inline;
+        font-size: 85%;
+        color: red;
+        font-style: italic;
+}

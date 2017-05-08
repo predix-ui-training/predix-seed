@@ -1,0 +1,111 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html"/>
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html"/>
+<link rel="import" href="person-list-styles.html"/>
+
+<dom-module id="person-list">
+  <template>
+       <style include="person-list-styles"></style>	
+       
+        <iron-ajax
+        id="deletePersonAjax"
+        url="https://502581119-go-learning-session-svc2-pao.run.aws-usw02-pr.ice.predix.io/api/v1/contact"
+        last-response="{{response}}"
+        loading="{{loading}}"
+        method="POST">
+        </iron-ajax>
+
+        <table class="table table--rows">
+        <tbody>
+        <tr>
+        <th><i class="fa fa-file-image-o"></i></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Date Created</th>
+        <th></th>
+        </tr>
+        <template is="dom-repeat" items="{{personList}}" sort="_sort">
+        <tr>
+        <td><img class="img-circle" src={{item.image}}></img></td>
+        <td><span>{{item.name}}</span></th> 
+        <td><a href="{{item.email}}" id="email"><span>{{item.email}}</span></a></td>
+        <td><span>{{item.createdDate}}</span></a></td>
+        <td><px-modal btn-modal-positive="Delete" btn-modal-negative="Cancel" modal-heading="Delete Contact">
+            <button class='btn btn--bare modal-trigger' on-tap="saveId" value= "{{item.id}}"><iron-icon icon="fa:fa-times"></iron-icon> </button>           
+            <p>Are you sure?</p></px-modal>
+        </td>
+        </tr>
+        </template>
+        </tbody>
+        </table>
+    
+    </template>
+
+  <script>
+    Polymer({
+      is: 'person-list',
+
+      properties: {
+
+        personList: {
+          type: Array,
+          value: function() {
+           return [
+              {
+                name: 'Jay',
+                email: 'jay@yahoo.com',
+                age: 50
+              }
+            ]
+          }
+        },
+          deleteId: String
+	      },
+
+        saveId: function(e) {
+           var model = e.model
+           console.log("Contact ID: " + model.item.id)
+           this.deleteId = model.item.id;
+        },
+        
+       deletePerson: function() { 
+         let tempPerson = new Object();
+         tempPerson.id = this.deleteId ;
+      
+        console.log("Request Body : " + JSON.stringify(tempPerson));
+
+        this.$.deletePersonAjax.body = JSON.stringify(tempPerson);
+        this.$.deletePersonAjax.generateRequest();
+        },
+      
+       listeners: {
+        'btnModalPositiveClicked' : 'deletePerson',
+       },
+
+      isLoading: function(){
+        console.log("isLoading : " + this.loading);
+        if(!this.loading){
+          this.fire('delete-person-completed');
+        }
+      },
+
+      observers: [
+        'isLoading(loading)'
+      ],
+
+      _sort: function(a,b) {  
+        if (a.createdDate == b.createdDate) {
+        return 0;
+        }
+        return a.createdDate > b.createdDate ? -1 : 1;
+      },
+
+  	  ready: function(){
+  	  	//console.log("person-list ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

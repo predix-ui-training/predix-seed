@@ -1,0 +1,214 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/px-validation/px-validation.html"/>
+<link rel="import" href="/bower_components/px-spinner/px-spinner.html"/>
+<link rel="import" href="add-person-styles.html">
+
+<dom-module id="add-person">
+  <template>
+  <style include="add-person-styles"></style>
+
+  <iron-ajax
+      id="postPersonAjax"
+      url="https://502581119-go-learning-session-svc2-pao.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
+      last-response="{{response}}"
+      loading="{{loading}}"
+      method="POST">
+    </iron-ajax>
+
+  <div>
+  <h3><i class="fa fa-user-plus" aria-hidden="true"></i>Add a contact</h3>
+  <h4> **all fields are required</h4>
+
+   
+  <label>Name:<px-dropdown value="{{selectedName}}" display-value="{{defaultValue}}">
+      <px-dropdown-content class="px-dropdown-content" 
+         items='[{"key":"one", "val": "Addison"},
+        {"key":"two", "val": "Elijah"}, 
+        {"key":"three", "val": "Jacob"},
+        {"key":"four", "val": "Liam"},
+        {"key":"four", "val": "Olivia"},
+        {"key":"four", "val": "Natalie"},
+        {"key":"five", "val": "Vince"}]'></px-dropdown-content>
+        </px-dropdown> 
+      </label>
+    </div>
+    <label><span>Email: <br>  <input type="text" class="text-input input--small" value="{{email::input}}" placeholder="Input email..." on-blur="validateEmail">  
+        <template is="dom-if" if="{{!isEmailValid}}">
+         <h4>Invalid email, please try again</h4>
+        </template>
+        </span>
+       </label>
+    <label>Image: <br>  <input type="text" class="text-input input--regular" value="{{image::input}}" placeholder="Input image url..."></label>
+    <br>
+
+    <button class="btn btn--primary" on-tap="addPerson">Add</button>
+    <button class="btn btn--primary" on-tap="resetPerson">Reset</button>
+    
+
+    <template is="dom-if" if="{{!addError}}">
+
+      <template is="dom-if" if="{{displayDetails}}">
+        <table class="table table--rows">
+          <tbody>
+            <tr>
+              <th>Add contact?</th>
+              <th></th>
+            </tr>
+            <tr width="50%">
+              <td width="20%"><img class="img-circle" src='{{image}}'></td>
+              <td>Name: {{selectedName}}<br>
+                Email: {{email}}
+            </td>
+            </tbody>
+          </table>
+          <br>
+          <button class="btn btn--primary" on-tap="submitPerson">Submit</button>
+          <!--<button class="btn btn--primary" on-tap="cancelPerson">Cancel</button>-->
+      </template>
+
+      <template is="dom-if" if="{{stillLoading}}"> 
+        <px-spinner size="65"></px-spinner>
+      </template>
+
+    </template>
+
+    <template is="dom-if" if="{{addError}}">
+      <h4>**please complete all required fields</h4>
+    </template>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'add-person',
+
+      properties: {
+
+        selectedName: String,
+        email: String,
+        image: String,
+
+        defaultValue: {
+          type:String,
+          value:"Select"
+        },
+
+        loading: {
+           type: Boolean
+        },
+
+        displayDetails: {
+          type:Boolean,
+          value:false
+        },
+
+        stillLoading: {
+          type:Boolean,
+          value:false
+        },
+        
+        //error when fields are incomplete
+        addError: {
+          type:Boolean,
+          value:false
+        },
+        //error when email in invalid
+        isEmailValid: {
+          type: Boolean,
+          value: true
+        }
+      },
+
+      listeners: {
+        'px-dropdown-value-changed' : 'getSelectedName'
+      },
+
+      observers: [
+        'isLoading(loading)'
+      ],
+
+      isLoading: function(){
+        console.log("isLoading : " + this.loading);
+        if(!this.loading){
+          this.stillLoading = false;
+          this.fire('add-person-completed');
+        }
+      },
+
+      addPerson: function() {
+     
+          if(this.selectedName == "Select" || this.email == "" || this.image == "" || this.image == "undefined") {
+            this.addError = true;
+          } else {
+            this.addError = false;
+          }
+
+          if (this.displayDetails == false) {
+            this.displayDetails = true 
+          } else {
+             this.displayDetails = false 
+          }
+      },
+
+      resetPerson: function() {
+          this.displayDetails = false;
+          this.addError = false;
+          this.isEmailValid = true;
+          this.defaultValue = "Select";
+          this.selectedName = "Select";
+          this.email = "";
+          this.image= "";
+      },
+
+      submitPerson: function() {
+    
+        this.stillLoading = true;
+        
+        let tempPerson = new Object();
+        tempPerson.name = this.selectedName;
+        tempPerson.email = this.email;
+        tempPerson.image = this.image
+
+        console.log("Request Body : " + JSON.stringify(tempPerson));
+
+        this.$.postPersonAjax.body = JSON.stringify(tempPerson);
+        this.$.postPersonAjax.generateRequest();
+
+        //reset fields
+        this.resetPerson();
+      },
+
+       validateEmail: function() {
+        
+        var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ;
+        var pattern = new RegExp(emailRegex)
+        this.isEmailValid =  pattern.test(this.email);
+        console.log("is email invalid?" + this.isEmailValid);
+
+        if (this.isEmailValid == false) {
+          this.email = ""
+        }
+      
+      } ,
+
+      getSelectedName: function() {
+        //close add window if open
+        if(this.displayDetails == true) {
+          this.addPerson();
+        }
+
+        //enable add button
+        this.disableAddButton = false;
+
+        console.log("Selected name : " + this.selectedName);
+      },
+
+  	  ready: function(){
+  	  	console.log("add-person ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>

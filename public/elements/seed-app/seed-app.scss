@@ -1,5 +1,6 @@
 // Settings
 @import "px-colors-design/_settings.colors.scss";
+@import 'px-buttons-design/_objects.buttons.scss';
 
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
@@ -11,6 +12,7 @@
 $desk-wide-width: auto; // defaults to 100%
 $desk-wide-max-width: none; // defaults to 80rem
 $viewport-margin: 0; // defaults to auto
+$inuit-enable-btn--primary : true;
 
 // Base
 @import "px-viewport-design/_base.viewport.scss";

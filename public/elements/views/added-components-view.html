@@ -1,0 +1,151 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/px-tabs/px-tab-set.html"/>
+<link rel="import" href="/bower_components/Px-Datetime-Picker/Px-Datetime-Picker.html"/>
+<link rel="import" href="/bower_components/px-vis-pie-chart/px-vis-pie-chart.html"/>
+<link rel="import" href="/bower_components/px-file-upload/px-file-upload.html"/>
+<link rel="import" href="/bower_components/px-map/px-map.html" />
+<link rel="import" href="/bower_components/px-map/px-map-tile-layer.html" />
+<link rel="import" href="/bower_components/px-modal/px-modal.html"/>
+<link rel="import" href="../../bower_components/px-sample-cards/added-components.html">
+
+<dom-module id="added-components-view">
+
+  <style>
+
+    h2 {
+      margin-left: 20px;
+      margin-right: 100px;
+      color: black;
+      font-family: Tahoma; 
+    }
+
+     p{
+      margin-left: 20px;
+      color:black;
+      font-family: Calibri;
+      size: "6"
+    }
+
+    px-tab-pages div {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+
+    px-tab-pages h4 {
+       color:black;
+        font-family: Calibri;
+
+    }
+
+    .img-logo {
+    height: 40px;
+    width: 80px
+    } 
+
+    .img-circle {
+    border-radius: 50%;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    height: 180px;
+    width: 200px
+    } 
+
+    px-modal {
+      margin-left: 20px;
+      margin-bottom: 30px;
+
+    }
+
+  </style>
+  <template>
+
+ <added-components-card id="myCard">
+
+    
+ <px-tab-set bare="true" selected="{{selected}}">
+   <px-tab id='tab1'><h2>About Rainforests</h2></px-tab>
+   <px-tab id='tab2'><h2>Choose a date</h2></px-tab>
+   <px-tab id='tab3'><h2>Find us</h2></px-tab>
+ </px-tab-set>
+ <px-tab-pages selected="{{selected}}">
+
+      <!--TAB 1-->
+       <div>
+        <p> Rainforests are forest ecosystems characterized by high levels of rainfall, an enclosed<br>
+           canopy and high species diversity. While tropical rainforests are the best-known type <br>
+           of rainforest and the focus of this section of the web site, rainforests are actually <br>
+           found widely around the world, including temperate regions in Canada, the United States,<br>
+            and the former Soviet Union. </p>
+
+              <img class="img-circle" src='http://imagecache6.allposters.com//LRG//%5C21%5C2143%5CPPQED00Z.jpg'></img>
+              <img class="img-circle" src='http://www.onemeteratatime.org/wp-content/uploads/rainforest1.jpg'></img>
+              <img class="img-circle" src='http://www.oddizzi.com/wp-content/uploads/2012/04/img-rainforest-keelbilledtoucan.jpg'></img>
+          
+              <px-vis-pie-chart prevent-resize="true" width="200" height="200" chart-horizontal-alignment="left"
+              chart-vertical-alignment="center" margin='{"top":"50","bottom":"10","left":"0","right":"0"}'
+              register-config='{"type":"vertical","width":200}' 
+              chart-data='[
+              {"percentage":"17","x":15,"y":"Tropical","colorIndex":0,"backgroundColor":"rgb(93,165,218)"},
+              {"percentage":"11","x":10,"y":"Subtropical","colorIndex":1,"backgroundColor":"rgb(250,164,58)"},
+              {"percentage":"28","x":25,"y":"Temperate","colorIndex":2,"backgroundColor":"rgb(96,189,104)"},
+              {"percentage":"43","x":38,"y":"Boreal","colorIndex":3,"backgroundColor":"rgb(241,124,176)"}]'
+              series-config='{"mySerie":{"xAxisUnit":"percent","y":"y","x":"x"}}' 
+              donut="true"  title-spacing="5" 
+              dynamic-menu-config='[{"name":"Log message","action":"function(data) {
+              console.log(\"logging message\")}","eventName":"delete","icon":"fa-trash"}]'>
+              </px-vis-pie-chart>
+            
+              <p><b>JOIN OUR SOCIAL MEDIA PAGE</b></p>
+            
+              <px-modal btn-modal-positive="Continue" btn-modal-negative="Back" btn-modal-border-color=white modal-heading="Join us on TWITTER">
+              <button class="btn btn--primary modal-trigger"><img class="img-logo" src='http://imavex.vo.llnwd.net/o18/clients/imavex/images/Blog/12-09-28-twitter-redesign-twitter-header-photo.jpg'></img></button>
+              <p><b>www.twitter.com/rainforests</b></p>
+              </px-modal>
+
+              <px-modal btn-modal-positive="Continue" btn-modal-negative="Back" btn-modal-border-color=white modal-heading="Join us on FACEBOOK">
+              <button class="btn btn--primary modal-trigger"><img class="img-logo" src='https://www.freedigitalphotos.net/blog/wp-content/uploads/2014/01/facebook-image-compression-570x200.jpg'></img></button>
+              <p><b>www.facebook.com/rainforests</b></p>
+              </px-modal>
+
+              <px-modal btn-modal-positive="Continue" btn-modal-negative="Back" btn-modal-border-color=white modal-heading="Join us on INSTAGRAM">
+              <button class="btn btn--primary modal-trigger"><img class="img-logo" src='https://d61b2508e4ded409de16-422b77a335f29780f56306a57bbea991.ssl.cf1.rackcdn.com/production/widgetcenter/userfiles/1/12/instagram-header_1390998265.png'></img></button>
+              <p><b>www.instagram.com/rainforests</b></p>
+              </px-modal>
+      
+       </div>
+
+        <!--TAB 2-->
+
+       <div>
+        <h4>From:</h4>
+         <px-datetime-picker date-format="DD/MM/YYYY" pxDatetimeBehavior="true" time-format="HH:mm" time-zone="UTC" show-time-zone="text" date-time="2017-01-05T05:30:00.000Z"></px-datetime-picker>
+        <h4>To:</h4>
+        <px-datetime-picker date-format="DD/MM/YYYY" pxDatetimeBehavior="true" time-format="HH:mm" time-zone="UTC" show-time-zone="text" date-time="2017-01-05T05:30:00.000Z"></px-datetime-picker>
+      
+        <h4>Attach a pic:</h4>
+        <px-file-upload message="Drag your image here" language="en"></px-file-upload>
+        <br>
+        <button class="btn btn--primary" btn-primary-background : $primary-blue>Cancel</button><button class="btn btn--primary">Submit</button>
+       </div>
+
+       <!--TAB 3-->
+       <div>
+         <div style="height:400px;width:600px;display:flex"><px-map zoom="10" lat="14.457288039583421" lng="121.18331909179689" flex-to-size="true" disable-scroll-zoom="true" disable-touch-zoom="true"><px-map-tile-layer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'></px-map></div>
+       </div>
+  
+ </px-tab-pages>
+
+ </added-components-card>
+
+  </template>
+
+  <script>  
+    Polymer({
+      is: 'added-components-view',
+      properties: {},
+      ready: function() {
+        console.log('added-components-view ready()')
+      }
+    });
+  </script>
+</dom-module>
