@@ -1,4 +1,5 @@
 $inuit-enable-btn--primary : true;
+$inuit-enable-btn--bare : true;
 @import 'px-buttons-design/_objects.buttons.scss';
 @import 'px-forms-design/_base.forms.scss';
 @import "px-helpers-design/_generic.helpers.scss";
@@ -12,8 +13,15 @@ div.comboBoxDiv {
     width:150px;
 
 }
+.data{
+    font-size: small;
+}
+.errorMsg{
+color : red;
+}
 .fa {
   color : red;
+
 }
 .img-circle {
    border-radius: 50%;
@@ -32,7 +40,10 @@ div.comboBoxDiv {
 
     
 }
-
+.required-label:before {
+  content:"*";
+  color:red;
+}
 h3{
  margin-top: auto;
     margin-bottom: auto;

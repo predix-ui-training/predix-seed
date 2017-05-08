@@ -4,10 +4,9 @@
 <link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
 <link rel="import" href="../../bower_components/px-polymer-font-awesome/px-polymer-font-awesome.html">
 
-
 <dom-module id="populate-contact-list">
     <template>
-       <iron-ajax
+      <iron-ajax
         id="postPersonAjax"
         url="https://502581119-go-learning-session-svc2-pao.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
         last-response="{{response}}"
@@ -16,62 +15,73 @@
         on-response="handleResponse"
       >
       </iron-ajax>
-      <style include="populate-contact-list-styles"></style>
+		  <style include="populate-contact-list-styles"></style>
         <h1>Add Users Page</h1>
+
         <div class="comboBoxDiv" >
-          <span class="asterisk_input"></span> 
-          <label><b><i class="fa fa-asterisk" aria-hidden="true"></i>Name  :</b></label>
-          <px-dropdown value="{{name::change}}" id="nameDropDown" display-value="{{defaultValue}}">
-            <px-dropdown-content 
-              class="px-dropdown-content" 
-              items='[{"key":"","val":"Select","key":"Jake", "val": "Jake"}, 
-              {"key":"Jack", "val": "Jack"}, 
-              {"key":"Jon", "val": "Jon"}]'>
+         <b><label class="required-label"></i>Name  :</label></b>
+            <px-dropdown value="{{name::change}}" 
+            id="nameDropDown" display-value="{{defaultValue}}">
+              <px-dropdown-content 
+                class="px-dropdown-content" 
+                items='[{"key":"","val":"Select","key":"Jake", "val": "Jake"}, 
+                {"key":"Jack", "val": "Jack"}, 
+                {"key":"Jon", "val": "Jon"}]'>
               </px-dropdown-content>
             </px-dropdown>
+            <label class="errorMsg" id="errorName"></label>
+           
         </div>
+
         <div class="comboBoxDiv">
-          <b><i   class="fa fa-asterisk" color: #FF0000 aria-hidden="true"></i>Email:</b>
-          <input  id="email" type="text"
+          <b><label class="required-label">Email:</label></b>
+          <input id="email" type="text"
             class="text-input"placeholder="Enter Email"
-            value="{{email::input}}"  />
+            value="{{email::input}}" on-keyup="removewarning" />
+            <label class="errorMsg" id="errorEmail"></label>
         </div>
+		
         <div class="comboBoxDiv">
-          <label><i class="fa fa-asterisk" aria-hidden="true"></i><b>Age &nbsp; :</b></label>
+           <b><label class="required-label">Age &nbsp; :</label></b>
           <input id="age" value="{{age::input}}"
-          class="text-input"  type="number" 
-          placeholder="Enter Age">    
+            class="text-input"  type="number" 
+            placeholder="Enter Age" on-keyup="removewarning">    
+          <label class="errorMsg" id="errorAge"></label>
         </div> 
+
         <div class="comboBoxDiv">
-          <label><i class="fa fa-asterisk" aria-hidden="true"></i><b>Image :</b></label>
+           <b> <label class="required-label">Image :</label></b>
           <input id="imageUrl" value="{{imageUrl::input}}" 
-          class="text-input" type="text" 
-          placeholder="Enter Image Url">    
-        </div> 
+            class="text-input" type="text" 
+            placeholder="Enter Image Url" on-keyup="removewarning"> 
+            <label class="errorMsg" class=ErrorMessage id="errorImage"></label>   
+		    </div> 
+
         <br>
         <div class="comboBoxDiv">
           <button   class="btn btn--primary" on-tap="clearFields">Reset</button>
           <button   class="btn btn--primary" on-tap="validate">Add</button>
         </div>
+  
         <template is="dom-if" if="{{isMsg}}">
           <div class="comboBoxDiv">
-              <label>Name: {{name}}</label>
+            <label>Name: {{name}}</label>
           </div>
           <div class="comboBoxDiv">
             <label>Email: {{email}}</label>
           </div>
           <div class="comboBoxDiv">
-              <label>Age: {{age}}</label>
+            <label>Age: {{age}}</label>
           </div>
           <div class="comboBoxDiv">
-              <label>Image:</label> 
-              <img class="img-circle"src="{{imageUrl}}" />
+            <label>Image:</label> 
+            <img class="img-circle"src="{{imageUrl}}" />
           </div>
           <div class="comboBoxDiv">
-              <button class="btn btn--primary" on-tap="saveContact">Submit</button>
+            <button class="btn btn--primary" on-tap="saveContact">Submit</button>
           </div>
-      </template>
-  </template>
+		</template>
+	</template>
     <script>
       Polymer({
         is: 'populate-contact-list',
@@ -80,43 +90,49 @@
             type: Array
           },
           id: {
-              type: String
-            },
+            type: String
+          },
           imageUrl: {
-              type: String
-            },
+            type: String
+          },
           name: {
-              type: String
-            },
-
-            email: {
-              type: String
-            },
-            age: {
-              type: String
-            },
-            createdDate: {
-              type: String
-            },
-              loading: {
-             type: Boolean,
-             observer: 'isLoading'
-            },
-            isMsg: {
-              type: Boolean,
-              value: false
-            },
-             isValidate: {
-              type: Boolean,
-              value: true
-            },
-            defaultValue: {
-              type: String,
-              value: "Select"
-            },
+            type: String
+          },
+          email: {
+            type: String
+          },
+          age: {
+            type: String
+          },
+          createdDate: {
+            type: String
+          },
+          loading: {
+            type: Boolean,
+            observer: 'isLoading'
+          },
+          isMsg: {
+            type: Boolean,
+            value: false
+          },
+          isValidate: {
+            type: Boolean,
+            value: true
+          },
+          defaultValue: {
+            type: String,
+            value: "Select"
+          },
+          errorMessage: {
+            type: String,
+            value:"",
+          },
         },
-         saveContact: function() {
-          
+        listeners:{
+		    	'px-dropdown-click':'removewarning'
+        },
+
+        saveContact: function() {
             let tempContact = new Object();
             tempContact.name = this.name;
             tempContact.email = this.email;
@@ -126,91 +142,85 @@
             console.log("Request Body : " + JSON.stringify(tempContact));
             this.$.postPersonAjax.body = JSON.stringify(tempContact);
             this.$.postPersonAjax.generateRequest();
-            
           },
        
-          clearFields: function() {
+        clearFields: function() {
             this.defaultValue="Select";
-              this.name="";
-              this.email="";
-              this.age="";
-              this.imageUrl="";
-              this.isMsg=false;
-              this.isValidate=false;
-              this.showMsg();
-          },
-          showMsg: function() {
-          
-              if(this.isMsg){
-                this.isMsg = false;
-              } else {
-                this.isMsg = true;
-              
-            }
-          },
-        handleResponse: function(e) {
-          console.log(e.detail.response);
+            this.name="";
+            this.email="";
+            this.age="";
+            this.imageUrl="";
+            this.isValidate=false;
+            this.isMsg=true;
+            this.showMsg();
         },
-        validate:function(){
-           this.isValidate=true;
+        showMsg: function() {
+            if(this.isMsg){
+				    this.isMsg = false;
+            } else {
+                this.isMsg = true;
+            }
+        },
+        removewarning: function(e){
+            this.$.errorName.innerHTML = "";
+            this.$.errorEmail.innerHTML = "";
+            this.$.errorAge.innerHTML = "";
+            this.$.errorImage.innerHTML = "";
+        },
+        handleResponse: function(e) {
+			    console.log(e.detail.response);
+        },
+	    	validate:function(){
+            this.isValidate=true;
             if( this.defaultValue=="Select"){
-               // alert("Please Select a Name");
-             //
+				    this.$.errorName.innerHTML="Please Select a Name";
                 this.isValidate=false;
-               
             }
-             if( (this.isValidate) && this.$.email.value==""){
-                alert("Please Enter A valid Email");
+            if( (this.isValidate) && this.$.email.value==""){
+                this.$.errorEmail.innerHTML="Please Enter A valid Email";
                 this.isValidate=false;
-              
             }
-              if( (this.isValidate) && this.email!==""){
-                if(!this.validateEmail(this.email)){
-                    alert("Email format is invalid");
-                   this.isValidate=false;
-                  
-                }
-            }
-            if( (this.isValidate) && this.$.age.value==""){
-                alert("Please Enter your Age");
-                this.isValidate=false;
-                
-             }
-              if( (this.isValidate) && this.age <= 0){
-                alert("Age Must be grater than 0");
-                this.isValidate=false;
-             
-                
-             }
-              if( (this.isValidate) && this.$.imageUrl.value==""){
-                alert("Please Enter a Image Url");
+            if( (this.isValidate) && this.email!==""){
+              if(!this.validateEmail(this.email)){
+                this.$.errorEmail.innerHTML="Email format is invalid";
                 this.isValidate=false;
               }
-              if (this.isValidate){
-                this.showMsg();
+			      }
+            if( (this.isValidate) && this.$.age.value==""){
+                this.$.errorAge.innerHTML="Please Enter your Age";
+                this.isValidate=false;
+            }
+            if( (this.isValidate) && this.age <= 0){
+               this.$.errorAge.innerHTML="Age Must be grater than 0";
+               this.isValidate=false;
+            }
+            if( (this.isValidate) && this.$.imageUrl.value==""){
+				        this.$.errorImage.innerHTML="Please Enter a Image Url";
+                this.isValidate=false;
+            }
+            if (this.isValidate){
+				        this.showMsg();
                 this.isValidate=true;
-             }
-
-           
-            return
-           
+            }
         },
-        isLoading: function(){
-        console.log("isLoading : " + this.loading);
-        if(!this.loading){
+		
+      isLoading: function(){
+			  console.log("isLoading : " + this.loading);
+			  if(!this.loading){
           this.clearFields();
-             this.showMsg();
+          this.showMsg();
           this.fire('api-completed');
-        }
-      },
+			  }
+  		},
        
-       validateEmail:function(email) {
+	  	validateEmail:function(email) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
-        },
-        ready: function(){
-          console.log("populate-contact-list ready()");
+      },
+		
+      ready: function(){
+			  console.log("populate-contact-list ready()");
         }
-      });
+    });
     </script>
 </dom-module>
