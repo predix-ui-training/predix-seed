@@ -74,6 +74,30 @@
             element-href="/elements/views/blankpage-view.html">
           </px-view>
 
+           <!-- /addedcomponent route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/addedcomponent"
+            active="{{_addedcomponentActive}}">
+          </app-route>
+          <px-view
+            active="[[_addedcomponentActive]]"
+            element-href="/elements/views/addedcomponents-view.html">
+          </px-view>
+
+          
+          <!-- /contactlist route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/contacts"
+            active="{{_contactlistActive}}">
+          </app-route>
+          <px-view
+            active="[[_contactlistActive]]"
+            element-href="/elements/views/contact-list-view.html">
+          </px-view>
+
+
           <!-- /winddata route and view -->
           <app-route
             route="[[_route]]"
@@ -138,6 +162,14 @@
               "label": "Blank Page",
               "path": "/blankpage",
               "icon": "fa-file"
+            }, {
+               "label": "Added Component",
+               "path": "/addedcomponent",
+               "icon": "fa-apple"
+            },{
+               "label": "Contacts",
+               "path": "/contacts",
+               "icon": "fa-user"
             }
             //Uncomment this block to show the Simple Asset navigation item on the menu.
             /* // asset-nav-item

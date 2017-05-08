@@ -1,0 +1,70 @@
+<link rel="import" href="/bower_components/px-card/px-dashboard.html"/>
+<link rel="import" href="/bower_components/px-card/px-deck.html"/>
+<link rel="import" href="/bower_components/px-card/px-card.html"/>
+<link rel="import" href="/bower_components/px-map/px-map.html" />
+<link rel="import" href="/bower_components/px-map/px-map-tile-layer.html" />
+<link rel="import" href="/bower_components/px-tabs/px-tab-set.html"/>
+<link rel="import" href="/bower_components/px-vis-pie-chart/px-vis-pie-chart.html"/>
+<link rel="import" href="/bower_components/px-alert-message/px-alert-message.html"/>
+
+<dom-module id="addedcomponents-view">
+    <template>
+        <px-card header-text='Japan'>
+            <h1 align = "center" >
+                    日本へようこそ
+                    Nihon e yōkoso</h1>
+            <p align="center">Facts about Japan.</p>
+        </px-card>
+
+<px-tab-set selected="{{selected}}">
+        <px-tab>Geography</px-tab>
+        <px-tab>Language</px-tab>
+        <px-tab>Population</px-tab>
+
+    </px-tab-set>
+    <px-tab-pages selected="{{selected}}">
+        <section>Japan is situated in northeastern Asia between the North Pacific and the Sea of Japan. The area of Japan is 377,944 square kilometers, nearly equivalent to Germany and Switzerland combined or slightly smaller than California. Japan consists of 6,852 islands, including four of the large main islands.
+Shown below are the four major islands, their locations and sizes.Japan has many islands, but also has many forests as well. The forests of Japan cover about 25.12 million hectares, which adds up to roughly 66% of the entire national land area. This means that Japan has one of the largest forest coverage rates in the world. Other areas used consist of 5.04 million hectares of agricultural land, 3.06 million hectares of other land, 1.74 million hectares of residential land, 1.33 million hectares of water surfaces, rivers, and channels, 1.23 million hectares of roads, and 260 thousand hectares of wilderness areas.
+*These figures are from October 1, 2013 (Statistics Bureau, Ministry of Internal Affairs and Communications)
+Japan’s topographical features include coastlines with varied scenery, towering mountains, which are very often volcanic and twisted valleys that invite visitors into the mysterious world of nature.
+The National Area of Japan
+The islands of Japan in the Pacific Ocean may cover more territory than you thought. The northernmost, southernmost, easternmost, and westernmost edges are as shown below.</section>
+        <section>There is only one official language spoken in Japan, which is of course Japanese. However, many Japanese are able to understand English to a certain extent since English is the foreign language that everyone must learn as part of compulsory education.
+Even if you don’t understand Japanese, you can still certainly enjoy Japan. But if you know a few everyday Japanese phrases then it will make your trip even more memorable. A few words make a big difference.</section>
+        <section>Japan’s population is over 126 million. Most Japanese reside in densely populated urban areas. Japan’s capital city is Tokyo. The population of the Tokyo Metropolitan Area including the city, some of its suburbs and the surrounding area is approximately 12 million.
+Historically, the population of Japan has undergone repeated periods of increase and decrease. During the period from approximately 400 years ago to 300 years ago, it increased significantly due to the societal change from the Warring State Period to a peaceful period. Afterward, it remained stable until approximately 150 years ago. Due to the advancement of medical care, changes in lifestyle, and industrial growth, the population of approximately 33,300,000 rapidly increased to the current 127 million. It is, however, estimated to take a significant downward turn in the future due to its aging population combined with its declining birth rate.</section>
+    </px-tab-pages>
+
+<px-map lat="36.2048" lng="138.2529" zoom="5" style="width: 600px; height: 600px;">
+  <px-map-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></px-map-tile-layer>
+  <px-map-control-zoom position="center"></px-map-control-zoom>
+</px-map>
+
+<px-vis-pie-chart prevent-resize="true" width="800" height="400" chart-horizontal-alignment="right" chart-vertical-alignment="right" 
+margin='{"top":"5","bottom":"5","left":"0","right":"0"}' register-config='{"type":"vertical","width":200}'
+ chart-data='[{"percentage":"26","x":15,"y":"Tokyo"},{"percentage":"2","x":1,"y":"Yokohama"},{"percentage":"2","x":1,"y":"Osaka"},{"percentage":"14","x":8,"y":"Nagoya"},{"percentage":"21","x":12,"y":"Sapporo"},
+ {"percentage":"12","x":7,"y":"Kobe"},{"percentage":"16","x":9,"y":"Fakuoka"},{"percentage":"7","x":4,"y":"Kawasaki"}]'
+  series-config='{"mySerie":{"xAxisUnit":"person","y":"y","x":"x"}}' title="Total" title-spacing="5"
+  dynamic-menu-config='[{"name":"Log message","action":"function(data) {console.log(\"logging message\")}","eventName":"delete","icon":"fa-trash"}]'>
+  </px-vis-pie-chart>
+
+<px-alert-message type="information" message-title="Well done!" message="Thank you for visiting my page." auto-dismiss="0" action="dismiss" language="en"></px-alert-message>
+
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'addedcomponents-view',
+        init: function(){
+            // this is where you can do some initialization of your card
+        },
+        contextChanged: function(newContext, oldContext){
+            // this is where you will receive updates to the context
+        },
+        deckStateChanged: function(newDeckState, oldDeckState){
+            // this is where you will receive updates from other cards
+        },
+        behaviors: [px.card]
+    });
+
+</script>

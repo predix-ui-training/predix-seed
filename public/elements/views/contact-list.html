@@ -1,0 +1,148 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/px-modal/px-modal.html"/>
+<link rel="import" href="my-contact.html">
+
+<link rel="import" href="contact-list-styles.html">
+
+<dom-module id="contact-list">
+  
+  <template>
+
+  	<style include="contact-list-styles"></style>
+
+    <iron-ajax
+            id="deleteContactAJax"
+            url="https://jcmr-go-learning-contacts-svc2.run.aws-usw02-pr.ice.predix.io/api/v1/deletecontactlist"
+            last-response="{{contactList}}"
+            method= "POST"
+            loading="{{loading}}"
+            >
+                    
+    </iron-ajax>
+
+    <px-card chevron="true" header-text="Contacts" icon="fa-user">
+    <ul>
+      <template is="dom-repeat" items="{{contactList}}" as = "cons" sort="_sort" >
+
+          <li>
+              <img class = "img-circle" src="{{cons.image}}"style="width:100px;height:100px;" alt="">
+              <span> <my-contact name ="{{cons.name}}" email="{{cons.email}}" date = "{{cons.datetimestamp}}"> </my-contact></span>
+           
+              <px-modal
+                   btn-modal-positive="Continue"
+                   btn-modal-negative="Cancel"
+                   modal-heading="Delete Contacts">
+                   <button class="btn btn--bare modal-trigger" on-tap = "_getid">x
+                  </button>
+                 <p>
+                 <b>Are you sure you want to delete contact?</b>
+                 </p>
+                </px-modal>
+            
+          </li>
+          
+      </template>
+
+    </ul>
+    </px-card>
+</template>
+
+  <script>
+   Polymer({
+      is: 'contact-list',
+
+      properties: {
+
+        isMsg: {
+          type: Boolean,
+          value: false
+        },
+        loading: {
+          type: Boolean,
+          observer: 'isLoading'
+        },
+        contactid: String,
+          
+        contactList: {
+          type: Array,
+          value: function() {
+           return [
+              {
+            name: "Aldwin Tan Sy",
+            email: "aldwin.c.t.sy@accenture.com",
+            img: "https://fb-s-d-a.akamaihd.net/h-ak-xpt1/v/t1.0-1/p160x160/13239087_1091551554216243_7338569923553041542_n.jpg?oh=1e86a8e713abca8fdd83856d138f59e0&oe=597FCCFF&__gda__=1502939636_8da4bf5b39d1116b07813214675c7525"
+  
+              },
+              {
+            name: "Adoha Lei Blanco",
+            email: "adoha.lei.blanco@accenture.com",
+            img: "https://s-media-cache-ak0.pinimg.com/736x/57/ae/9a/57ae9a373318e844c4e5732f09e5acb8.jpg"
+        
+              },
+              {
+            name: "Peter John Olaño",
+            email: "peter.john.c.olano@accenture.com",
+            img: "https://fb-s-d-a.akamaihd.net/h-ak-fbx/v/t1.0-1/p160x160/16649184_1408049105880193_6077129296957146525_n.jpg?oh=453f5aaadc45591bb1ec20b3372c027c&oe=5978F0C1&__gda__=1501683567_ccc7e3cd7c208090d4a3d02b2cee49ef"
+      
+              },
+              {
+            name: "John Carlo Butil",
+            email:"john.carlo.m.butil@accenture.com",
+            img:"https://fb-s-b-a.akamaihd.net/h-ak-xlt1/v/t31.0-8/s960x960/17240048_1700310769984714_3867823040867421909_o.jpg?oh=7114f9c79ab817aef370d752ffef04a7&oe=5975479D&__gda__=1501497896_231616fd86bc1be43742f72f5ec0e63a"
+      
+              }
+            ]
+          }
+        }
+	    },
+        listeners: {
+             'btnModalPositiveClicked' : 'deleteItem'
+      
+      },
+
+      showMsg: function() {
+        
+        if(this.isMsg){
+          this.isMsg = false;
+        } else {
+          this.isMsg = true;
+        }
+
+      },
+         isLoading: function(){
+        console.log("isLoading : " + this.loading);
+        if(!this.loading){
+          this.fire('delete-contact-completed');
+        }
+      },
+       _sort: function(item1, item2) { 
+        return item1.datetimestamp < item2.datetimestamp; 
+      },
+       deleteItem: function() {
+        console.log('Deleting');
+         let tempContact = new Object();
+         tempContact.id=this.contactid
+        console.log("Request Body : " + JSON.stringify(tempContact));
+        this.$.deleteContactAJax.body = JSON.stringify(tempContact);
+       this.$.deleteContactAJax.generateRequest();
+      },
+      //  _getIDParam:function() {
+      //    console.log("id = " +contactid);
+      //  return {
+      //    id:contactid
+      //    }
+      // },
+      _getid:function(e){
+        var model = e.model
+        this.contactid = model.cons.id
+        console.log("IDTriggered = " +this.contactid)
+      },
+      ready: function() {
+        console.log('contactlist-view ready()')
+      }
+    });
+  </script>
+</dom-module>
+
+

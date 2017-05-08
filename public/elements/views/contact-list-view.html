@@ -1,0 +1,68 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-widget-cards/px-twoup.html">
+<link rel="import" href="contact-list.html">
+<link rel="import" href="add-contact.html">
+<link rel="import" href="contact-list-view-styles.html">
+
+<dom-module id="contact-list-view">
+  
+  <template>
+
+  <iron-ajax
+            id="getContactAJax"
+            url="https://jcmr-go-learning-contacts-svc2.run.aws-usw02-pr.ice.predix.io/api/v1/contactlists"
+            method= "GET"
+            last-response="{{contactList}}"
+            auto
+            >
+            
+    </iron-ajax>
+
+  	<style></style>
+    <px-twoup id="widget-2" widget-header="Contact List" widget-icon="fa-users"><div class='widget-1'>
+        <add-contact contact="{{contact}}"></add-contact>
+      </div>
+      <div class='widget-2' >
+        <contact-list contact-list="{{contactList}}"></contact-list>
+      </div>
+    </px-twoup>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'contact-list-view',
+
+      properties: {
+
+            contact:{
+                type: Object,
+                value: function(){
+                    return {
+                        name: 'Dafault',
+                        email: 'Default@gmail.com'
+                    }
+                }
+            },
+            contactList: {
+                type: Array
+            }
+	    },
+
+      listeners: {
+        'add-contact-completed' : 'triggerGetContactAjax',
+        'delete-contact-completed' : 'triggerGetContactAjax'
+      },
+      triggerGetContactAjax: function() {
+            console.log("Contact" + JSON.stringify(this.contact));
+            this.$.getContactAJax.generateRequest();
+      },
+  
+  	  ready: function(){
+  	  	console.log("contact-list-view ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

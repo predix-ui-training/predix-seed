@@ -1,0 +1,130 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="/bower_components/px-widget-cards/px-twoup.html"/>
+<link rel="import" href="my-contact.html">
+
+<link rel="import" href="add-contact-styles.html">
+
+<dom-module id="add-contact">
+  
+  <template>
+<form>
+    <style include="add-contact-styles"></style>
+
+    <iron-ajax
+      id="postContactAjax"
+      url="https://jcmr-go-learning-contacts-svc2.run.aws-usw02-pr.ice.predix.io/api/v1/contactlist"
+      last-response="{{contacts}}"
+      loading="{{loading}}"
+      method="POST"
+    >
+    </iron-ajax>
+    
+    <px-card chevron="true" header-text="Add Contact" icon="fa-user-plus">
+
+    <label>Name:</label>
+
+    <px-dropdown value="{{selectedName}}" display-value="Select">
+      <px-dropdown-content 
+        class="px-dropdown-content" 
+        items='[{"key":"one", "val": "Naruto"}, {"key":"two", "val": "Saitama"}, {"key":"three", "val": "Luffy"}]'>
+      </px-dropdown-content>
+    </px-dropdown>
+
+    <br>
+
+    <label>Email: </label> <input type="text" value="{{email::input}}" placeholder="Insert Email Address" class="text-input">
+
+    <br>
+    <br>
+    <label>Image: </label> <input type="text" value="{{image::input}}" placeholder="Insert Image URL"class="text-input">
+    <br>
+    <br>
+
+    <button class="btn btn--tertiary style-scope local-element-demo" on-tap="addContact">Add</button>
+    <button class="btn btn--tertiary style-scope local-element-demo" on-tap="resetContact">Reset</button>
+</form>
+</px-card>
+
+<px-card chevron="true" header-text="New Contact" icon="fa-user-secret">
+
+          <template is="dom-if" if="{{onSubmit}}">
+             <li>
+              <span> <my-contact name ="{{selectedName}}" email="{{email}}"> </my-contact></span>
+               <label>Image</label>  <img class = "img-circle" src="{{image}}"style="width:100px;height:100px;" alt="">
+             <br> 
+             <br>
+                 <button class="btn btn--tertiary style-scope local-element-demo" on-tap="submitContact">Submit</button>
+          </li>
+      </template>
+ </template>
+
+</px-card>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'add-contact',
+
+      properties: {
+
+        selectedName: String,
+        email: String,
+        image: String,
+        loading: {
+          type: Boolean,
+          observer: 'isLoading'
+        }
+
+      },
+       onSubmit: {
+       type: Boolean,
+       notify: false
+      },
+
+      listeners: {
+        'px-modal-value-changed' : 'getSelectedName'
+      },
+
+      observers: [
+            'isLoading(loading)'
+        ],
+
+      isLoading: function(){
+        console.log("isLoading : " + this.loading);
+        if(!this.loading){
+          this.fire('add-contact-completed');
+        }
+      },
+      addContact: function() {
+          this.onSubmit=true
+      },
+      resetContact: function() {
+          this.onSubmit=false
+      },
+      
+      submitContact: function() {
+        let tempContact = new Object();
+        tempContact.name = this.selectedName;
+        tempContact.email = this.email;
+        tempContact.image = this.image;
+
+        console.log("Request Body : " + JSON.stringify(tempContact));
+
+        this.$.postContactAjax.body = JSON.stringify(tempContact);
+        this.$.postContactAjax.generateRequest();
+
+      },
+
+      getSelectedName: function() {
+        console.log("Selected name : " + this.selectedName);
+      },
+
+  	  ready: function(){
+  	  	console.log("add-contact ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

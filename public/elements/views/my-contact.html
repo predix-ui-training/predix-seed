@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-contact">
+  
+  <template>
+
+  	<div>Name: {{name}}</div>
+    <div>Email: <a href = "{{email}}" >{{email}}</a></div>
+    <div>{{date}}</div>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-contact',
+
+      properties: {
+        id: {
+          type: String
+        },
+        name: {
+          type: String
+        },
+
+        email: {
+          type: String
+        },
+
+        image:{
+            type: String
+        },
+        date:{
+            type: String
+        }
+		
+	  },
+
+	  ready: function(){
+	  	//console.log("my-person ready()");
+	  }
+	  
+    });
+  </script>
+</dom-module>
+
