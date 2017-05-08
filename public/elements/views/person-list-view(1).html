@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-widget-cards/px-twoup.html">
+<link rel="import" href="person-list.html">
+<link rel="import" href="add-person.html">
+
+<link rel="import" href="person-list-view-styles.html">
+
+<dom-module id="person-list-view">
+  
+  <template>
+
+  	<style></style>
+
+    <px-twoup id="widget-2" widget-header="Persons" widget-icon="fa-paper-plane">
+      <div class='widget-1'>
+        <add-person></add-person>
+      </div>
+      <div class='widget-2'>
+        <person-list></person-list>
+      </div>
+    </px-twoup>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'person-list-view',
+
+      properties: {
+
+       
+	    },
+
+      listeners: {
+        'add-person-completed' : 'showLog'
+      },
+
+      showLog: function() {
+        console.log("showLog triggered..");
+      },
+
+  	  ready: function(){
+  	  	console.log("person-list-view ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

@@ -1,0 +1,36 @@
+ 
+    $inuit-enable-btn--icon : true;
+@import 'px-buttons-design/_objects.buttons.scss';
+
+
+    
+    li {
+        display: flex;
+        padding: 20px;
+        width: 50%;
+    }
+    li + li {
+        border-top: solid 1px #666
+    }
+
+    li img {
+        border-radius: 40%;
+        margin-right: 40px;
+        width: 100px;
+        height: 80px;
+    }
+     h3 {
+        margin: 0 40px 0 0;
+        line-height: 80px;      
+     }
+     li span {
+         line-height: 80px;
+        padding: 10px;
+         display: flex;
+       
+     }
+    
+     #navlist li { 
+    width: auto;
+    float: left;
+    }

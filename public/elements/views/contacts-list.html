@@ -1,0 +1,101 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-polymer-font-awesome/px-polymer-font-awesome.html"/>
+<link rel="import" href="../../bower_components/paper-button/paper-button.html"/>
+<link rel="import" href="../../bower_components/px-modal/px-modal.html"/>
+<link rel="import" href="contacts-view.html">
+<link rel="import" href="person-list-styles.html">
+<link rel="import" href="contact-list-styles.html">
+
+
+<dom-module id="contacts-list">
+ 
+  <template>
+
+     <iron-ajax
+      id="deletePersonAjax"
+      url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/deletecontacts"
+      params='{{_getParams(personId)}}'
+      loading="{{loading}}"
+      method="POST"
+    >
+    </iron-ajax>
+	<style include="contact-list-styles"></style>
+    <ul id="navlist">
+      <template is="dom-repeat" items="{{personList}}" sort ="_computeSort">
+      <li>
+         <img src = "{{item.image}}"/>        
+        <span> <h3>{{item.name}}</h3> </span>
+        <span> <a href={{item.email}}>{{item.email}}</a></span>
+        <span>{{item.dateTimeStamp}}</span>  
+    <px-modal btn-modal-positive="Proceed" btn-modal-negative="Cancel"><button class='btn btn--primary modal-trigger btn btn--icon' on-tap = "getId"><i class="fa fa-times"></i></button>
+     <p>Are you sure you want to delete?</p></px-modal>    
+     </li>
+    </template>   
+   </ul>
+ </template>
+
+</dom-module>
+  <script>
+    
+    Polymer({
+      is: 'contacts-list',
+      personId : String,
+      properties: {
+         access_token: String,
+        image: {
+          type: String
+        },
+        date: {
+          type: String
+        },
+        personList: {
+          type: Array,      
+        },
+        loading: {
+          type: Boolean
+        }
+      },     
+      
+       listeners: {
+        'btnModalPositiveClicked' : 'deleteContactId'
+        },
+         observers: [
+        'isLoading(loading)'
+      ],
+       _getParams(personId){
+        return{
+          id: personId
+        }
+      },
+      getId: function(e){
+        var model = e.model
+        this.personId = model.item.id
+        console.log("id",model.item.id)
+      },
+      deleteContactId: function(){        
+        this.$.deletePersonAjax.generateRequest();
+        console.log("deleteContact");
+      
+      },
+      deleteContact: function(){
+          this.getId
+          this.$.deletePersonAjax.generateRequest();
+          console.log("deleteContact");
+      },
+     
+      _computeSort: function(a, b) {
+      if (a.dateTimeStamp == b.dateTimeStamp) {
+        return 0;
+      }
+      return a.dateTimeStamp> b.dateTimeStamp ? -1 : 1;
+    },
+       isLoading: function(loading){
+        console.log("isLoading : " + loading);
+        if(!loading){
+          this.fire('delete-person-completed');
+        }
+      }
+
+    });
+
+  </script>

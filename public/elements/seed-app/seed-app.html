@@ -74,6 +74,28 @@
             element-href="/elements/views/blankpage-view.html">
           </px-view>
 
+           <!-- /addComponents route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/addedComponents"
+            active="{{_addedComponentsActive}}">
+          </app-route>
+          <px-view
+            active="[[_addedComponentsActive]]"
+            element-href="/elements/views/addedComponents-view.html">
+          </px-view>
+
+           <!-- /addComponents route and view -->
+          <app-route
+            route="[[_route]]"
+            pattern="/contactsView"
+            active="{{_contactsViewActive}}">
+          </app-route>
+          <px-view
+            active="[[_contactsViewActive]]"
+            element-href="/elements/views/contacts-view.html">
+          </px-view>
+
           <!-- /winddata route and view -->
           <app-route
             route="[[_route]]"
@@ -123,9 +145,20 @@
               "label": "Dashboards",
               "path": "/dashboards",
               "icon": "fa-tachometer"
-            }, {
+            }, 
+            {
               "label": "Blank Page",
               "path": "/blankpage",
+              "icon": "fa-file"
+            },
+            {
+              "label": "Added Components Page",
+              "path": "/addedComponents",
+              "icon": "fa-line-chart"
+            },
+            {
+              "label": "Contacts Page",
+              "path": "/contactsView",
               "icon": "fa-file"
             }
             /*

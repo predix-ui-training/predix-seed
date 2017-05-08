@@ -1,0 +1,109 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="my-person.html">
+
+<link rel="import" href="person-list-styles.html">
+
+<dom-module id="person-list">
+  
+  <template>
+
+  	<style include="person-list-styles"></style>
+
+    </iron-ajax>
+
+    <h3>Persons List</h3>
+
+    <ul>
+      <template is="dom-repeat" items="{{personList}}" as="person">
+        <li>
+          <my-person name="{{ .name}}" email="{{person.email}}"></my-person>
+        </li>
+      </template>
+    </ul>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'person-list',
+
+      properties: {
+
+        isMsg: {
+          type: Boolean,
+          value: false
+        },
+
+        firstName: {
+          type: String,
+          value: "Jon"
+        },
+
+        lastName: {
+          type: String,
+          value: "Doe"
+        },
+
+        fullName: {
+          type: String,
+          computed: 'computeFullname(firstName)'
+        },
+
+        person: {
+          type: Object,
+          value: function() {
+            return {
+              name: 'Jay',
+              email: 'jay@yahoo.com',
+              age: 50
+            }
+          }
+        },
+
+        personList: {
+          type: Array,
+          value: function() {
+           return [
+              {
+                name: 'Jay',
+                email: 'jay@yahoo.com',
+                age: 50
+              },
+              {
+                name: 'Jack',
+                email: 'jack@yahoo.com',
+                age: 22
+              },
+              {
+                name: 'Keith',
+                email: 'keith@yahoo.com',
+                age: 50
+              }
+            ]
+          }
+        }
+	    },
+
+      showMsg: function() {
+        
+        if(this.isMsg){
+          this.isMsg = false;
+        } else {
+          this.isMsg = true;
+        }
+
+      },
+
+      computeFullname: function(firstName) {
+        return firstName + ' ' + this.lastName;
+      },
+
+  	  ready: function(){
+  	  	//console.log("person-list ready()");
+        this.lastName = "Doe";
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

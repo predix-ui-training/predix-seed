@@ -1,0 +1,15 @@
+$inuit-enable-btn--tertiary: true;
+$inuit-enable-btn--primary : true;
+@import 'px-buttons-design/_objects.buttons.scss';
+@import 'px-forms-design/_base.forms.scss';
+
+div {
+        background-color: pink;
+}
+
+px-dropdown {
+	--px-dropdown-bg-color--default : white;
+}
+
+
+

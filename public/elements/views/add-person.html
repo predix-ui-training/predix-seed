@@ -1,0 +1,101 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="add-person-styles.html">
+
+<dom-module id="add-person">
+  
+  <template>
+
+    <style include="add-person-styles"></style>
+
+    <iron-ajax
+      id="postPersonAjax"
+      url="https://mtl-ironajaxactivity-app.run.aws-usw02-pr.ice.predix.io/api/v1/postcontactlist"
+      last-response="{{response}}"
+      loading="{{loading}}"
+      method="POST"
+    >
+    </iron-ajax>
+
+    <h3>Add Persons</h3>
+
+    <label>Name:</label>
+
+    <div style="width: 30%">
+      <px-dropdown value="{{selectedName}}" display-value="Select">
+        <px-dropdown-content 
+          class="px-dropdown-content" 
+          items='[{"key":"one", "val": "Harry"}, {"key":"two", "val": "James"}, {"key":"three", "val": "Matt"}]'>
+        </px-dropdown-content>
+      </px-dropdown>
+      <br>
+          <label>Email: </label> <input type="text" value="{{email::input}}" class="text-input">
+      <br>
+      <br>
+    <div>
+    <button class="btn btn--tertiary style-scope local-element-demo" on-tap="addPerson">Add</button>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'add-person',
+
+      properties: {
+
+        selectedName: String,
+        email: String,
+        loading: {
+          type: Boolean/*,
+          observer: 'isLoading'*/
+        },
+        person: {
+          type: Object,
+          notify: true
+        }
+
+      },
+
+      listeners: {
+        'px-dropdown-value-changed' : 'getSelectedName'
+      },
+
+      observers: [
+        'isLoading(loading)'
+      ],
+
+      isLoading: function(loading){
+        console.log("isLoading : " + loading);
+        if(!loading){
+          this.fire('add-person-completed');
+        }
+      },
+
+      addPerson: function() {
+        let tempPerson = new Object();
+        tempPerson.name = this.selectedName;
+        tempPerson.email = this.email;
+
+        console.log("Request Body : " + JSON.stringify(tempPerson));
+
+        this.person = tempPerson;
+        this.$.postPersonAjax.body = JSON.stringify(tempPerson);
+        this.$.postPersonAjax.generateRequest();
+
+      },
+
+      getSelectedName: function() {
+        console.log("Selected name : " + this.selectedName);
+        this.email = this.selectedName;
+      },
+
+  	  ready: function(){
+  	  	console.log("add-person ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

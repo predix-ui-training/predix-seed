@@ -1,0 +1,74 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-widget-cards/px-twoup.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="person-list.html">
+<link rel="import" href="add-person.html">
+
+<link rel="import" href="person-list-view-styles.html">
+
+<dom-module id="person-list-view">
+  
+  <template>
+
+  	<style></style>
+
+     <iron-ajax
+      id="getPersonsAJax"
+      url="https://mtl-ironajaxactivity-app.run.aws-usw02-pr.ice.predix.io/api/v1/contactlist"
+      last-response="{{response}}"
+      method="GET"
+      auto
+    >
+    </iron-ajax>
+
+    <px-twoup id="widget-2" widget-header="Persons" widget-icon="fa-paper-plane">
+      <div class='widget-1'>
+        <add-person person="{{person}}"></add-person>
+      </div>
+      <div class='widget-2'>
+        <person-list person-list={{response}}></person-list>
+      </div>
+    </px-twoup>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'person-list-view',
+
+      properties: {
+
+        person: {
+          type: Object,
+          value: function() {
+            return {
+              name: 'Default',
+              email: 'Default@yahoo.com'
+            }
+          }
+	     },
+
+       response: {
+          type: Array
+        }
+      },
+
+      listeners: {
+        'add-person-completed' : 'triggerGetPersonsAjax'
+      },
+
+      triggerGetPersonsAjax: function() {
+        console.log("Person " + JSON.stringify(this.person));
+        //this.push('response', this.person);
+        this.$.getPersonsAJax.generateRequest();
+
+      },
+
+  	  ready: function(){
+  	  	console.log("person-list-view ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

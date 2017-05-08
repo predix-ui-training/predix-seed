@@ -1,0 +1,65 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-widget-cards/px-twoup.html">
+<link rel="import" href="contacts-list.html">
+<link rel="import" href="contacts-add.html">
+<link rel="import" href="add-person.html">
+<link rel="import" href="person-list.html">
+
+
+
+<dom-module id="contacts-view">
+
+  <style>
+
+  </style>
+   <template>
+
+      <iron-ajax
+      id="getPersonsAJax"
+      url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
+      last-response="{{response}}"
+      method="GET"
+      auto
+    >
+    </iron-ajax>
+
+     <px-twoup id="widget-2" widget-header="Persons" widget-icon="fa-paper-plane">
+      <div class='widget-1'>
+      
+        <contacts-add person={{person}}></contacts-add>
+      </div>
+      <div class='widget-2'>   
+          <contacts-list person-list={{response}}></contacts-list>
+      </div>
+    </px-twoup>   
+  </template>
+
+  <script>
+    Polymer({
+      is: 'contacts-view',
+      properties: {
+         person: {
+          type: Object
+	     },     
+       response: {
+          type: Array
+        }
+      },
+
+      listeners: {
+        'add-person-completed' : 'triggerGetPersonsAjax',       
+        'delete-person-completed' : 'triggerGetPersonsAjax'
+     
+      },
+       triggerGetPersonsAjax: function() {
+        console.log("Person " + JSON.stringify(this.person));
+       // this.push('response', this.person);
+        this.$.getPersonsAJax.generateRequest();
+
+      },
+      ready: function() {
+        console.log('contacts-view ready()')
+      }
+    });
+  </script>
+</dom-module>
