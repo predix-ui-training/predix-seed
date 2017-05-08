@@ -22,7 +22,7 @@
   <h4> **all fields are required</h4>
 
    
-  <label>Name:<px-dropdown value="{{selectedName}}" display-value="{{defaultValue}}">
+  <label><template is="dom-if" if="{{noName}}"><h4>*</h4></template>Name:<px-dropdown value="{{selectedName}}" display-value="{{defaultValue}}">
       <px-dropdown-content class="px-dropdown-content" 
          items='[{"key":"one", "val": "Addison"},
         {"key":"two", "val": "Elijah"}, 
@@ -34,13 +34,16 @@
         </px-dropdown> 
       </label>
     </div>
-    <label><span>Email: <br>  <input type="text" class="text-input input--small" value="{{email::input}}" placeholder="Input email..." on-blur="validateEmail">  
+    <template is="dom-if" if="{{isEmailValid}}">
+    <label><span><template is="dom-if" if="{{noEmail}}"><h4>*</h4></template>Email: <br>  <input type="text" class="text-input input--small" value="{{email::input}}" placeholder="Input email..." on-blur="validateEmail">  
+     </template>
         <template is="dom-if" if="{{!isEmailValid}}">
+          <label><span><template is="dom-if" if="{{noEmail}}"><h4>*</h4></template>Email: <br>  <input type="text" class="text-input input--small validation-error" value="{{email::input}}" placeholder="Input email..." on-blur="validateEmail">  
          <h4>Invalid email, please try again</h4>
         </template>
         </span>
        </label>
-    <label>Image: <br>  <input type="text" class="text-input input--regular" value="{{image::input}}" placeholder="Input image url..."></label>
+    <label><template is="dom-if" if="{{noImage}}"><h4>*</h4></template>Image: <br><input type="text" class="text-input input--regular" value="{{image::input}}" placeholder="Input image url..."></label>
     <br>
 
     <button class="btn btn--primary" on-tap="addPerson">Add</button>
@@ -118,6 +121,24 @@
         isEmailValid: {
           type: Boolean,
           value: true
+        },
+
+        //no selected name
+         noName: {
+          type: Boolean,
+          value: false
+        },
+
+        //no email input
+        noEmail: {
+          type: Boolean,
+          value: false
+        },
+
+        //no image input
+        noImage: {
+          type: Boolean,
+          value: false
         }
       },
 
@@ -139,11 +160,33 @@
 
       addPerson: function() {
      
-          if(this.selectedName == "Select" || this.email == "" || this.image == "" || this.image == "undefined") {
-            this.addError = true;
-          } else {
-            this.addError = false;
+          // if(this.selectedName == "Select" || this.email == "" || this.image == "" || this.image == "undefined") {
+          //   this.addError = true;
+          // } else {
+          //   this.addError = false;
+          // } 
+
+          this.addError = true;
+          this.noName = false;
+          this.noEmail = false;
+          this.noImage = false;
+          if(this.selectedName == "Select") {
+            console.log("selectedName")
+            this.noName = true;
           }
+          if (this.email == "" || this.email == undefined) {
+            console.log("NO EMAIL")
+            this.noEmail = true;
+          } 
+          if (this.image == "" || this.image == undefined) {
+            console.log("NO IMAGE")
+            this.noImage = true;
+          } 
+
+          if(!this.noName && !this.noEmail && !this.noImage ) {
+             this.addError = false;
+          }
+
 
           if (this.displayDetails == false) {
             this.displayDetails = true 
@@ -153,6 +196,9 @@
       },
 
       resetPerson: function() {
+          this.noName = false;
+          this.noImage = false;
+          this.noEmail = false;
           this.displayDetails = false;
           this.addError = false;
           this.isEmailValid = true;
@@ -185,13 +231,8 @@
         var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ;
         var pattern = new RegExp(emailRegex)
         this.isEmailValid =  pattern.test(this.email);
-        console.log("is email invalid?" + this.isEmailValid);
-
-        if (this.isEmailValid == false) {
-          this.email = ""
-        }
       
-      } ,
+       } ,
 
       getSelectedName: function() {
         //close add window if open
@@ -200,8 +241,7 @@
         }
 
         //enable add button
-        this.disableAddButton = false;
-
+        this.disableAddButton = false
         console.log("Selected name : " + this.selectedName);
       },
 
