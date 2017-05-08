@@ -1,31 +1,12 @@
 
-div {
-        background-color: pink;
-}
- .img-circle {
-    border-radius: 50%;
+div{
+    background-color: lightgoldenrodyellow
+    }
+    px-twoup {
+        --px-card-background-color: lightyellow;
+        --px-card-border-color: blue;
+        --px-widget-boarder-color: blue;
     }
 
-    ul {
-      list-style: none;
-    }
-    li {
-      display: flex;
-      margin-bottom: 60px; 
-    }
-    li + li {
 
-        border-top: solid 1px #665;
-        margin-top: 50px;
-      
-    }
-    li img {
-      margin-right: 10px;
-    }
-    h3 {
-      line-height: 0 40px 0 0px;
-      margin: 40px;
-    }
-    li span {
-      line-height: 30px
-    }
+ 

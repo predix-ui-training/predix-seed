@@ -1,18 +1,19 @@
 $inuit-enable-btn--tertiary: true;
 @import 'px-buttons-design/_objects.buttons.scss';
 @import 'px-forms-design/_base.forms.scss';
-$inuit-btn-background : $blue3;
+//$inuit-btn-background : blue3;
 @import "px-buttons-design/_objects.buttons.scss";
 
-px-dropdown {
-	--px-dropdown-bg-color--default : white;
+px-dropdown-content{
+	--px-dropdown-bg-color--hover: lightblue;
 }
 
+px-card {
+--px-card-background-color: lightyellow;
+--px-card-border-color: blue;
+
+}
 .img-circle {
     border-radius: 50%;
 }
-
-
-
-
 

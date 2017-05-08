@@ -51,7 +51,8 @@
           <template is="dom-if" if="{{onSubmit}}">
              <li>
               <span> <my-contact name ="{{selectedName}}" email="{{email}}"> </my-contact></span>
-               <label>Image</label>  <img class = "img-circle" src="{{image}}"style="width:100px;height:100px;" alt="">
+               <label>Image</label>  
+               <img align = "center" class = "img-circle" src="{{image}}"style="width:100px;height:100px;" alt="">
              <br> 
              <br>
                  <button class="btn btn--tertiary style-scope local-element-demo" on-tap="submitContact">Submit</button>
@@ -65,9 +66,7 @@
   <script>
     Polymer({
       is: 'add-contact',
-
       properties: {
-
         selectedName: String,
         email: String,
         image: String,
@@ -75,21 +74,17 @@
           type: Boolean,
           observer: 'isLoading'
         }
-
       },
        onSubmit: {
        type: Boolean,
        notify: false
       },
-
       listeners: {
         'px-modal-value-changed' : 'getSelectedName'
       },
-
-      observers: [
+      observers: [
             'isLoading(loading)'
         ],
-
       isLoading: function(){
         console.log("isLoading : " + this.loading);
         if(!this.loading){
@@ -108,18 +103,13 @@
         tempContact.name = this.selectedName;
         tempContact.email = this.email;
         tempContact.image = this.image;
-
         console.log("Request Body : " + JSON.stringify(tempContact));
-
         this.$.postContactAjax.body = JSON.stringify(tempContact);
         this.$.postContactAjax.generateRequest();
-
       },
-
       getSelectedName: function() {
         console.log("Selected name : " + this.selectedName);
       },
-
   	  ready: function(){
   	  	console.log("add-contact ready()");
   	  }
@@ -127,4 +117,3 @@
     });
   </script>
 </dom-module>
-
