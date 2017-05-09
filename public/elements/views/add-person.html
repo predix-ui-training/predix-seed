@@ -159,34 +159,24 @@
       },
 
       addPerson: function() {
-     
-          // if(this.selectedName == "Select" || this.email == "" || this.image == "" || this.image == "undefined") {
-          //   this.addError = true;
-          // } else {
-          //   this.addError = false;
-          // } 
-
+    
           this.addError = true;
           this.noName = false;
           this.noEmail = false;
           this.noImage = false;
           if(this.selectedName == "Select") {
-            console.log("selectedName")
             this.noName = true;
           }
           if (this.email == "" || this.email == undefined) {
-            console.log("NO EMAIL")
             this.noEmail = true;
           } 
           if (this.image == "" || this.image == undefined) {
-            console.log("NO IMAGE")
             this.noImage = true;
           } 
 
           if(!this.noName && !this.noEmail && !this.noImage ) {
              this.addError = false;
           }
-
 
           if (this.displayDetails == false) {
             this.displayDetails = true 
@@ -231,6 +221,10 @@
         var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ;
         var pattern = new RegExp(emailRegex)
         this.isEmailValid =  pattern.test(this.email);
+
+        if (this.isEmailValid == false) {
+          this.email = ""
+        }
       
        } ,
 
