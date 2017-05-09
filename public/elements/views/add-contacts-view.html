@@ -111,7 +111,10 @@
         console.log("Selected name : " + this.selectedName);
         console.log("Email: "+ this.email);
         console.log("Image URL: "+ this.image);
-        if (this.email=="" || this.email==null || this.email=="" || this.email==null || this.image==null || this.image=="") {
+        var x = this.email;
+        var atpos = x.indexOf("@");
+        var dotpos = x.lastIndexOf(".");
+        if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length || this.email=="" || this.email==null || this.email=="" || this.email==null || this.image==null || this.image=="") {
          return this.addTriggered = false;
        } else if(this.$.dropDown.displayValue == "Select Name"){
          return this.addTriggered = false;
