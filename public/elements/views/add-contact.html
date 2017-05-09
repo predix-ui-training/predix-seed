@@ -24,15 +24,15 @@
   <px-card header-text="New Contact" icon="fa-user-plus" chevron>
   <form>
     <label for="name">Name:</label>
-    <px-dropdown value="{{selectedName}}"display-value="Select">
-        <px-dropdown-content class="px-dropdown-content" items='[{"key":"1","val":"Peter"},{"key":"2","val":"Aldwin"},{"key":"3","val":"Jess"},{"key":"4","val":"Pat"}]'>
+    <px-dropdown id='selectName' value="{{selectedName}}"display-value="Select">
+        <px-dropdown-content class="px-dropdown-content" items='[{"key":"1","val":"Peter John"},{"key":"2","val":"Aldwin"},{"key":"3","val":"Jessica"},{"key":"4","val":"Patrick"}]'>
         </px-dropdown-content>
     </px-dropdown>
 
     <br>
     
     <label for="email1">Email: </label>
-    <input id="email1" value="{{email::input}}"  placeholder="Type email address..." class="text-input input--regular" type="text" >
+    <input id="email1" value="{{email::input}}"  placeholder="Type email address..." class="text-input input--regular" type="email">
     
     <br>
     <label for="image1">Image: </label>
@@ -91,7 +91,33 @@
         console.log("Selected name: "+ this.selectedName);
       },
       _submitContact: function(){
-        this.submitPressed=true;
+        var inputEmail,inputURL,inputName;
+        inputName = document.getElementById("selectName").value;
+        inputEmail = document.getElementById("email1").value;
+        var atpos = inputEmail.indexOf("@");
+        var dotpos = inputEmail.lastIndexOf(".");
+
+        inputURL= document.getElementById("image1").value;
+        // this.submitPressed=true;
+        if(inputName=="Select"){
+          console.log("Select name");
+          alert("Please select a name");
+          this.submitPressed=false;
+        }else if(inputEmail==""){
+          console.log("Email is empty");
+          alert("Please input an email");
+          this.submitPressed=false;
+        }else if(atpos<1 || dotpos<atpos+2 || dotpos+2>=inputEmail.length){
+          console.log("Invalid email address");
+          alert("Invalid e-mail address");
+          this.submitPressed=false;
+        }else if(inputURL==""){
+          console.log("Image URL is empty");
+          alert("Please input an image url");
+          this.submitPressed=false;
+        }else{
+          this.submitPressed=true;
+        }   
       },
       _resetContact: function(){
          this.submitPressed=false;
