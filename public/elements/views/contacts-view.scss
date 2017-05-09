@@ -14,7 +14,8 @@ div {
     }
     li {
       display: flex;
-      margin-bottom: 40px; 
+      margin-top: 20px; 
+      margin-bottom: 20px; 
       padding: 20px;
     }
     li img {
@@ -22,10 +23,10 @@ div {
       margin-right: 40px;
     }
     li span{
-        line-height: 30px;
+        line-height: 10px;
     }
     li + li {
-        border-top: solid 1px gray;
+        border-top: solid 3px coral;
     }
     h3{
         margin: 0 10px 0 0;

@@ -14,8 +14,15 @@ div {
 
 px-dropdown {
 	--px-dropdown-bg-color--default : lightskyblue;
-    --px-dropdown-bg-color : white;
+    --px-dropdown-bg-color : lightblue;
+    --px-dropdown-chevron-color : salmon;
+    --px-dropdown-chevron-color--hover : salmon;
+    --px-dropdown-chevron-color--pressed : salmon;
+    --px-dropdown-chevron-color--opened : salmon;
+    
 }
+
+
 
 px-card{
     --px-card-background-color : lightskyblue;

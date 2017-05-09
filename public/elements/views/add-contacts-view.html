@@ -24,11 +24,14 @@
 
         <form>
          <label>Name:</label>
-         <px-dropdown value="{{selectedName}}" display-value="Select Name">
+         <px-dropdown id="dropDown" value="{{selectedName}}" display-value="Select Name" selected-key="{{selectedKey}}">
                
           <px-dropdown-content 
                class="px-dropdown-content" 
-               items='[{"key":"one", "val": "Naruto Uzumaki"}, {"key":"two", "val": "Sasuke Uchiha"}, {"key":"three", "val": "Sakura Haruno"}, {"key":"four", "val": "Kakashi Hatake"}]'>
+               items='[{"key":"one", "val": "Naruto Uzumaki"},
+                       {"key":"two", "val": "Sasuke Uchiha"},
+                       {"key":"three", "val": "Sakura Haruno"}, 
+                       {"key":"four", "val": "Kakashi Hatake"}]'>]'>
           </px-dropdown-content>
          </px-dropdown>
          <br>
@@ -37,7 +40,7 @@
           <input type="email" id="Email" name="email" placeholder="Enter a valid email address" value="{{email::input}}" class="text-input input--small" required>
          <br><br>
           <label for="Image">Image:</label>
-          <input type="text" id="Image" name="image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input input--small"pattern="https?://.+"  required>
+          <input type="text" id="Image" name="image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input input--small" pattern="https?://.+"  required>
           <br><br>
          </div>
           <button class="btn btn--primary" on-tap="addContact">Add</button>
@@ -67,6 +70,8 @@
       is: 'add-contacts-view',
 
       properties: {
+        displayValue: String,
+        selectedKey: String, 
         selectedName: String,
         email: String,
         image: String,
@@ -84,7 +89,9 @@
        },
 
        listeners: {
+        'submit-completed': 'clearAll',
         'px-dropdown-value-changed' : 'getSelectedName'
+        
       },
       
 
@@ -101,14 +108,15 @@
 
       addContact: function() {
         console.log("Adding Contact.....");
+        console.log("Selected name : " + this.selectedName);
         console.log("Email: "+ this.email);
-        console.log("Image URL: "+ this.email);
-        if (this.email=="" || this.email==null || this.email=="" || this.email==null)
-       {
-         alert("Please Fill All Required Field");
-         return false;
-       }else{
-           return this.addTriggered = true;
+        console.log("Image URL: "+ this.image);
+        if (this.email=="" || this.email==null || this.email=="" || this.email==null || this.image==null || this.image=="") {
+         return this.addTriggered = false;
+       } else if(this.$.dropDown.displayValue == "Select Name"){
+         return this.addTriggered = false;
+       }else {
+         return this.addTriggered = true;
        }
        
       },
@@ -122,10 +130,21 @@
         this.contact = tempContact
         this.$.postContactAjax.body = JSON.stringify(tempContact);
         this.$.postContactAjax.generateRequest();
+        this.fire('submit-completed');
+        return this.addTriggered = false;
+      },
+
+      clearAll: function() {
+        console.log("clearing..")
+        this.$.dropDown.displayValue = "Select Name";
+        this.email = null;
+        this.image = null;
       },
 
       resetTriggered: function() {
         console.log("Reset.....");
+        console.log("Resetting DropDown.....");
+        this.$.dropDown.displayValue = "Select Name";
         this.email = null;
         console.log("Email: "+ this.email);
         this.image = null;
