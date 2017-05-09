@@ -10,13 +10,13 @@
     <style include="contact-list-view-styles"></style>   
     <iron-ajax 
         id="getContactsAJax" 
-        url="http://localhost:8080/api/v1/contacts"
+        url="https://go-learning-session-svc2-kaloy-ui.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
         last-response="{{response}}" 
         method="GET" 
         auto
     ></iron-ajax>
 
-    <px-twoup id="widget-2" widget-header="Contact List:" widget-icon="fa-phone-square">
+    <px-twoup id="widget-2" widget-header="Contact List:" widget-icon="fa-phone">
       <div class='widget-1'>
         <add-contact contact={{contact}}></add-contact>
       </div>

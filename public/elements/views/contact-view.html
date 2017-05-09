@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/px-table-view/px-table-view.html">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 <link rel="import" href="../../bower_components/px-card/px-card.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="contact-view-styles.html">
@@ -16,7 +16,7 @@
 
     <iron-ajax 
         id="deleteContactAjax" 
-        url="http://localhost:8080/api/v1/delete-contact"
+        url="https://go-learning-session-svc2-kaloy-ui.run.aws-usw02-pr.ice.predix.io/api/v1/delete-contact"
         method="POST"
         params='{{_processParam(contactId)}}'
         loading="{{loading}}"
@@ -33,7 +33,7 @@
                     <div class="modal-div"> 
                         <px-modal btn-modal-positive="Confirm" btn-modal-negative="Cancel" on-tap="saveContactId" id="modalButton">
                             <button class='btn btn--bare modal-trigger'  >
-                                <iron-icon icon="fa:fa-times"></iron-icon>
+                                <iron-icon icon="fa:fa-trash"></iron-icon>
                             </button>
                             <p>Delete contact {{contact.name}} ?</p>
                             <div class="delete-div">

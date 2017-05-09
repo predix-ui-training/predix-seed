@@ -1,14 +1,46 @@
 
+$inuit-enable-btn--disabled : true;
 $inuit-enable-btn--primary : true;
-//$inuit-enable-btn--disabled : true;
+$inuit-enable-btn--small : true;
+$inuit-enable-btn--icon : true;
+$inuit-enable-btn--bare : true;
+$inuit-btn-background : $red;
 @import 'px-forms-design/_base.forms.scss';
 @import 'px-buttons-design/_objects.buttons.scss';
 
 
 px-dropdown {
 	--px-dropdown-bg-color--default : white;
-    width: 10px;
+    width: 250px;
     
+}
+
+.email-input {
+    display: flex;
+    padding-right: 50px;
+}
+
+.image-input {
+    display: flex;
+    padding-right: 50px;
+}
+
+.ddpt-div {
+    display: flex;
+    //padding-right: 50px;
+}
+
+.tooltipbtn-div {
+    height: 3px;
+}
+
+.tooltip-div {
+    line-height: 30px;
+    padding-left: 5%;
+}
+
+.tooltip-div button {
+    background-color: red;
 }
 
 .dropdown-div {
@@ -22,7 +54,7 @@ px-dropdown {
 }
 
 .image-div {
-    width: 500px;
+    width: 400px;
     margin-bottom: 20px;
 }
 
@@ -41,4 +73,9 @@ button {
 
 h4 {
     font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+.disabler {
+     opacity: 0.5;
+     //margin-bottom: -200px;
 }

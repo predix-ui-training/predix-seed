@@ -3,7 +3,7 @@
       
       .contacts-div {
           display: flex;
-          padding: 15px;
+          padding: 5px;
           border-top: solid 1px #666;
           /*border-right: solid 1px #666;
           border-left: solid 1px #666;
@@ -32,7 +32,7 @@
       h4 {
           margin: 0 20px 0 0;
           line-height: 80px;
-          font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+          //font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
           font-weight: lighter;
       }
       span {
@@ -46,6 +46,6 @@
 
       .modal-div {
           position:relative;
-          left: 7%;
+          right: 1%;
           line-height: 80px;
       }

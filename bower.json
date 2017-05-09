@@ -45,7 +45,9 @@
     "px-table-view": "^2.0.7",
     "px-modal": "^1.4.10",
     "iron-data-table": "^1.0.7",
-    "sass-web-fonts": "^2.0.1"
+    "sass-web-fonts": "^2.0.1",
+    "iron-icon": "polymerelements/iron-icon#^1.0.13",
+    "components-font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "px-forms-design": "^1.1.1",

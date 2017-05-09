@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
 <link rel="import" href="../../bower_components/px-modal/px-modal.html">
 <link rel="import" href="add-contact-styles.html">
+<link rel="import" href="../../bower_components/px-tooltip/px-tooltip.html">
 
 
 <dom-module id="add-contact">
@@ -11,7 +12,7 @@
 
     <iron-ajax
       id="postContactAjax"
-      url="http://localhost:8080/api/v1/contact"
+      url="https://go-learning-session-svc2-kaloy-ui.run.aws-usw02-pr.ice.predix.io/api/v1/contact"
       last-response="{{response}}"
       loading="{{loading}}"
       method="POST"
@@ -22,34 +23,65 @@
     
     <div class="dropdown-div">
         <label>Name:</label>
-        <px-dropdown id="dropDownList" value="{{selectedName}}" display-value="Select Name">
-        <px-dropdown-content 
-            class="px-dropdown-content" 
-            items='[{"key":"one", "val": "Kaloy"}, {"key":"two", "val": "Gia"}, {"key":"three", "val": "Daryl"}, {"key":"three", "val": "Sheila"}]'>
-        </px-dropdown-content>
-        </px-dropdown>
+        <div class="ddpt-div">
+            <px-dropdown id="dropDownList" value="{{selectedName}}" display-value="Select Name">
+              <px-dropdown-content 
+                  class="px-dropdown-content" 
+                  items='[{"key":"one", "val": "Kaloy"}, {"key":"two", "val": "Gia"}, {"key":"three", "val": "Daryl"}, {"key":"three", "val": "Sheila"}]'>
+              </px-dropdown-content>
+            </px-dropdown>
+
+          <template is="dom-if" if="{{isNameEmpty}}">
+            <div class="tooltip-div">
+              <px-tooltip for="btn1" delay="500" tooltip-message="{{tooltipNameMessage}}" orientation="auto" tooltip-style="dark">
+                </px-tooltip>
+                <!--<button id='btn1' class="btn btn--small btn--icon btn--bare" >i</button>-->
+                <i id="btn1" class="fa fa-info-circle"></i> 
+            </div>
+          </template>
+        </div>
+
     </div>
 
 
-    <label id="emailInput">Email:</label> 
-    <div class="email-div">
-        <input type="text" value="{{email::input}}" class="text-input">
-    </div>
+    <label id="emailInput">Email:</label>
+    <div class="email-input"> 
+      <div class="email-div">
+          <input type="text" value="{{email::input}}" class="text-input">
+      </div>
 
+      <template is="dom-if" if="{{isEmailEmpty}}">
+        <div class="tooltip-div">
+          <px-tooltip for="btn1" delay="500" tooltip-message="{{tooltipEmailMessage}}" orientation="auto" tooltip-style="dark">
+            </px-tooltip>
+              <!--<button id='btn1' class="btn btn--small btn--icon btn--bare" >i</button>-->
+              <i id="btn1" class="fa fa-info-circle"></i>
+        </div>
+      </template>
+
+    </div>
+    
 
     <label id="imageInput">Image:</label> 
-    <div class="image-div">
-        <input type="text" value="{{image::input}}" class="text-input">
+    <div class="image-input">
+      <div class="image-div">
+          <input type="text" value="{{image::input}}" class="text-input">
+      </div>
+
+      <template is="dom-if" if="{{isImageEmpty}}">
+        <div class="tooltip-div">
+          <px-tooltip for="btn1" delay="500" tooltip-message="{{tooltipImageMessage}}" orientation="auto" tooltip-style="dark">
+            </px-tooltip>
+            <!--<button id='btn1' class="btn btn--small btn--icon" >i</button>-->
+            <i id="btn1" class="fa fa-info-circle"></i> 
+        </div>
+      </template>
     </div>
+
 
     <div class="button-div">
         <button class="btn btn btn--primary style-scope local-element-demo" on-tap="showInputs">Add Contact</button>
         <button id="saveBtn" class="btn btn btn--primary style-scope local-element-demo" on-tap="saveContact">Submit</button>
-        <!--<px-modal btn-modal-positive="Confirm" btn-modal-negative="Cancel" id="modalButton">
-            <button class='btn btn--primary modal-trigger'>Submit</button>
-
-            <p>Delete contact {{contact.name}} ?</p>
-        </px-modal>-->
         <button class="btn btn--tertiary style-scope local-element-demo" on-tap="resetFields" >Reset</button>    
     </div>
     
@@ -88,6 +120,27 @@
             value: false
         },
 
+        isEmailEmpty: {
+            type: Boolean,
+            value: false
+        },
+
+        isNameEmpty: {
+            type: Boolean,
+            value: false
+        },
+
+        isImageEmpty: {
+            type: Boolean,
+            value: false
+        },
+
+        tooltipEmailMessage: String,
+
+        tooltipNameMessage: String,
+
+        tooltipImageMessage: String,
+
         response: {
           type: Array
         },
@@ -99,6 +152,11 @@
         contact: {
           type: Object,
           notify: true
+        },
+
+        isInputsValid : {
+          type: Boolean,
+          value: false
         }
       },
 
@@ -111,8 +169,10 @@
         this.email = undefined;
         this.image = undefined; 
         this.$.dropDownList.displayValue = "Select Name";
-        //this.selectedName = "";
+        this.selectedName = "Select Name";
         this.isAddBtnClicked = false;
+        return this.$.saveBtn.disabled=true, this.isEmailEmpty=false,
+                this.isImageEmpty=false, this.isNameEmpty=false;
         
       },
 
@@ -128,32 +188,169 @@
          
       },
 
+      validateEmailFormat: function(){
+           var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+           if(!re.test(this.email)){
+              this.tooltipEmailMessage = "Please input a valid email address."
+              console.log("Email is malformed...")
+              return false;
+           } else {
+             return true;
+           }
+      },
+
       validateInputs: function() {
         console.log("validateInputs triggered...")
 
-        if (this.email === undefined && this.image === undefined) {
-            alert("Please provide contact name, email and image..");
-            this.resetFields();
-            return true;
-        }else if( this.email === undefined && this.image !== undefined) {
-            alert("Please provide contact email address..");
-            this.resetFields();
-            return true;
-        }else if (this.email !== undefined && this.image === undefined) {
-            alert("Please provide contact image..");
-            this.resetFields();
-            return true;
-        }
+        if(this.selectedName === "Select Name" && this.email != undefined && this.image != undefined)  {
 
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        console.log("result: " , re.test(this.email))
-        if(!re.test(this.email)){
-            alert("Invalid email address..");
-            return true;
-        }
+            var isEmailValid = this.validateEmailFormat();
+
+            if(isEmailValid){
+              this.tooltipNameMessage = "Please select name."
+              console.log("Name is empty...")
+              this.resetFields();
+              return true, this.isNameEmpty = true;
+            } else {
+              this.tooltipEmailMessage = "Please input a valid email address."
+              console.log("Email is malformed...")
+
+              this.tooltipNameMessage = "Please select name."
+              console.log("Name is empty...")
+              this.resetFields();
+              return true, this.isNameEmpty = true, this.isEmailEmpty = true;
+            }
+
+
+        }else if(this.selectedName != "Select Name" && this.email === undefined && this.image != undefined) {
+
+            this.tooltipEmailMessage = "Please input user's email address."
+            console.log("Email is empty...")
+            this.resetFields();
+            return true, this.isEmailEmpty = true;     
+
+        } else if(this.selectedName != "Select Name" && this.email != undefined && this.image === undefined){
+
+            var isEmailValid = this.validateEmailFormat();
+            if(isEmailValid){
+              this.tooltipImageMessage = "Please provide user's picture."
+              console.log("Image is empty...")
+              this.resetFields();
+              return true, this.isImageEmpty = true;  
+
+            }else {
+
+              this.tooltipEmailMessage = "Please input a valid email address."
+              console.log("Email is malformed...")
+
+              this.tooltipImageMessage = "Please provide user's picture."
+              console.log("Image is empty...")
+              this.resetFields();
+              return true, this.isImageEmpty = true, this.isEmailEmpty = true;  
+
+            }
+          
+        } else if ((this.selectedName === "Select Name" && this.email === undefined) && this.image != undefined) {
+
+              this.tooltipNameMessage = "Please select name."
+              console.log("Name is empty...")
+
+              this.tooltipEmailMessage = "Please input user's email address."
+              console.log("Email is empty...")
+
+              this.resetFields();
+              return true, this.isNameEmpty = true, this.isEmailEmpty = true;
+        
+        } else if ((this.selectedName === "Select Name" && this.image === undefined) && this.email != undefined) {
+
+              this.tooltipNameMessage = "Please select name."
+              console.log("Name is empty...")
+
+              this.tooltipImageMessage = "Please provide user's picture."
+              console.log("Image is empty...")
+          
+              var isEmailValid = this.validateEmailFormat();
+
+              if (!isEmailValid) {
+                this.tooltipEmailMessage = "Please input a valid email address."
+                console.log("Email is malformed...")
+                this.resetFields();
+
+                return true, this.isNameEmpty = true, this.isImageEmpty = true, this.isEmailEmpty = true;
+              }
+
+              this.resetFields(); 
+              return true, this.isNameEmpty = true, this.isImageEmpty = true;
+
+        } else if ((this.email === undefined && this.image === undefined) && this.selectedName != "Select Name") {
+
+              this.tooltipImageMessage = "Please provide user's picture."
+              console.log("Image is empty...")
+
+              this.tooltipEmailMessage = "Please input user's email address."
+              console.log("Email is empty...")
+
+              this.resetFields();
+              return true, this.isImageEmpty = true, this.isEmailEmpty = true;
+        
+        } else if (this.selectedName === "Select Name" && this.email === undefined && this.image === undefined) {
+              
+              this.tooltipNameMessage = "Please select name."
+              console.log("Name is empty...")
+
+              this.tooltipImageMessage = "Please provide user's picture."
+              console.log("Image is empty...")
+
+              this.tooltipEmailMessage = "Please input user's email address."
+              console.log("Email is empty...")
+
+              this.resetFields();
+              return true, this.isNameEmpty= true, this.isImageEmpty = true, this.isEmailEmpty = true;
+
+        } 
+        
+        // if(this.image === undefined) {
+        //     this.tooltipImageMessage = "Please provide user's picture."
+        //     this.isImageEmpty = true;
+        //     console.log("Image is empty...")
+        // }
+
+        // this.resetFields();
+
+        //   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        //    if(!re.test(this.email)){
+        //       this.tooltipEmailMessage = "Please input a valid email address."
+        //       this.isEmailEmpty = true;
+        //       console.log("Email is malformed...")
+        //    }
+        
+        // return this.isNameEmpty = true, this.isEmailEmpty = true, this.isImageEmpty = true;
+
+        // if (this.email === undefined && this.image === undefined) {
+        //     //alert("Please provide contact name, email and image..");
+        //     this.tooltipNameMessage = "Please select name."
+        //     this.resetFields();
+        //     return this.isNameEmpty = true;
+        // }else if( this.email === undefined && this.image !== undefined) {
+        //     //alert("Please provide contact email address..");
+        //     this.resetFields();
+        //     this.tooltipEmailMessage = "Please provide email address."
+        //     return this.isEmailEmpty = true;
+        // }else if (this.email !== undefined && this.image === undefined) {
+        //     //alert("Please provide contact image..");
+        //     this.resetFields();
+        // }
+
+        // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        // console.log("result: " , re.test(this.email))
+        // if(!re.test(this.email)){
+        //     alert("Invalid email address..");
+        //     return true;
+        // }
       },
 
       saveContact: function() {
+        
         console.log("selected name: "+ this.selectedName);
         console.log("image: " + this.image);
         console.log("email : " + this.email);
@@ -169,7 +366,7 @@
         this.person = contactToInsert;
         this.$.postContactAjax.body = JSON.stringify(contactToInsert);
         this.$.postContactAjax.generateRequest();
-
+        return this.$.saveBtn.disabled=true;
       },
 
       isLoading: function(){
