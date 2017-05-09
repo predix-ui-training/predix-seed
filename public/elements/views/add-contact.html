@@ -33,16 +33,16 @@
 
     <br>
 
-    <label>Email: </label> <input type="text" value="{{email::input}}" placeholder="Insert Email Address" class="text-input">
+    <label>Email: </label> <input id = "emails" type="text" value="{{email::input}}" placeholder="Insert Email Address" class="text-input">
 
     <br>
     <br>
-    <label>Image: </label> <input type="text" value="{{image::input}}" placeholder="Insert Image URL"class="text-input">
+    <label>Image: </label> <input id ="images" type="text" value="{{image::input}}" placeholder="Insert Image URL"class="text-input">
     <br>
     <br>
 
     <button class="btn btn--tertiary style-scope local-element-demo" on-tap="addContact">Add</button>
-    <button class="btn btn--tertiary style-scope local-element-demo" on-tap="resetContact">Reset</button>
+    <button class="btn btn--tertiary style-scope local-element-demo" on-tap="resetContact" value = "reset" type = "reset">Reset</button>
 </form>
 </px-card>
 
@@ -51,8 +51,9 @@
           <template is="dom-if" if="{{onSubmit}}">
              <li>
               <span> <my-contact name ="{{selectedName}}" email="{{email}}"> </my-contact></span>
-               <label>Image</label>  
-               <img align = "center" class = "img-circle" src="{{image}}"style="width:100px;height:100px;" alt="">
+                <label>Image</label>  
+               <h3 align = "center"><img class = "img-circle" src="{{image}}"style="width:100px;height:100px;" alt=""></h3>
+              
              <br> 
              <br>
                  <button class="btn btn--tertiary style-scope local-element-demo" on-tap="submitContact">Submit</button>
@@ -92,10 +93,23 @@
         }
       },
       addContact: function() {
+          
+    var x = document.getElementById("emails").value;
+    var y = document.getElementById("images").value;
+    var atpos = x.indexOf("@");
+    var dotpos = x.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+        alert("Not a valid e-mail address");
+          this.onSubmit=false;
+    }else if(y==""){
+      alert("Not a valid image url");
+           this.onSubmit=false;
+    }else {
           this.onSubmit=true
+    }
       },
       resetContact: function() {
-          this.onSubmit=false
+          this.onSubmit=false;
       },
       
       submitContact: function() {

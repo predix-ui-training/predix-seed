@@ -34,7 +34,7 @@
                    btn-modal-positive="Continue"
                    btn-modal-negative="Cancel"
                    modal-heading="Delete Contacts">
-                   <button class="btn btn--bare modal-trigger" on-tap = "_getid">x
+                   <button class="btn btn--bare modal-trigger" on-tap = "_getid"><i class="fa fa-times" aria-hidden="true"></i>
                   </button>
                  <p>
                  <b>Are you sure you want to delete contact?</b>
@@ -128,12 +128,7 @@
         this.$.deleteContactAJax.body = JSON.stringify(tempContact);
        this.$.deleteContactAJax.generateRequest();
       },
-      //  _getIDParam:function() {
-      //    console.log("id = " +contactid);
-      //  return {
-      //    id:contactid
-      //    }
-      // },
+  
       _getid:function(e){
         var model = e.model
         this.contactid = model.cons.id
