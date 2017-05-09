@@ -46,7 +46,9 @@
     "paper-behaviors": "^1.0.13",
     "paper-styles": "^1.2.1",
     "paper-dialog": "^1.1.0",
-    "px-modal": "^1.4.10"
+    "px-modal": "^1.4.10",
+    "paper-input": "^1.1.24",
+    "iron-input": "^1.0.11"
   },
   "devDependencies": {
     "px-forms-design": "^1.1.1",

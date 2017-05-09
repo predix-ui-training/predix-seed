@@ -18,6 +18,7 @@
       id="getPersonsAJax"
       url="https://acts-contacts-microservice.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
       last-response="{{response}}"
+      loading="{{loading}}"
       method="GET"
       auto
     >
@@ -43,6 +44,9 @@
 	     },     
        response: {
           type: Array
+      },
+         loading: {
+          type: Boolean,
         }
       },
 
@@ -50,6 +54,15 @@
         'add-person-completed' : 'triggerGetPersonsAjax',       
         'delete-person-completed' : 'triggerGetPersonsAjax'
      
+      },
+       observers: [
+        'isLoading(loading)'
+      ],
+       isLoading: function(loading){
+        console.log("getLoading : " + loading);
+        if(!loading){
+          this.fire('get-person-completed');
+        }
       },
        triggerGetPersonsAjax: function() {
         console.log("Person " + JSON.stringify(this.person));

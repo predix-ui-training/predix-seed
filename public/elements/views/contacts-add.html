@@ -1,5 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="../../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../../bower_components/px-polymer-font-awesome/px-polymer-font-awesome.html"/>
 
 
 <dom-module id="contacts-add">
@@ -21,14 +23,15 @@
 
     <label>Name:</label>
 
-    <px-dropdown value="{{selectedName}}" display-value="Select">
+    <px-dropdown value="{{selectedName}}" display-value="{{defaultDropDownVal}}">
       <px-dropdown-content 
         class="px-dropdown-content" 
         items='[{"key":"one", "val": "Levi"}, {"key":"two", "val": "Mikasa"}, {"key":"three", "val": "Hange"}]'>
       </px-dropdown-content>
     </px-dropdown>
     <br>
-    <label>Email: </label> <input type="text" value="{{email::input}}" class="text-input">   
+    <label>Email: </label> <input type="text" value="{{email::input}}" class="text-input">
+        <i class="fa fa-info-circle" style="font-size:24px;color:red"></i>
      <br>
      <br>
     <label>Image: </label> <input type="text" value="{{image::input}}" class="text-input">
@@ -39,7 +42,6 @@
      </form>
 
     <template is="dom-if" if="{{addPersonTriggered}}">
-            <div><img class="img-circle" src={{image::input}} alt="" height="100" width="100" /></div>
             <br>
             <div><label>Name: </label> {{selectedName}}</div>
             <br>
@@ -61,6 +63,10 @@
         selectedName: String,
         email: String,
         image: String,
+        defaultDropDownVal:{
+          type:String,
+          value: "Select"
+        },
         loading: {
           type: Boolean,
         },
@@ -74,7 +80,8 @@
         }
         },
         listeners: {
-        'px-dropdown-value-changed' : 'getSelectedName'
+        'px-dropdown-value-changed' : 'getSelectedName',
+        'get-person-completed' : 'resetPerson'
         },
 
       observers: [
@@ -82,19 +89,55 @@
       ],
 
       isLoading: function(loading){
-        console.log("isLoading : " + loading);
+        console.log("addLoading : " + loading);
         if(!loading){
           this.fire('add-person-completed');
+          this.email = " "
+          this.image = " "
+          this.defaultDropDownVal = "Select"
+          return this.addPersonTriggered = false;
         }
+      },    
+      validateEmail: function(){
+       console.log("validateEmail");
+        var regExp =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var isValidEmail =regExp.test(this.email)
+        console.log("validateEmail", this.email)
+        return isValidEmail
       },
-
+      validateInput: function() {
+       var isValid = true
+        var validEmail = this.validateEmail()
+        console.log("isValidEmail", validEmail);
+        console.log("this.image" , this.image);
+         if (!validEmail){
+           isValid = false
+           alert("E-mail invalid");
+         }
+          if (this.email == ""){
+            isValid = false
+           alert("Please input e-mail");
+         }
+          if (this.image == undefined){
+            isValid = false
+           alert("Please input image");
+         }
+         return isValid
+      },
       addPerson: function() {
+        var valid = this.validateInput()
+        console.log("addPerson valid" , valid)
         console.log("addPersonTriggered: " + this.addPersonTriggered);
+        if(!valid){
+        return this.addPersonTriggered = false;
+        }else{
         return this.addPersonTriggered = true;
+        }
         }, 
         resetPerson: function() {
+         this.defaultDropDownVal = "Select"
         return this.addPersonTriggered = false;
-        console.log("addPersonTriggered" + this.addPersonTriggered);
+        console.log("RESET" + this.addPersonTriggered);
         }, 
       submitContact: function() {
         let tempPerson = new Object();
@@ -117,6 +160,7 @@
       ready: function() {
         console.log('contacts-add ready()')
       }
+     
     });
   </script>
 </dom-module>
