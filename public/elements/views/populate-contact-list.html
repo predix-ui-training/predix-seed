@@ -6,63 +6,96 @@
 
 <dom-module id="populate-contact-list">
     <template>
-      <iron-ajax
-        id="postPersonAjax"
-        url="https://502581119-go-learning-session-svc2-pao.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
-        last-response="{{response}}"
-        loading="{{loading}}"
-        method="POST"
-        on-response="handleResponse"
-      >
-      </iron-ajax>
-		  <style include="populate-contact-list-styles"></style>
+      <div id="parentDiv">
+        <iron-ajax
+          id="postPersonAjax"
+          url="https://502581119-go-learning-session-svc2-pao.run.aws-usw02-pr.ice.predix.io/api/v1/contacts"
+          last-response="{{response}}"
+          loading="{{loading}}"
+          method="POST"
+          on-response="handleResponse"
+        >
+        </iron-ajax>
+        <style include="populate-contact-list-styles"></style>
         <h1>Add Users Page</h1>
-
         <div class="comboBoxDiv" >
-         <b><label class="required-label"></i>Name  :</label></b>
-            <px-dropdown value="{{name::change}}" 
-            id="nameDropDown" display-value="{{defaultValue}}">
-              <px-dropdown-content 
-                class="px-dropdown-content" 
-                items='[{"key":"","val":"Select","key":"Jake", "val": "Jake"}, 
-                {"key":"Jack", "val": "Jack"}, 
-                {"key":"Jon", "val": "Jon"}]'>
-              </px-dropdown-content>
-            </px-dropdown>
-            <label class="errorMsg" id="errorName"></label>
-           
+             <table >
+               <tr>
+                <td><b><label  class="required-label"></i>Name  :</label></b></td>
+                   <td> <select id="cboName" disabled="{{cboNameFlag}}" >
+                      <option value="">Select</option>
+                    </select></td>
+                <!--<td><px-dropdown value="{{name::change}}" 
+                  id="cboName"  display-value="{{defaultValue}}">
+                    <px-dropdown-content 
+                      class="px-dropdown-content" 
+                      items='[{"key":"","val":"Select","key":"Jake", "val": "Jake"}, 
+                      {"key":"Jack", "val": "Jack"}, 
+                      {"key":"Jon", "val": "Jon"}]'>
+                    </px-dropdown-content>
+                  </px-dropdown></td>-->
+                <td> <label class="errorMsg" id="errorName"></label></td>
+            </div>
+
+        <div class="texFields">
+         
+            <tr>
+              <td ><b><label class="required-label">Email:</label></b></td>
+              <td > 
+                <input id="txtEmail" type="text"
+                  class="text-input"placeholder="Enter Email"
+                  value="{{email::input}}" on-keyup="removewarning" />
+              </td>
+               <td align ='left'><label class="errorMsg" id="errorEmail"></label></td>
+              </tr>
+            
         </div>
 
-        <div class="comboBoxDiv">
-          <b><label class="required-label">Email:</label></b>
-          <input id="email" type="text"
-            class="text-input"placeholder="Enter Email"
-            value="{{email::input}}" on-keyup="removewarning" />
-            <label class="errorMsg" id="errorEmail"></label>
-        </div>
-		
-        <div class="comboBoxDiv">
-           <b><label class="required-label">Age &nbsp; :</label></b>
-          <input id="age" value="{{age::input}}"
-            class="text-input"  type="number" 
-            placeholder="Enter Age" on-keyup="removewarning">    
-          <label class="errorMsg" id="errorAge"></label>
+        <div class="texFields">
+          
+             <tr>
+                <td ><b><label class="required-label">Age &nbsp;&nbsp; :</label></b></td>
+                <td ><input id="txtAge" value="{{age::input}}"
+                class="text-input"  type="number" 
+                placeholder="Enter Age" on-keyup="removewarning">   </td> 
+                <td ><label class="errorMsg" id="errorAge"></label></td>
+             </tr>
         </div> 
-
-        <div class="comboBoxDiv">
-           <b> <label class="required-label">Image :</label></b>
-          <input id="imageUrl" value="{{imageUrl::input}}" 
-            class="text-input" type="text" 
-            placeholder="Enter Image Url" on-keyup="removewarning"> 
-            <label class="errorMsg" class=ErrorMessage id="errorImage"></label>   
-		    </div> 
+         <div class="texFields">
+            <tr>  
+               <th><b><label class="required-label">Image:</label></b></td>
+               <td><input id="txtImageUrl" value="{{imageUrl::input}}" 
+                  class="text-input" type="text" 
+                  placeholder="Enter Image Url" on-keyup="removewarning"></td>
+               <td><label class="errorMsg" class=ErrorMessage id="errorImage"></label></td>
+            </tr>   
+         </div>     
+       </table>      
+		    
 
         <br>
         <div class="comboBoxDiv">
-          <button   class="btn btn--primary" on-tap="clearFields">Reset</button>
-          <button   class="btn btn--primary" on-tap="validate">Add</button>
+          <button id="btnClearFields"  class="btn btn--primary" on-tap="clearFields">Reset</button>
+          <button id="btnAdd" class="btn btn--primary" on-tap="validate">Add</button>
         </div>
-  
+
+        <div id="myModal" class="modal" align="center">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalHeader">ERROR!</h2>
+            </div>
+            <div class="modal-body">
+              <p id="modalBody">Some text in the Modal Body</p>
+            </div>
+              <div class="modal-footer">
+                <button   class="btn btn--primary" on-tap="closeModal">Close</button>
+              </div>
+            
+          </div>
+        </div>
+           
         <template is="dom-if" if="{{isMsg}}">
           <div class="comboBoxDiv">
             <label>Name: {{name}}</label>
@@ -80,7 +113,10 @@
           <div class="comboBoxDiv">
             <button class="btn btn--primary" on-tap="saveContact">Submit</button>
           </div>
+          
 		</template>
+          
+      </div>
 	</template>
     <script>
       Polymer({
@@ -119,6 +155,10 @@
             type: Boolean,
             value: true
           },
+           cboNameFlag: {
+            type: Boolean,
+            value: false
+          },
           defaultValue: {
             type: String,
             value: "Select"
@@ -130,6 +170,7 @@
         },
         listeners:{
 		    	'px-dropdown-click':'removewarning'
+          
         },
 
         saveContact: function() {
@@ -151,8 +192,9 @@
             this.age="";
             this.imageUrl="";
             this.isValidate=false;
-            this.isMsg=true;
-            this.showMsg();
+            this.isMsg=false;
+            this.removewarning();
+          
         },
         showMsg: function() {
             if(this.isMsg){
@@ -162,48 +204,93 @@
             }
         },
         removewarning: function(e){
-            this.$.errorName.innerHTML = "";
-            this.$.errorEmail.innerHTML = "";
-            this.$.errorAge.innerHTML = "";
-            this.$.errorImage.innerHTML = "";
+       
+        },
+        closeModal:function(){
+         var modal=this.$.myModal;
+
+         this.enableFields();
+         modal.style.display = "none";
+         
         },
         handleResponse: function(e) {
 			    console.log(e.detail.response);
         },
 	    	validate:function(){
             this.isValidate=true;
+             var modal=this.$.myModal;
+             var msg="";
+             
             if( this.defaultValue=="Select"){
-				    this.$.errorName.innerHTML="Please Select a Name";
+             
+            
+              msg="Please Select a Name";
+				       
                 this.isValidate=false;
             }
             if( (this.isValidate) && this.$.email.value==""){
-                this.$.errorEmail.innerHTML="Please Enter A valid Email";
+                
+                msg="Please Enter A valid Email";
+                
                 this.isValidate=false;
             }
             if( (this.isValidate) && this.email!==""){
               if(!this.validateEmail(this.email)){
-                this.$.errorEmail.innerHTML="Email format is invalid";
+                 msg="Email format is invalid";
+                
                 this.isValidate=false;
               }
 			      }
             if( (this.isValidate) && this.$.age.value==""){
-                this.$.errorAge.innerHTML="Please Enter your Age";
+                msg="Please Enter your Age";
                 this.isValidate=false;
             }
             if( (this.isValidate) && this.age <= 0){
-               this.$.errorAge.innerHTML="Age Must be grater than 0";
+               
+               msg="Age Must be grater than 0";
                this.isValidate=false;
             }
             if( (this.isValidate) && this.$.imageUrl.value==""){
-				        this.$.errorImage.innerHTML="Please Enter a Image Url";
-                this.isValidate=false;
+				        
+                 msg="Please Enter a Image Url";
+                 this.isValidate=false;
             }
             if (this.isValidate){
 				        this.showMsg();
                 this.isValidate=true;
             }
+            if (!this.isValidate){
+              modal.style.display = "block";
+               this.$.modalBody.innerHTML=msg;
+               this.disableFields();
+            }
         },
-		
+        enableFields:function(){
+                this.$.cboName.disabled=false
+                
+               this.$.txtAge.removeAttribute("readonly");
+               this.$.txtEmail.removeAttribute("readonly");
+               this.$.txtImageUrl.removeAttribute("readonly");
+               this.$.btnAdd.disabled = false;
+               this.$.btnClearFields.disabled = false;
+                  
+        },
+        disableFields:function(){
+               this.$.cboName.disabled=true
+               this.$.txtAge.readOnly="true";
+               this.$.txtEmail.readOnly="true";
+               this.$.txtImageUrl.readOnly="true";
+               this.$.btnAdd.disabled = true;
+               this.$.btnClearFields.disabled = true;
+        },
+        populateList:function(){
+          var select = this.$.cboName; 
+          var options = ["Jack", "Jon", "Jake", "John", "Jones"]; 
+            for ( var i = 0; i < options.length; i++) {
+               var opt = options[i];
+              select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+            }
+        },
       isLoading: function(){
 			  console.log("isLoading : " + this.loading);
 			  if(!this.loading){
@@ -217,10 +304,12 @@
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
       },
-		
+    
+
       ready: function(){
 			  console.log("populate-contact-list ready()");
-        }
+        this.populateList();
+      }
     });
     </script>
 </dom-module>
