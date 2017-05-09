@@ -1,0 +1,222 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="../../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/px-modal/px-modal.html">
+<link rel="import" href="add-contacts-styles.html">
+
+<dom-module id="add-contacts">
+  
+  <template>
+
+    <style include="add-contacts-styles">
+        .form-field label {
+            color: #443730;
+        }
+        h1 {
+            color: #443730;
+            text-align: center;
+        }
+        .form-field input {
+            color: #550c18;
+            background-color: #A5907E;
+        }
+        .form-field button {
+            border-color: #786452;
+        }
+        .form-field {
+            padding-left: 15px;
+        }
+        .positive {
+            color: #F7DAD9;
+            background-color: #550c18;
+        }
+        .positive:hover {
+            color: #550c18;
+            background-color: #F7DAD9;
+        }
+        .negative {
+            color: #550c18;
+            background-color: #F7DAD9;
+        }
+        .negative:hover {
+            color: #F7DAD9;
+            background-color: #550c18;
+        }
+        .verifyDetails img {
+            border-radius: 100%;
+            border-color: none;
+        }
+
+        .confirmDelete {
+        color:#F7DAD9;
+        --px-modal-background-color: #443730;
+        --px-modal-border-color : #a5907e;
+        --px-modal-positive-button : {
+          background-color: #550c18;
+          color: #F7DAD9;
+        };
+        --px-modal-buttons : {
+          background-color: #F7DAD9;
+          color: #550c18;
+        };
+      }
+      .confirmDelete p {
+        color: #F7DAD9;
+        font-size: 14px;
+      }
+    </style>
+
+    <iron-ajax
+      id="postContactAjax"
+      url="https://predix-backend-ui-contacts.run.aws-usw02-pr.ice.predix.io/api/v1/contact"
+      last-response="{{response}}"
+      loading="{{loading}}"
+      method="POST"
+    >
+    </iron-ajax>
+
+    <h1>Add Contact</h1>
+    <form>
+        <fieldset class="form-field">
+            <li class="form-field">
+                <label>Name:</label>
+                <px-dropdown value="{{selectedName}}" display-value="Select" on>
+                    <px-dropdown-content 
+                    class="px-dropdown-content" 
+                    items='[{"key":"one", "val": "Bea"},
+                            {"key":"two", "val": "Amie"},
+                            {"key":"three", "val": "Teriz"},
+                            {"key":"four", "val": "Eira"},
+                            {"key":"five", "val": "Yuki"}]'>
+                    </px-dropdown-content>
+                </px-dropdown>
+            </li>
+            <li>
+                <label>Age: </label>
+                <input is="iron-input" 
+                type="number" 
+                value-as-number="{{age::input}}" 
+                class="text-input input--large text-input--bare"
+                prevent-invalid-input allowed-pattern="[0-9]"
+                max="100">
+            </li>
+            <li>
+                <label>Email: </label>
+                <input is="iron-input"
+                 type="text" 
+                 value="{{email::input}}" 
+                 class="text-input input--large text-input--bare">
+            </li>
+            <li>
+                <label>Image: </label>
+                <input is="iron-input"
+                 type="text"
+                 value="{{image::input}}" 
+                 class="text-input input--large text-input--bare">
+            </li>
+            <li>
+                <button class="btn btn--primary positive" on-tap="showDetails">Add</button>
+                <button type="reset" class="btn btn--tertiary negative" on-tap="showDetails">Reset</button>
+            </li>
+            <li>
+                <div id="showInfo" style="display: none;" class="verifyDetails">
+                    <label>Name: {{selectedName}}</label>
+                    <label>Age: {{age::input}}</label>
+                    <label>Email: {{email::input}}</label>
+                    <label>Image:</label>
+                    <img src="{{image::input}}" height="300" width="300"/>
+                </div>
+            </li>
+            <li>
+                <div id="submit" style="display: none;">
+                    <button class="btn btn--primary positive" on-tap="addPerson">Submit</button>
+                </div>
+            </li>
+        </fieldset>
+    </form>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'add-contacts',
+
+      properties: {
+        selectedName: String,
+        age: Number,
+        email: String,
+        image: String,
+        loading: {
+          type: Boolean
+        }
+
+      },
+
+      listeners: {
+        'px-dropdown-value-changed' : 'getSelectedName'
+      },
+
+      observers: [
+        'isLoading(loading)'
+      ],
+
+      isLoading: function(){
+        console.log("isLoading : " + this.loading);
+        if(!this.loading){
+          this.fire('add-contacts-completed');
+        }
+      },
+
+      addPerson: function() {
+        let tempPerson = new Object();
+        tempPerson.name = this.selectedName;
+        tempPerson.age = this.age;
+        tempPerson.email = this.email;
+        tempPerson.image = this.image;
+
+        console.log("Request Body : " + JSON.stringify(tempPerson));
+
+        this.$.postContactAjax.body = JSON.stringify(tempPerson);
+        this.$.postContactAjax.generateRequest();
+
+      },
+
+      showDetails: function() {
+        var x = document.getElementById('showInfo');
+        var y = document.getElementById('submit');
+
+
+        /*if ( this.selectedName === "" 
+        || this.email.indexOf('@') < 0 
+        || this.image.indexOf('.') < 0 
+        || this.age < 0) {
+            alert("Invalid input! Please enter valid input for the fields needed.");
+            console.log("Cannot load data; error in input.")
+            return;
+        }*/
+
+        if (x.style.display === 'none' && y.style.display === 'none') {
+            x.style.display = 'block';
+            y.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+            y.style.display = 'none';
+            this.selectedName = "";
+            this.age = 0;
+            this.email = ""
+            this.image = "" 
+        }
+      },
+
+      getSelectedName: function() {
+        console.log("Selected name : " + this.selectedName);
+      },
+
+  	  ready: function(){
+  	  	console.log("add-contacts ready()");
+  	  }
+	  
+    });
+  </script>
+</dom-module>
+

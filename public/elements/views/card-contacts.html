@@ -1,0 +1,46 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="list-contact.html">
+
+<dom-module id="card-contacts">
+  
+  <template>
+
+  	<style>
+      li {
+        border-bottom: solid 1px #443730;
+      }
+      h1 {
+        color: #443730;
+        text-align: center;
+      }
+    </style>
+    <h1>Contact List</h1>
+    <template is="dom-repeat" items="{{contactList}}" as="contacts">
+        <li>
+            <list-contact 
+                id="{{contacts.id}}"
+                name="{{contacts.name}}" 
+                email="{{contacts.email}}" 
+                img="{{contacts.image}}"
+                timestamp="{{contacts.timestamp}}">
+            </list-contact>
+        </li>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'card-contacts',
+      properties: {
+          contactList: {
+            type: Array
+          }
+      },
+	  ready: function(){
+	  	console.log("card-contacts ready()");
+	  }
+	  
+    });
+  </script>
+</dom-module>
+

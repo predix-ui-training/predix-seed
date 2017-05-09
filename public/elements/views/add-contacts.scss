@@ -1,0 +1,33 @@
+$inuit-enable-btn--primary: true;
+$inuit-enable-btn--tertiary: true;
+$inuit-enable-text-input--bare : true;
+$inuit-enable-input--large : true;
+$inuit-forms-border--outer : 1px solid #786452;
+$inuit-forms-border--inner : inset 0 0 0 1px #786452;
+$inuit-forms-border--inner--focused : inset 0 0 0 1px #F7DAD9;
+$inuit-forms-border--outer--focused :#F7DAD9;
+$inuit-enable-validation-states : true;
+@import 'px-buttons-design/_objects.buttons.scss';
+@import 'px-layout-design/_objects.layout.scss';
+@import 'px-forms-design/_base.forms.scss';
+
+px-dropdown {
+	--px-dropdown-bg-color--default : #A5907E;
+    --px-dropdown-bg-color : #A5907E;
+    --px-dropdown-bg-color--opened : #A5907E;
+    --px-dropdown-bg-color--hover : #F7DAD9;
+    --px-dropdown-border-color : #786452;
+    --px-dropdown-border-color--opened : #F7DAD9;
+    --px-dropdown-border-color--hover : #F7DAD9;
+    --px-dropdown-text-color : #550c18;
+    --px-dropdown-text-color--opened : #550c18;
+    --px-dropdown-text-color--hover : #550c18;
+    --px-dropdown-text-color--pressed : #F7DAD9; 
+    --px-dropdown-chevron-color : #443730;
+}
+
+li {
+    margin: 0 100px 0 0;
+    padding: 15px;
+}
+
