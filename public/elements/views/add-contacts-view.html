@@ -37,17 +37,17 @@
          <br>
          <div>
           <label for="Email">Email:</label>
-          <input type="email" id="Email" name="email" placeholder="Enter a valid email address" value="{{email::input}}" class="text-input input--small" required>
+          <input type="email" id="Email" name="email" placeholder="Enter a valid email address" value="{{email::input}}" class="text-input input--small" required> <span>{{errorMessage}}</span>
          <br><br>
-          <label for="Image">Image:</label>
-          <input type="text" id="Image" name="image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input input--small" pattern="https?://.+"  required>
+          <label for="Image">Image URL:</label>
+          <input type="url" id="Image" name="image"  placeholder="Your Image URL" value="{{image::input}}" class="text-input input--small" pattern="https?://.+"  required>
           <br><br>
          </div>
           <button class="btn btn--primary" on-tap="addContact">Add</button>
           <button class="btn btn--primary" type="reset" value="Reset" on-tap="resetTriggered">Reset</button>
         </form>
 
-        <br>
+        
         <template is="dom-if" if="{{addTriggered}}">
         <px-card icon='fa-user' header-text='New Contact'>
         <div align="center">
@@ -61,6 +61,7 @@
         </div>
         </px-card>
         </template>
+
        
       </px-card>
   </template>
@@ -114,11 +115,14 @@
         var x = this.email;
         var atpos = x.indexOf("@");
         var dotpos = x.lastIndexOf(".");
-        if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length || this.email=="" || this.email==null || this.email=="" || this.email==null || this.image==null || this.image=="") {
-         return this.addTriggered = false;
+        if ( this.image==null || this.image=="") {
+            return this.addTriggered = false;
+       } else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length || this.email=="" || this.email==null || this.email=="" || this.email==null){
+           return this.addTriggered = false;
        } else if(this.$.dropDown.displayValue == "Select Name"){
+         alert("Select a name first");
          return this.addTriggered = false;
-       }else {
+       } else {
          return this.addTriggered = true;
        }
        

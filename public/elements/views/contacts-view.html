@@ -29,9 +29,16 @@
                        <span><b>Date Created : </b>{{contact.dateTimeStamp}}</span>
                    </div>
                 <px-modal btn-modal-positive="DELETE" btn-modal-negative="Cancel" modal-heading="Confirm Delete" scrolling-disabled="true">
-                <button class='btn btn--primary modal-trigger' on-tap="getId"><iron-icon icon="fa:fa-times"></iron-icon></button><p>Contact will be deleted!!</p></px-modal>
-              </li>
-             
+                <button class='btn btn--primary modal-trigger' on-tap="getId"><iron-icon icon="fa:fa-times"></iron-icon></button>
+                <p>Contact will be deleted!!</p>
+                <div align="center">
+                     <br><br><img class="img-circle" src={{contact.image}} alt="" height="200" width="200" /><br><br>
+                     <span><b>Name : </b>{{contact.name}}</span><br>
+                     <span><b>Email : </b><a href={{contact.image}}>{{contact.email}}</a></span><br>
+                     <span><b>Date Created : </b>{{contact.dateTimeStamp}}</span>
+                </div>
+                </px-modal>
+              </li>             
           </template>
       </ul>          
    </px-card></div>

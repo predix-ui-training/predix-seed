@@ -49,11 +49,11 @@ px-card{
     color: green;
   }
 
-  input[type="text"]:invalid {
+  input[type="url"]:invalid {
     color: red;
   }
 
-  input[type="text"]:valid {
+  input[type="url"]:valid {
     color: green;
   }
 
